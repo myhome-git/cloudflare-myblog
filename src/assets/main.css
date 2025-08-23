@@ -1,0 +1,15 @@
+
+#app {
+  margin: 0 auto;
+  font-weight: normal;
+}
+
+#app .body-row-selected{}
+#app .body-row-selected.bg-color-green{
+  background-color: #538521;
+  border: 1px solid #519121;
+  color: white;
+}
+#app .body-row-selected>td:hover{
+  background-color: inherit !important;
+}

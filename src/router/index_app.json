@@ -1,0 +1,25 @@
+[
+    {
+        "path": "/app",
+        "name": "前台",
+        "source": "/app/Home.vue",
+        "redirect": "/app/blogs",
+        "children": [
+            {
+                "path": "/welcome",
+                "name": "首页",
+                "source": "/app/Welcome.vue"
+            },
+            {
+                "path": "/blogs",
+                "name": "博客列表",
+                "source": "/app/BlogList.vue"
+            },
+            {
+                "path": "/blog",
+                "name": "博客详情",
+                "source": "/app/BlogDetail.vue"
+            }
+        ]
+    }
+]

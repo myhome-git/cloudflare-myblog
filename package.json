@@ -1,0 +1,48 @@
+{
+  "name": "bun-vue-template",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "type-check": "vue-tsc --build",
+    "build": "vite build",
+    "build-only": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.5.32",
+    "@types/lodash": "^4.17.18",
+    "@ztree/ztree_v3": "^3.5.48",
+    "ant-design-vue": "4.x",
+    "axios": "^1.10.0",
+    "cherry-markdown": "^0.9.4",
+    "echarts": "^6.0.0",
+    "eslint": "^9.32.0",
+    "jquery": "^3.7.1",
+    "less": "^4.3.0",
+    "less-loader": "^12.3.0",
+    "lodash": "^4.17.21",
+    "terser": "^5.43.1",
+    "uuid": "^11.1.0",
+    "vditor": "^3.11.1",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@babel/generator": "^7.28.0",
+    "@babel/parser": "^7.28.0",
+    "@babel/traverse": "^7.28.0",
+    "@babel/types": "^7.28.2",
+    "@tsconfig/node22": "^22.0.0",
+    "@types/node": "^22.13.4",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vitejs/plugin-vue-jsx": "^4.1.1",
+    "@vue/tsconfig": "^0.7.0",
+    "npm-run-all2": "^7.0.2",
+    "typescript": "~5.7.3",
+    "vite": "^6.1.0",
+    "vite-plugin-vue-devtools": "^7.7.2",
+    "vue-tsc": "^2.2.2"
+  }
+}

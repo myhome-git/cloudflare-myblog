@@ -1,0 +1,60 @@
+[
+    {
+        "path": "/admin",
+        "name": "管理后台",
+        "source": "/admin/Home.vue",
+        "icon": "home",
+        "redirect": "/admin/welcome",
+        "children": [
+            {
+                "path": "/welcome",
+                "name": "首页",
+                "source": "/admin/Welcome.vue",
+                "icon": "home"
+            },
+            {
+                "path": "/blogs",
+                "name": "文章管理",
+                "icon": "list",
+                "source": "/admin/page/blogs/List.vue"
+            },
+            {
+                "path": "/notepad",
+                "name": "日常记事",
+                "icon": "list",
+                "source": "/admin/page/notepad/List.vue"
+            },
+            {
+                "path": "/blogClass",
+                "name": "分类管理",
+                "icon": "list",
+                "source": "/admin/page/blogClass/List.vue"
+            },
+            {
+                "path": "/link",
+                "name": "友情链接",
+                "icon": "list",
+                "source": "/admin/page/link/List.vue"
+            },
+            {
+                "path": "/user",
+                "name": "账户管理",
+                "icon": "user",
+                "source": "/admin/page/user/List.vue"
+            },
+            {
+                "path": "/database",
+                "name": "数据管理",
+                "icon": "database",
+                "source": "/admin/page/database/List.vue"
+            },
+            {
+                "path": "/systemconfig",
+                "name": "系统配置",
+                "icon": "set",
+                "source": "/admin/page/systemconfig/List.vue",
+                "display": false
+            }
+        ]
+    }
+]

@@ -1,0 +1,18 @@
+[
+    {
+        "path": "/",
+        "name": "系统入口",
+        "source": "/Home.vue",
+        "redirect": "/app"
+    },
+    {
+        "path": "/login",
+        "name": "登录",
+        "source": "/Login.vue"
+    },
+    {
+        "path": "/:pathMatch(.*)*",
+        "name": "NotFound",
+        "source": "/NotFound.vue"
+    }
+]
