@@ -1,6 +1,9 @@
 # Vue 3 Blog Management System (Vue 3 博客管理系统)
 
-A modern blog management system built with Vue 3, Vite, and Bun. Features include blog post management, user authentication, category management, and more.
+### 重要说明
+### 1、如果想快速部署的话，直接下载dist文件夹，压缩后上传到cloudflare的pages就行（推荐）
+### 2、上传dist后绑定自己的域名，用自己的域名访问，例如：blog.baidu.com
+### 3、进入自己的域名菜单，找到workers路由，添加一条规则，例如：blog.baidu.com/api/*，选择自己的worker-myblog，这里应该首先部署api，链接地址：https://github.com/myhome-git/cloudflare-myblog-api
 
 ## 简介
 
