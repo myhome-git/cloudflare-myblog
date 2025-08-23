@@ -1,1 +1,0 @@
-import{u as a,R as s}from"./index-B0uerZMZ.js";import{d as e,l as o,m as t,q as u,u as n,F as r,j as l}from"./vendor-d3xKHcIY.js";const m=e({__name:"Home",setup:e=>(a().currentRoute.value.path,(a,e)=>(l(),o(r,null,[e[0]||(e[0]=t("h1",null,"index page",-1)),u(n(s))],64)))});export{m as default};
