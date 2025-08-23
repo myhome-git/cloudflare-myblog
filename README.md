@@ -1,5 +1,7 @@
 # Vue 3 Blog Management System (Vue 3 博客管理系统)
 
+## 如果遇到问题需要可以入群1020935359，管理员有时间会在第一时间解答
+
 ### 重要说明
 ### 1、如果想快速部署的话，直接下载dist文件夹，压缩后上传到cloudflare的pages就行（推荐）
 ### 2、上传dist后绑定自己的域名，用自己的域名访问，例如：blog.baidu.com
