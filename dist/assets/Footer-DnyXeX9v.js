@@ -1,0 +1,1 @@
+import{d as o,l as a,j as e}from"./vendor-d3xKHcIY.js";import{_ as s}from"./_plugin-vue_export-helper-BCo6x5W8.js";const p={class:"app-footer"},t=s(o({__name:"Footer",setup:o=>(o,s)=>(e(),a("div",p," 开发者联系方式：admin@myhome.top "))}),[["__scopeId","data-v-49b7ad85"]]);export{t as default};
