@@ -1,11 +1,15 @@
 # Vue 3 Blog Management System (Vue 3 博客管理系统)
 
-## 如果遇到问题需要可以入群1020935359，管理员有时间会在第一时间解答
+- 如果遇到问题需要可以入群1020935359，管理员有时间会在第一时间解答
+- 前端比后台部署是非常简单的
+- 这个只是前端页面，配套后台在下方的地址
+- 选择前后端分离的原因是前台可以部署在任何地方，然后调用我们线上的接口和数据库，比如你搭建在自己的路由器上，可以达到最快的访问速度
 
 ### 重要说明
-### 1、如果想快速部署的话，直接下载dist文件夹，压缩后上传到cloudflare的pages就行（推荐）
-### 2、上传dist后绑定自己的域名，用自己的域名访问，例如：blog.baidu.com
-### 3、进入自己的域名菜单，找到workers路由，添加一条规则，例如：blog.baidu.com/api/*，选择自己的worker-myblog，这里应该首先部署api，链接地址：https://github.com/myhome-git/cloudflare-myblog-api
+- 应该首先部署api，链接地址：https://github.com/myhome-git/cloudflare-myblog-api
+- 如果想快速部署的话，直接下载dist内的压缩包，上传到cloudflare的pages就行（推荐），具体：首页->计算(workers)->workers和pages->创建->pages->使用直接上传->开始使用->创建项目（名称为pages-myblog）->部署站点
+- 上传dist后绑定自己的域名，用自己的域名访问，例如：blog.xxx.com，具体：首页->计算(workers)->workers和pages->pages-myblog->自定义域->设置自定义域
+- 进入自己的域名菜单，找到workers路由，添加一条规则，例如：blog.xxx.com/api/*，选择自己的worker-myblog，这里应该首先部署api，链接地址：https://github.com/myhome-git/cloudflare-myblog-api
 
 
 ## 其它说明
