@@ -59,7 +59,7 @@ const onSearch = (value: string) => {
 }
 
 // 数据源
-const apiURL = `${SystemConfig.host}/api/app/blogs/query`;
+const apiURL = `/api/app/blogs/query`;
 const dataSourceHot = ref([]);
 const handleGetListHot = () => {
     let requestParams = Object.assign({}, {
@@ -142,7 +142,7 @@ const handleGetListNav = () => {
         searchText: isValidValue(inputSearchValue.value) ? inputSearchValue.value : null
     });
     request({
-        url: `${SystemConfig.host}/api/app/blogClass`,
+        url: `/api/app/blogClass`,
         params: requestParams
     }).then((data: any) => {
         const result = data.result;

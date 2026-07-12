@@ -90,8 +90,7 @@ const statistics = ref({
   blogClassCount: []
 });
 
-const confHost = SystemConfig.host;
-const apiURL = `${confHost}/api/admin/welcome`;
+const apiURL = `/api/admin/welcome`;
 
 // 获取数据
 const handleGetList = () => {
@@ -167,7 +166,7 @@ const pagination = ref({
 const handleGetListBlog = () => {
   let requestParams = Object.assign({}, pagination.value);
   request({
-    url: `${confHost}/api/admin/blogs/query/list/simple`,
+    url: `/api/admin/blogs/query/list/simple`,
     params: requestParams
   }).then((data: any) => {
     const dataSource = recentArticles;

@@ -55,7 +55,7 @@ import Select from "@/views/componentsPlus/Select.vue";
  */
 // @ts-ignore
 import tableConf from "./table.conf.js";
-const { confHost, apiURL, uuidName, tableColumns, confPage } = tableConf;
+const { apiURL, uuidName, tableColumns, confPage } = tableConf;
 const dataSource = ref([]);
 const columns = ref(tableColumns);
 const tableSpinning = ref(false);

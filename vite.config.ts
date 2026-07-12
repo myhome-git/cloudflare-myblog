@@ -32,13 +32,13 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       allowedHosts: true,
-      // proxy: {
-      //   "/api": {
-      //     target: "http://localhost:8787",
-      //     changeOrigin: true,
-      //     rewrite: (path) => path.replace(/^\/api/, "/api")
-      //   }
-      // }
+      proxy: {
+        "/api": {
+          target: "http://localhost:8787",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, "/api")
+        }
+      }
     },
     publicDir: 'public',  //编译时将public一起编译
     build: {

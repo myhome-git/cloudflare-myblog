@@ -45,7 +45,7 @@ const route = useRoute();
 const router = useRouter();
 
 // 数据源
-const apiURL = `${SystemConfig.host}/api/app/blogs/query`;
+const apiURL = `/api/app/blogs/query`;
 const dataSource = ref([]);
 const pagination = ref({
     size: 10,

@@ -59,7 +59,7 @@ import MarkdownEditor from "@/views/componentsPlus/MarkdownEditor.vue";
  */
 // @ts-ignore
 import tableConf from "./table.conf.js";
-const { confHost, apiURL, uuidName, tableColumns, confPage } = tableConf;
+const { apiURL, uuidName, tableColumns, confPage } = tableConf;
 const dataSource = ref([]);
 const columns = ref(tableColumns);
 const tableSpinning = ref(false);
@@ -273,7 +273,7 @@ const handleGetList = () => {
 // 获取表单class列表
 const handleGetClassList = async () => {
     request({
-        url: `${confHost}/api/admin/blogClass`,
+        url: `/api/admin/blogClass`,
         params: {}
     }).then((data: any) => {
         const list: any = [{ label: "请选择", value: null }];

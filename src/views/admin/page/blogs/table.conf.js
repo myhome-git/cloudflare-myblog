@@ -1,6 +1,5 @@
 import SystemConfig from "@/SystemConfig";
-const confHost = SystemConfig.host;
-const apiURL = `${confHost}/api/admin/blogs`;
+const apiURL = `/api/admin/blogs`;
 const confPage = SystemConfig.page;
 const uuidName = "id";
 const tableColumns = [
@@ -34,4 +33,4 @@ const tableColumns = [
         dataIndex: 'operation',
     },
 ];
-export default { confHost,apiURL, uuidName, tableColumns,confPage };
+export default { apiURL, uuidName, tableColumns,confPage };

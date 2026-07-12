@@ -1,6 +1,5 @@
 import SystemConfig from "@/SystemConfig.js";
-const confHost = SystemConfig.host;
-const apiURL = `${confHost}/api/admin/blogClass`;
+const apiURL = `/api/admin/blogClass`;
 const confPage = SystemConfig.page;
 const uuidName = "id";
 const tableColumns = [
@@ -34,4 +33,4 @@ const tableColumns = [
         dataIndex: 'operation',
     },
 ];
-export default { confHost, apiURL, uuidName, tableColumns, confPage };
+export default { apiURL, uuidName, tableColumns, confPage };

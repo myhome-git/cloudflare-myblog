@@ -64,7 +64,7 @@ const onFinish = (values: any) => {
   const sendForm = JSON.parse(JSON.stringify(formState));
   try {
     request({
-      url: `${SystemConfig.host}/api/user/accountVerification`,
+      url: `/api/user/accountVerification`,
       method: "post",
       data: sendForm
     }).then((resp: any) => {

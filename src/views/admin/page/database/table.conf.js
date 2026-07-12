@@ -1,5 +1,5 @@
 import SystemConfig from "@/SystemConfig";
-const apiURL = `${SystemConfig.host}/api/admin/database`;
+const apiURL = `/api/admin/database`;
 const uuidName = "id";
 const tableColumns = [
     {

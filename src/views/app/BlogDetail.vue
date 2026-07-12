@@ -42,7 +42,7 @@ const route = useRoute();
 const router = useRouter();
 
 // 数据源
-const apiURL = `${SystemConfig.host}/api/app/blogs/query`;
+const apiURL = `/api/app/blogs/query`;
 const refMarkdownEditor = ref(null);
 const rowData = ref(<any>{});
 const pagination = ref({
