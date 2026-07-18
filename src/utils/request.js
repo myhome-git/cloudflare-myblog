@@ -37,7 +37,6 @@ service.interceptors.response.use((response) => {
     throw new Error(message);
 }, (error) => {
     if (error.status === 401) {
-        sessionStorage.removeItem("token");
         location.href = "/login";
         return;
     }

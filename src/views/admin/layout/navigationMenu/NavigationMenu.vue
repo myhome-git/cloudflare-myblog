@@ -33,7 +33,6 @@ const onClick = (info: { key: string; keyPath: string[] }) => {
       // 退出系统逻辑
       // 清除登录状态
       sessionStorage.removeItem('token');
-      sessionStorage.clear();
       // 跳转到登录页面或首页
       router.push('/');
       break;

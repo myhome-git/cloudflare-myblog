@@ -39,7 +39,6 @@ function handleRespIsLogin(data) {
     const value = data;
     if (value && value.username) {
         if (sessionStorage.getItem("username") !== value["username"]) {
-            sessionStorage.clear();
             Object.keys(value).forEach(key => {
                 sessionStorage.setItem(key, `${value[key]}`);
             });
