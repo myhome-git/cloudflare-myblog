@@ -7,6 +7,8 @@ import vueDevTools from 'vite-plugin-vue-devtools';
 import redefineConsole from './redefine-console-plugin.js';
 import { multiPagePlugin } from './vite.config.multipage.js';
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   // 加载环境变量
@@ -19,6 +21,7 @@ export default defineConfig(({ mode }) => {
       vueDevTools(),
       redefineConsole(),
       multiPagePlugin,
+      cloudflare()
     ],
     define: {
       // 将环境变量注入到客户端代码中
@@ -65,5 +68,5 @@ export default defineConfig(({ mode }) => {
       },
       minify: 'terser'
     },
-  }
+  };
 })
