@@ -3,7 +3,7 @@
         @click.prevent />
 </template>
 <script lang="ts" setup>
-import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { ref } from 'vue';
 
 // 获取路由对象
