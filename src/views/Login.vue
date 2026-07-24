@@ -69,7 +69,6 @@ const onFinish = (values: any) => {
       data: sendForm
     }).then((resp: any) => {
       const { result } = resp;
-      sessionStorage.setItem("token", result.token);
       sessionStorage.setItem("username", result.username);
       sessionStorage.setItem("file_upload_max_size", result.file_upload_max_size);
       // 记住功能

@@ -19,9 +19,9 @@ service.interceptors.request.use(config => {
     setTimeout(() => {
         message.loading({ content: 'Loading...', key, duration: 1 });
     }, 1);
-    Object.assign(config.headers, {
-        "token": sessionStorage.getItem("token")
-    });
+    // Object.assign(config.headers, {
+    //     "token": sessionStorage.getItem("token")
+    // });
     config.startTime = Date.now();
     return config;
 }, (error) => {
