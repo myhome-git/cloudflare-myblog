@@ -13,7 +13,7 @@
                 </div>
                 <div class="view-container-box" :style="{ padding: '24px' }">
                     <div class="view-container" :style="{ minHeight: '360px' }">
-                        <RouterView></RouterView>
+                        <Tabs></Tabs>
                     </div>
                 </div>
             </a-layout-content>
@@ -25,10 +25,10 @@
 </template>
 <script lang="ts" setup>
 import { onMounted, nextTick, onUnmounted } from 'vue';
-import { RouterLink, RouterView, useRouter } from 'vue-router'
 import Sider from "./layout/sider/Sider.vue";
 import PageHeader from "./layout/pageHeader/PageHeader.vue";
 import NavigationMenu from "./layout/navigationMenu/NavigationMenu.vue";
+import Tabs from './layout/tabs/Tabs.vue'
 
 // 挂载事件
 onMounted(async () => {
