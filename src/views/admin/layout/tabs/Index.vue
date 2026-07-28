@@ -36,7 +36,7 @@
     <!-- 路由视图（单实例，配合 KeepAlive 缓存） -->
     <div class="tabs-content">
       <RouterView v-slot="{ Component, route: viewRoute }">
-        <KeepAlive :include="tagsViewStore.cacheNames">
+        <KeepAlive>
           <component :is="Component" :key="tagsViewStore.getRefreshKey(viewRoute.path)" />
         </KeepAlive>
       </RouterView>
