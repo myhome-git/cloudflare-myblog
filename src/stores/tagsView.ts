@@ -13,14 +13,21 @@ export interface TagView extends Partial<RouteLocationNormalized> {
   meta?: Record<string, any>
 }
 
+/** 首页标签页固定配置 */
+const WELCOME_TAG: TagView = {
+  path: '/admin/welcome',
+  title: '首页',
+  meta: { title: '首页' }
+}
+
 /** sessionStorage 存储键名 */
 const STORAGE_KEY = 'admin-tags-view'
 const ACTIVE_TAG_KEY = 'admin-active-tag-path'
 
 export const useTagsViewStore = defineStore('tagsView', () => {
   // ========== 状态 ==========
-  /** 当前打开的标签页列表（从 sessionStorage 恢复） */
-  const visitedViews = ref<TagView[]>(loadVisitedViews())
+  /** 当前打开的标签页列表（从 sessionStorage 恢复，确保首页始终存在） */
+  const visitedViews = ref<TagView[]>(ensureWelcomeTag(loadVisitedViews()))
   /** 当前激活的标签页路径 */
   const activeTagPath = ref<string>(loadActiveTagPath())
   /** 每个标签页的刷新计数器（key=路由路径，value=递增计数） */
@@ -61,12 +68,21 @@ export const useTagsViewStore = defineStore('tagsView', () => {
     return []
   }
 
+  /** 确保首页标签始终存在 */
+  function ensureWelcomeTag(tags: TagView[]): TagView[] {
+    const hasWelcome = tags.some(tag => tag.path === '/admin/welcome')
+    if (!hasWelcome) {
+      return [WELCOME_TAG, ...tags]
+    }
+    return tags
+  }
+
   /** 从 sessionStorage 加载激活的标签路径 */
   function loadActiveTagPath(): string {
     try {
-      return sessionStorage.getItem(ACTIVE_TAG_KEY) || ''
+      return sessionStorage.getItem(ACTIVE_TAG_KEY) || '/admin/welcome'
     } catch (e) {
-      return ''
+      return '/admin/welcome'
     }
   }
 
@@ -133,9 +149,11 @@ export const useTagsViewStore = defineStore('tagsView', () => {
   }
 
   /**
-   * 关闭指定标签页
+   * 关闭指定标签页（首页不可关闭）
    */
   function closeTag(tag: TagView): string | null {
+    if (tag.path === '/admin/welcome') return null
+
     const index = visitedViews.value.findIndex(t => t.path === tag.path)
     if (index === -1) return null
 
@@ -162,38 +180,44 @@ export const useTagsViewStore = defineStore('tagsView', () => {
   }
 
   /**
-   * 关闭其他标签页
+   * 关闭其他标签页（首页永远不会被关闭）
    */
   function closeOtherTags() {
     visitedViews.value = visitedViews.value.filter(
-      tag => tag.path === activeTagPath.value
+      tag => tag.path === activeTagPath.value || tag.path === '/admin/welcome'
     )
   }
 
   /**
-   * 关闭所有标签页
+   * 关闭所有标签页（保留首页）
    */
   function closeAllTags() {
-    visitedViews.value = []
-    activeTagPath.value = ''
+    visitedViews.value = [WELCOME_TAG]
+    activeTagPath.value = '/admin/welcome'
   }
 
   /**
-   * 关闭右侧标签页
+   * 关闭右侧标签页（首页不会受影响）
    */
   function closeRightTags(tag: TagView) {
     const index = visitedViews.value.findIndex(t => t.path === tag.path)
     if (index === -1) return
+    // 确保首页始终保留
+    const welcomeIndex = visitedViews.value.findIndex(t => t.path === '/admin/welcome')
+    if (welcomeIndex !== -1 && welcomeIndex > index) {
+      return // 首页在右侧，不关闭
+    }
     visitedViews.value = visitedViews.value.slice(0, index + 1)
   }
 
   /**
-   * 关闭左侧标签页
+   * 关闭左侧标签页（首页永远不会被关闭）
    */
   function closeLeftTags(tag: TagView) {
     const index = visitedViews.value.findIndex(t => t.path === tag.path)
     if (index === -1) return
-    visitedViews.value = visitedViews.value.slice(index)
+    // 保留首页
+    visitedViews.value = [visitedViews.value[0], ...visitedViews.value.slice(index)]
   }
 
   /**
