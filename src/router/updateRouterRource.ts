@@ -1,18 +1,8 @@
-import { defineAsyncComponent } from 'vue';
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 const components = import.meta.glob('../views/**/*.vue');
 
 // Object.keys(components).forEach((key) => {
 //   console.log(key);
 // });
-
-import { confRouterIntex } from "./index";
-const newResultRouter = updateRouterRource(confRouterIntex, "");
-// createWebHistory,createWebHashHistory
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: newResultRouter,
-})
 
 function updateRouterRource(list: any, parentPath: string = '') {
   list.forEach((element: { source: any; component: () => Promise<any>; children: any[]; path: any; }) => {
@@ -59,4 +49,4 @@ function updateRouterRource(list: any, parentPath: string = '') {
   return list;
 }
 
-export default router
+export default updateRouterRource

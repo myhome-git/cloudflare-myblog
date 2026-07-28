@@ -1,4 +1,12 @@
-import routerConfigIndex from "./index.json";
-import routerConfigAdmin from "./index_admin.json";
-import routesConfigApp from "./index_app.json";
-export const confRouterIntex = [...routerConfigIndex, ...routerConfigAdmin, ...routesConfigApp];
+import { createRouter, createWebHistory } from 'vue-router';
+import updateRouterRource from './updateRouterRource.ts'
+import { indexConf } from './index.config.ts'
+
+const newResultRouter = updateRouterRource(indexConf, "");
+// createWebHistory,createWebHashHistory
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: newResultRouter,
+})
+
+export default router

@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // 引入路由文件
-import { confRouterIntex } from './src/router/index';
+import { indexConf } from './src/router/index.config';
 
 // 在构建完成后复制index.html到各个目录
 function copyHtmlFiles() {
@@ -60,7 +60,7 @@ function copyHtmlFiles() {
   }
 
   // 为每个路由配置复制HTML文件
-  copyFiles(confRouterIntex, '');
+  copyFiles(indexConf, '');
 }
 
 // 创建一个Vite插件来在构建完成后复制HTML文件

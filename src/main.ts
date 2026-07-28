@@ -6,7 +6,7 @@ import Andt from "ant-design-vue"
 import "ant-design-vue/dist/reset.css";
 
 import App from './App.vue'
-import router from './router/router'
+import router from './router/index.ts'
 
 const app = createApp(App)
 app.use(Andt)
