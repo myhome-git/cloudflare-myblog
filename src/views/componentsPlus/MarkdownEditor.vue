@@ -1,5 +1,5 @@
 <template>
-  <div class="markdown-container" :style="{ height: props.height ? props.height.toString() : '100%' }">
+  <div class="markdown-container" :style="{ height: props.height ? props.height.toString() : '100%' }" @keydown="onKeydown">
     <MdEditor v-if="props.type !== 'view'"
       v-model="markdownValue"
       :editorId="uuid"
@@ -54,6 +54,13 @@ const language = ref('zh-CN');
 
 const onChange = (value: string) => {
   markdownValue.value = value;
+}
+
+// 阻止 Esc 键冒泡，防止触发全局关闭事件
+const onKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape') {
+    e.stopPropagation();
+  }
 }
 
 // 设置内容
