@@ -49,7 +49,7 @@ watch(() => props.value, (newValue) => {
 const uuid = `markdown-${createUUID()}`;
 
 const theme = ref('light' as const);
-const previewTheme = ref('default' as const);
+const previewTheme = ref('github' as const);
 const language = ref('zh-CN');
 
 const onChange = (value: string) => {
