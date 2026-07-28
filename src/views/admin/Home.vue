@@ -8,10 +8,7 @@
                 <NavigationMenu></NavigationMenu>
             </a-layout-header>
             <a-layout-content style="margin: 0px;position: relative;">
-                <div>
-                    <PageHeader />
-                </div>
-                <div class="view-container-box" :style="{ padding: '24px' }">
+                <div class="view-container-box" :style="{ padding: '0px' }">
                     <div class="view-container" :style="{ minHeight: '360px' }">
                         <Tabs></Tabs>
                     </div>

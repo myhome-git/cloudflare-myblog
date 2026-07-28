@@ -1,5 +1,17 @@
 {
-  "extends": "@tsconfig/node22/tsconfig.json",
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // ========== 环境类型库（仅 Node.js，禁用 DOM 类型） ==========
+    "lib": ["ES2023"],
+    "types": ["node"],
+
+    // ========== 覆盖根配置的 Node.js 专属选项 ==========
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2022",
+    "noEmit": true
+  },
   "include": [
     "vite.config.*",
     "vitest.config.*",
@@ -8,22 +20,8 @@
     "playwright.config.*",
     "eslint.config.*"
   ],
-  "compilerOptions": {
-    "noEmit": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "types": [
-      "node"
-    ]
-  },
-  "target": "esnext", // 或者 "es2020" 或更高
-  "module": "esnext",
-  "moduleResolution": "node",
-  "jsx": "preserve",
-  "vueCompilerOptions": {
-    "experimentalTemplateCompilerOptions": {
-      "whitespace": "condense" // 可选：用于压缩模板中的空格
-    }
-  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

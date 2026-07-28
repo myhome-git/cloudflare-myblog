@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import updateRouterRource from './updateRouterRource.ts'
-import { indexConf } from './index.config.ts'
+import { indexConf } from './index.config'
 
 const newResultRouter = updateRouterRource(indexConf, "");
 // createWebHistory,createWebHashHistory
