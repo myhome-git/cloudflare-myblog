@@ -28,7 +28,7 @@ const headers = ref({
   tempfilename: ""
 });
 
-const beforeUpload = (file) => {
+const beforeUpload = (file: any) => {
   const value = headers.value;
   value.tempfilename = encodeURIComponent(file.name);
   return true;

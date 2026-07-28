@@ -11,7 +11,7 @@ const newRouter = useRouter();
 const routesOptions = newRouter?.options?.routes;
 
 let routes = ref([]);
-newRouter.beforeEach((to, from, next) => {
+newRouter.beforeEach((to, _from, next) => {
     routes.value = <any>formatRouterListToNav(to.path);
     next();
 });

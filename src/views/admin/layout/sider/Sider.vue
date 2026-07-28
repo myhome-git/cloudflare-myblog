@@ -10,11 +10,9 @@
 </template>
 <script lang="ts" setup>
 import { reactive, ref, watch, VueElement, h } from 'vue';
-import { RouterLink, RouterView, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import {
     HomeOutlined,
-    MailOutlined,
-    AppstoreOutlined,
     SettingOutlined,
     UserOutlined,
     MehOutlined,

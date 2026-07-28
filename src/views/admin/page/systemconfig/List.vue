@@ -24,7 +24,6 @@
 </template>
 <script lang="ts" setup>
 import { reactive, ref, onMounted, nextTick } from "vue";
-import { message } from "ant-design-vue";
 // @ts-ignore
 import SystemConfig from "@/SystemConfig.js";
 // @ts-ignore

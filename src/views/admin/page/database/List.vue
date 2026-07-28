@@ -14,7 +14,7 @@
             <a-button v-if="onRowAdd" @click="onRowAdd" type="primary" ghost>备份数据库</a-button>
             <!-- <a-button v-if="onRowVacuum" @click="onRowVacuum" type="primary" ghost>压缩数据库</a-button> -->
         </template>
-        <template #link="{ text, record, field }">
+        <template #link="{ text, field }">
             <template v-if="field === 'link_url'">
                 <a href="javascript:void(0)">{{ text }}</a>
             </template>
@@ -31,7 +31,7 @@ import { message } from "ant-design-vue";
 import SystemConfig from "@/SystemConfig.js";
 // @ts-ignore
 import request from "@/utils/request.js";
-import { isValidValue, getKey, encodeString, decodeString } from "@/utils/utils.js";
+import { isValidValue } from "@/utils/utils.js";
 import Table from "@/views/componentsPlus/Table.vue";
 import Modal from "@/views/componentsPlus/Modal.vue";
 
@@ -58,16 +58,12 @@ const onRefresh = () => {
     handleGetList();
 }
 // 添加
-const onRowAdd = (key: string) => {
+const onRowAdd = () => {
     modalStatus.value = "add";
     modalTitle.value = "新增数据";
     resetFormValue();
     handleOk(new MouseEvent("click"));
 };
-// 压缩
-const onRowVacuum = () => {
-    handleDatabaseVacuum();
-}
 
 // 打开弹窗
 
@@ -95,7 +91,7 @@ const handleRowCancel = () => {
 
 }
 // 选中回调函数
-const onSelected = (selectedRows: any[]) => {
+const onSelected = () => {
     // console.log("选中的行数据:", selectedRows);
     // 在这里处理选中的行数据
     // 例如，可以将选中的数据存储到一个响应式变量中
@@ -119,14 +115,12 @@ const pagination = ref(SystemConfig.page);
  * 模态对话框
  */
 const modalOpen = ref<Boolean>(false);
-const modalWidth = ref(`${Math.max(600, 0)}px`);
-const modalHeight = ref(`${Math.max(600, 0)}px`);
 const modalStatus = ref("");
 const modalTitle = ref("");
 const showModal = (value: boolean = true) => {
     modalOpen.value = value === undefined ? true : value;
 };
-const handleOk = (e: MouseEvent) => {
+const handleOk = (_p0: MouseEvent) => {
     const value = modalStatus.value;
     if (value === "add") {
         handleAdd();
@@ -134,9 +128,6 @@ const handleOk = (e: MouseEvent) => {
         handleEdit();
     }
 };
-const handleCancel = () => {
-
-}
 
 /**
  * from表单
@@ -154,14 +145,6 @@ const resetFormValue = () => {
         value[key] = fromSource[key];
     });
     value = Object.assign({}, formStateDefaultValue);
-}
-const setFormValue = (obj: any) => {
-    resetFormValue();
-    const value = formState;
-    Object.keys(obj).forEach(key => {
-        // @ts-ignore
-        value[key] = obj[key];
-    });
 }
 
 const handleGetList = () => {
@@ -211,21 +194,9 @@ const handleAdd = () => {
         url: `${apiURL}`,
         method: "post",
         data: sendForm
-    }).then((data: Object) => {
+    }).then(() => {
         handleGetList();
         showModal(false);
-    }).catch((err: any) => {
-        console.log(err);
-    });
-}
-const handleDatabaseVacuum = () => {
-    let sendForm = JSON.parse(JSON.stringify(formState));
-    request({
-        url: `${apiURL}/Vacuum`,
-        method: "post",
-        data: sendForm
-    }).then((data: Object) => {
-        message.success("数据库压缩成功");
     }).catch((err: any) => {
         console.log(err);
     });
@@ -241,7 +212,7 @@ const handleEdit = () => {
         url: `${apiURL}`,
         method: "put",
         data: sendForm
-    }).then((data: Object) => {
+    }).then(() => {
         handleGetList();
         showModal(false);
     }).catch((err: any) => {
@@ -254,7 +225,7 @@ const handleDelete = (sendData: any) => {
         url: `${apiURL}/multiple`,
         method: "delete",
         data: sendData
-    }).then((data: Object) => {
+    }).then(() => {
         handleGetList();
     }).catch((err: any) => {
         console.log(err);

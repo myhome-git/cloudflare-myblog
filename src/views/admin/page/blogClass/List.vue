@@ -67,7 +67,7 @@ const onRefresh = () => {
     handleGetList();
 }
 // 添加
-const onRowAdd = (key: string) => {
+const onRowAdd = () => {
     modalStatus.value = "add";
     modalTitle.value = "新增数据";
     resetFormValue();
@@ -118,7 +118,7 @@ const handleRowCancel = () => {
 
 }
 // 选中回调函数
-const onSelected = (selectedRows: any[]) => {
+const onSelected = () => {
     // console.log("选中的行数据:", selectedRows);
     // 在这里处理选中的行数据
     // 例如，可以将选中的数据存储到一个响应式变量中
@@ -142,14 +142,12 @@ const pagination = ref(confPage);
  * 模态对话框
  */
 const modalOpen = ref<Boolean>(false);
-const modalWidth = ref(`${Math.max(600, 0)}px`);
-const modalHeight = ref(`${Math.max(600, 0)}px`);
 const modalStatus = ref("");
 const modalTitle = ref("");
 const showModal = (value: boolean = true) => {
     modalOpen.value = value === undefined ? true : value;
 };
-const handleOk = (e: MouseEvent) => {
+const handleOk = () => {
     const value = modalStatus.value;
     if (value === "add") {
         handleAdd();
@@ -244,7 +242,7 @@ const handleAdd = () => {
         url: `${apiURL}`,
         method: "post",
         data: sendForm
-    }).then((data: Object) => {
+    }).then(() => {
         handleGetList();
         showModal(false);
     }).catch((err: any) => {
@@ -262,7 +260,7 @@ const handleEdit = () => {
         url: `${apiURL}`,
         method: "put",
         data: sendForm
-    }).then((data: Object) => {
+    }).then(() => {
         handleGetList();
         showModal(false);
     }).catch((err: any) => {
@@ -275,7 +273,7 @@ const handleDelete = (sendData: any) => {
         url: `${apiURL}/multiple`,
         method: "delete",
         data: sendData
-    }).then((data: Object) => {
+    }).then(() => {
         handleGetList();
     }).catch((err: any) => {
         console.log(err);

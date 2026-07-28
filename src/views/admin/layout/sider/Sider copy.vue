@@ -12,7 +12,7 @@
     </a-layout-sider>
 </template>
 <script lang="ts" setup>
-import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { ref } from 'vue';
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['/home']);
@@ -22,19 +22,16 @@ const router = useRouter();
 const routerList = router?.options?.routes;
 import SiderMenu from "./SiderMenu.vue";
 
-function eventTest1(event: any) {
-    console.log("click ...",event);
-}
 
 function eventTest2(event: any) {
     console.log("deselect ...",event);
 }
 
-function eventTest3(event: any) {
+function eventTest3(_event: any) {
     // console.log("openChange ...",event);
 }
 
-function eventTest4(event: any) {
+function eventTest4(_event: any) {
     // console.log("select ...",event);
 }
 

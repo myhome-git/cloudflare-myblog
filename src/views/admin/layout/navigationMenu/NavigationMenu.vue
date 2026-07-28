@@ -4,7 +4,7 @@
 <script lang="ts" setup>
 import { h, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { MailOutlined, AppstoreOutlined, SettingOutlined, HomeOutlined } from '@ant-design/icons-vue';
+import { SettingOutlined, HomeOutlined } from '@ant-design/icons-vue';
 import type { MenuProps } from 'ant-design-vue';
 const current = ref<string[]>(['app']);
 const items = ref<MenuProps['items']>([

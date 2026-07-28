@@ -77,7 +77,7 @@ const onRefresh = () => {
     handleGetList();
 }
 // 添加
-const onRowAdd = (key: string) => {
+const onRowAdd = () => {
     modalStatus.value = "add";
     modalTitle.value = "新增数据";
     resetFormValue();
@@ -164,7 +164,7 @@ const modalTitle = ref("");
 const showModal = (value: boolean = true) => {
     modalOpen.value = value === undefined ? true : value;
 };
-const handleOk = async (e: MouseEvent) => {
+const handleOk = async () => {
     const value = modalStatus.value;
     let result = false;
     if (value === "add") {
@@ -339,7 +339,7 @@ const handleDelete = (sendData: any) => {
         url: `${apiURL}/multiple`,
         method: "delete",
         data: sendData
-    }).then((data: Object) => {
+    }).then(() => {
         handleGetList();
     }).catch((err: any) => {
         console.log(err);
