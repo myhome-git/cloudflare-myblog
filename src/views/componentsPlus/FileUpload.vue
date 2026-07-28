@@ -8,7 +8,7 @@
   </a-upload>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 import { message } from 'ant-design-vue';
 import { UploadOutlined } from '@ant-design/icons-vue';
 import type { UploadChangeParam } from 'ant-design-vue';
@@ -44,7 +44,7 @@ const handleChange = (info: UploadChangeParam) => {
       const response = info.file.response;
       emit("onUploadSuccess",response.result);
     } catch (error) {
-      console.error(error.message);
+      console.error(error instanceof Error ? error.message : error);
     }
     message.success(`${info.file.name} file uploaded successfully`);
   } else if (info.file.status === 'error') {

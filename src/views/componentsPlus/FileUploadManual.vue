@@ -1,7 +1,7 @@
 <template>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 // @ts-ignore
 import request from "@/utils/request.js";
 

@@ -1,5 +1,5 @@
 // 创建消息通道
-const bc = new BroadcastChannel(location.origin);
+const bc = new BroadcastChannel(location.origin)
 
 // 监听消息
 const handleBindSystemMessage = (event) => {
@@ -7,45 +7,45 @@ const handleBindSystemMessage = (event) => {
     switch (event.data.type) {
         // 处理不同类型的消息
         case 'req.isLogin':
-            if (sessionStorage.getItem("username")) {
-                handleSendSystemMessage("resp.isLogin", { ...sessionStorage });
+            if (sessionStorage.getItem('username')) {
+                handleSendSystemMessage('resp.isLogin', { ...sessionStorage })
             }
-            break;
+            break
         case 'resp.isLogin':
-            handleRespIsLogin(event.data.data);
-            break;
+            handleRespIsLogin(event.data.data)
+            break
         default:
-            break;
+            break
     }
 }
 
 // 错误处理
 const handleBindSystemMessageError = (error) => {
-    console.error('消息传输错误:', error);
+    console.error('消息传输错误:', error)
 }
 export const initHandleSystemMessage = () => {
-    bc.addEventListener('message', handleBindSystemMessage);
-    bc.addEventListener('messageerror', handleBindSystemMessageError);
+    bc.addEventListener('message', handleBindSystemMessage)
+    bc.addEventListener('messageerror', handleBindSystemMessageError)
 }
 
 // 关闭通道
 export const clearHandleCloseChannel = () => {
-    bc.close();
-    bc.removeEventListener('message', handleBindSystemMessage);
-    bc.removeEventListener('messageerror', handleBindSystemMessageError);
+    bc.close()
+    bc.removeEventListener('message', handleBindSystemMessage)
+    bc.removeEventListener('messageerror', handleBindSystemMessageError)
 }
 
 function handleRespIsLogin(data) {
-    const value = data;
+    const value = data
     if (value && value.username) {
-        if (sessionStorage.getItem("username") !== value["username"]) {
+        if (sessionStorage.getItem('username') !== value['username']) {
             Object.keys(value).forEach(key => {
-                sessionStorage.setItem(key, `${value[key]}`);
-            });
+                sessionStorage.setItem(key, `${value[key]}`)
+            })
         }
     }
 }
 
 export const handleSendSystemMessage = (type, data) => {
-    bc.postMessage({ type, data });
+    bc.postMessage({ type, data })
 }

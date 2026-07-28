@@ -1,6 +1,6 @@
-import SystemConfig from "@/SystemConfig";
-const apiURL = `/api/admin`;
-const uuidName = "id";
+import '@/SystemConfig'
+const apiURL = '/api/admin'
+const uuidName = 'id'
 const tableColumns = [
     {
         title: '序号',
@@ -31,5 +31,5 @@ const tableColumns = [
         title: '操作',
         dataIndex: 'operation',
     },
-];
-export default { apiURL, uuidName, tableColumns };
+]
+export default { apiURL, uuidName, tableColumns }

@@ -4,5 +4,5 @@ const SystemConfig = {
         index: 1,
         total: 0
     }
-};
-export default SystemConfig;
+}
+export default SystemConfig

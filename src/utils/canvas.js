@@ -11,24 +11,13 @@ async function canvasToFile(canvas, fileName, mimeType = 'image/png', quality = 
     return new Promise((resolve, reject) => {
         canvas.toBlob((blob) => {
             if (!blob) {
-                return reject(new Error('Canvas to Blob failed'));
+                return reject(new Error('Canvas to Blob failed'))
             }
 
-            const file = new File([blob], fileName, { type: mimeType });
-            resolve(file);
-        }, mimeType, quality);
-    });
-}
-
-
-async function processCanvas(canvas) {
-    try {
-        const file = await canvasToFile(canvas, 'myImage.png');
-        console.log('文件已创建:', file);
-        // 在这里可以使用 file 对象做其他操作，例如上传到服务器
-    } catch (error) {
-        console.error('创建文件失败:', error);
-    }
+            const file = new File([blob], fileName, { type: mimeType })
+            resolve(file)
+        }, mimeType, quality)
+    })
 }
 
 export default canvasToFile

@@ -2,8 +2,8 @@
 import './assets/main.css'
 import { createApp } from 'vue'
 
-import Andt from "ant-design-vue"
-import "ant-design-vue/dist/reset.css";
+import Andt from 'ant-design-vue'
+import 'ant-design-vue/dist/reset.css'
 
 import { createPinia } from 'pinia'
 

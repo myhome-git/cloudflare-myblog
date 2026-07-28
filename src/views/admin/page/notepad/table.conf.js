@@ -1,7 +1,7 @@
-import SystemConfig from "@/SystemConfig";
-const apiURL = `/api/admin/notepad`;
-const confPage = SystemConfig.page;
-const uuidName = "id";
+import SystemConfig from '@/SystemConfig'
+const apiURL = '/api/admin/notepad'
+const confPage = SystemConfig.page
+const uuidName = 'id'
 const tableColumns = [
     {
         title: '序号',
@@ -27,5 +27,5 @@ const tableColumns = [
         title: '操作',
         dataIndex: 'operation',
     },
-];
-export default { apiURL, uuidName, tableColumns, confPage };
+]
+export default { apiURL, uuidName, tableColumns, confPage }

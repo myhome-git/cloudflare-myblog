@@ -1,6 +1,6 @@
-import SystemConfig from "@/SystemConfig";
-const apiURL = `/api/admin/database`;
-const uuidName = "id";
+import '@/SystemConfig'
+const apiURL = '/api/admin/database'
+const uuidName = 'id'
 const tableColumns = [
     {
         title: '序号',
@@ -20,12 +20,12 @@ const tableColumns = [
     {
         title: '备份大小',
         dataIndex: 'size',
-        key:'size'
+        key: 'size'
     },
     {
         title: 'MD5',
         dataIndex: 'md5',
-        key:'md5'
+        key: 'md5'
     },
     {
         title: '备份时间',
@@ -36,5 +36,5 @@ const tableColumns = [
         title: '操作',
         dataIndex: 'operation',
     },
-];
-export default { apiURL, uuidName, tableColumns };
+]
+export default { apiURL, uuidName, tableColumns }

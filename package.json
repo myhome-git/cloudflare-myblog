@@ -4,15 +4,19 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
+    "dev": "npm run lint && vite --host",
     "type-check": "vue-tsc --build",
-    "build": "vite build",
+    "build": "npm run lint && vite build",
     "build-only": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint src/ --ext .js,.ts",
+    "lint:fix": "eslint src/ --ext .js,.ts --fix"
   },
   "dependencies": {
     "@types/jquery": "^3.5.32",
     "@types/lodash": "^4.17.18",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
     "@ztree/ztree_v3": "^3.5.48",
     "ant-design-vue": "4.x",
     "axios": "^1.10.0",

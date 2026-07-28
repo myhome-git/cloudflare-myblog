@@ -47,10 +47,10 @@ export const useTagsViewStore = defineStore('tagsView', () => {
   /** 计算需要缓存的组件名称列表 */
   const cacheNames = computed(() => {
     return visitedViewsFiltered.value.map(tag => {
-      let name = tag.path.replace(/[^a-zA-Z0-9]/g, '_');
-      if (name.startsWith('_')) name = name.substring(1);
-      return 'R_' + name;
-    });
+      let name = tag.path.replace(/[^a-zA-Z0-9]/g, '_')
+      if (name.startsWith('_')) name = name.substring(1)
+      return 'R_' + name
+    })
   })
 
   // ========== 持久化 ==========
@@ -97,7 +97,7 @@ export const useTagsViewStore = defineStore('tagsView', () => {
     try {
       const saved = sessionStorage.getItem(ACTIVE_TAG_KEY)
       return saved ? normalizePath(saved) : '/admin/welcome'
-    } catch (e) {
+    } catch {
       return '/admin/welcome'
     }
   }
