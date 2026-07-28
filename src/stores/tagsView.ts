@@ -55,17 +55,27 @@ export const useTagsViewStore = defineStore('tagsView', () => {
 
   // ========== 持久化 ==========
 
-  /** 从 sessionStorage 加载标签页列表 */
+  /** 从 sessionStorage 加载标签页列表（自动去重，按 path 取最后出现的） */
   function loadVisitedViews(): TagView[] {
     try {
       const saved = sessionStorage.getItem(STORAGE_KEY)
       if (saved) {
-        return JSON.parse(saved)
+        const parsed: TagView[] = JSON.parse(saved)
+        return deduplicateByPath(parsed)
       }
     } catch (e) {
       console.warn('Failed to load tags from sessionStorage:', e)
     }
     return []
+  }
+
+  /** 按 path 去重，保留最后出现的 */
+  function deduplicateByPath(tags: TagView[]): TagView[] {
+    const map = new Map<string, TagView>()
+    for (const tag of tags) {
+      map.set(tag.path, tag)
+    }
+    return Array.from(map.values())
   }
 
   /** 确保首页标签始终存在 */
