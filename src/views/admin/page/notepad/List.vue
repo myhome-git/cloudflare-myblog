@@ -5,7 +5,7 @@
             <a-form :model="formState" name="basic" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }"
                 autocomplete="off">
                 <a-form-item label="内容：" name="content" :rules="[{ required: true, message: '请输入内容' }]">
-                    <MarkdownEditor ref="refFormContent" :type="modalStatus" :height="`calc(${modalHeight} - 200px)`" />
+                    <MarkdownEditor ref="refFormContent" :type="modalStatus" :height="`calc(${modalHeight}px - 200px)`" />
                 </a-form-item>
             </a-form>
         </template>

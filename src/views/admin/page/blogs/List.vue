@@ -14,7 +14,7 @@
                     <a-input v-model:value="formState.tags" />
                 </a-form-item>
                 <a-form-item label="内容：" name="content" :rules="[{ required: true, message: '请输入内容' }]">
-                    <MarkdownEditor ref="refFormContent" :height="`calc(${modalHeight} - 500px)`" />
+                    <MarkdownEditor ref="refFormContent" :height="`calc(${modalHeight}px - 500px)`" />
                 </a-form-item>
                 <a-form-item label=" " name="name" :rules="[{ required: false, message: '请输入是否置顶' }]">
                     <a-checkbox v-model:checked="formState.readTop">是否置顶</a-checkbox>
