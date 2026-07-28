@@ -130,9 +130,8 @@ export const useTagsViewStore = defineStore('tagsView', () => {
    * 添加标签页
    */
   function addVisitedView(view: TagView) {
-    const existing = visitedViews.value.find(tag => tag.path === view.path)
-    if (existing) {
-      Object.assign(existing, view)
+    // 如果已存在则不添加
+    if (visitedViews.value.some(tag => tag.path === view.path)) {
       return
     }
     visitedViews.value.push({
