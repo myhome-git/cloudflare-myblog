@@ -6,8 +6,7 @@
         v-model:activeKey="tagsViewStore.activeTagPath"
         type="editable-card"
         hideAdd
-        size="small"
-        :tabBarStyle="{ margin: 0, background: '#fff' }"
+        :tabBarStyle="{ margin: 0 }"
         @tabClick="switchTag"
         @edit="handleEdit"
       >

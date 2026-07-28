@@ -23,9 +23,8 @@
 <script lang="ts" setup>
 import { onMounted, nextTick, onUnmounted } from 'vue';
 import Sider from "./layout/sider/Sider.vue";
-import PageHeader from "./layout/pageHeader/PageHeader.vue";
 import NavigationMenu from "./layout/navigationMenu/NavigationMenu.vue";
-import Tabs from './layout/tabs/Tabs.vue'
+import Tabs from './layout/tabs/Index.vue'
 
 // 挂载事件
 onMounted(async () => {
@@ -51,7 +50,7 @@ onUnmounted(() => {
 .view-container-box {
     position: absolute;
     width: 100%;
-    height: calc(100% - 40px);
+    height: 100%;
     overflow: hidden;
     display: grid;
     grid-template-rows: 1fr;
