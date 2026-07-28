@@ -69,18 +69,23 @@ export const useTagsViewStore = defineStore('tagsView', () => {
     return []
   }
 
+  /** 标准化路径：移除末尾的斜杠 */
+  function normalizePath(path: string): string {
+    return path.replace(/\/+$/, '')
+  }
+
   /** 按 path 去重，保留最后出现的 */
   function deduplicateByPath(tags: TagView[]): TagView[] {
     const map = new Map<string, TagView>()
     for (const tag of tags) {
-      map.set(tag.path, tag)
+      map.set(normalizePath(tag.path), { ...tag, path: normalizePath(tag.path) })
     }
     return Array.from(map.values())
   }
 
   /** 确保首页标签始终存在 */
   function ensureWelcomeTag(tags: TagView[]): TagView[] {
-    const hasWelcome = tags.some(tag => tag.path === '/admin/welcome')
+    const hasWelcome = tags.some(tag => normalizePath(tag.path) === '/admin/welcome')
     if (!hasWelcome) {
       return [WELCOME_TAG, ...tags]
     }
@@ -90,7 +95,8 @@ export const useTagsViewStore = defineStore('tagsView', () => {
   /** 从 sessionStorage 加载激活的标签路径 */
   function loadActiveTagPath(): string {
     try {
-      return sessionStorage.getItem(ACTIVE_TAG_KEY) || '/admin/welcome'
+      const saved = sessionStorage.getItem(ACTIVE_TAG_KEY)
+      return saved ? normalizePath(saved) : '/admin/welcome'
     } catch (e) {
       return '/admin/welcome'
     }
@@ -140,7 +146,9 @@ export const useTagsViewStore = defineStore('tagsView', () => {
    * 添加标签页
    */
   function addVisitedView(view: TagView) {
-    // 如果已存在则不添加
+    // 统一标准化路径，避免末尾斜杠导致重复
+    view.path = normalizePath(view.path)
+    if (view.fullPath) view.fullPath = normalizePath(view.fullPath)
     if (visitedViews.value.some(tag => tag.path === view.path)) {
       return
     }
@@ -154,7 +162,7 @@ export const useTagsViewStore = defineStore('tagsView', () => {
    * 设置当前激活的标签页路径
    */
   function setActiveTag(path: string) {
-    activeTagPath.value = path
+    activeTagPath.value = normalizePath(path)
   }
 
   /**
