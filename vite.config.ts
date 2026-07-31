@@ -3,8 +3,8 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 // @ts-ignore
-import redefineConsole from './redefine-console-plugin.js';
-import { multiPagePlugin } from './vite.config.multipage.js';
+import redefineConsole from './redefine-console-plugin.js'
+import { multiPagePlugin } from './vite.config.multipage.js'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -32,20 +32,20 @@ export default defineConfig(({ mode }) => {
     server: {
       allowedHosts: true,
       proxy: {
-        "/api": {
-          target: "http://localhost:8787",
+        '/api': {
+          target: 'http://localhost:8787',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, "/api")
+          rewrite: (path) => path.replace(/^\/api/, '/api')
         }
       }
     },
-    publicDir: 'public',  //编译时将public一起编译
+    publicDir: 'public', //编译时将public一起编译
     build: {
       rollupOptions: {
         output: {
-          manualChunks: function (id) {
-            if (id.includes("node_modules") && (id.endsWith(".js") || id.endsWith(".ts"))) {
-              return "vendor";
+          manualChunks: function(id) {
+            if (id.includes('node_modules') && (id.endsWith('.js') || id.endsWith('.ts'))) {
+              return 'vendor'
             }
           }
         }

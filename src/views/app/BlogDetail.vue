@@ -141,28 +141,17 @@ onMounted(async () => {
   position: relative;
 }
 
-.x-detail .x-title {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: auto;
-  overflow: auto;
-  background: #fff;
-  z-index: 10;
-}
-
 .x-detail .x-title .t-text {
   font-size: 22px;
   font-weight: bold;
   color: #666;
-  padding: 20px 20px 0px 20px;
+  padding: 10px;
 }
 
 .x-detail .x-title .t-other {
   font-size: 14px;
   color: #999;
-  padding: 10px 20px 20px 20px;
+  padding: 10px;
 }
 
 .x-detail .x-title .t-other .t-time {
