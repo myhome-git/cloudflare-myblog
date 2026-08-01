@@ -1,42 +1,44 @@
 <template>
     <template v-if="computedDataSource && computedDataSource.length > 0">
-        <div class="x-list">
+        <div class="app-unit x-list app-shadow">
             <div class="unit-title">
                 <div class="t-value">
                     文章列表
                 </div>
             </div>
-            <template v-for="item of computedDataSource" :key="item.id">
-                <a :href="`/app/blog?id=${item.id}`" target="_blank">
-                    <div class="x-item">
-                        <div class="item-title">
-                            <a-tag v-if="item.readTop == 'true'" color="red">置顶</a-tag>
-                            <span>{{ item.title }}</span>
-                        </div>
-                        <div class="item-content">
-                            <div class="c-text">
-                                {{ item.jianshu }}
+            <div class="unit-content">
+                <template v-for="item of computedDataSource" :key="item.id">
+                    <a :href="`/app/blog?id=${item.id}`" target="_blank">
+                        <div class="x-item">
+                            <div class="item-title">
+                                <a-tag v-if="item.readTop == 'true'" color="red">置顶</a-tag>
+                                <span>{{ item.title }}</span>
                             </div>
-                            <div class="c-footer">
-                                <i class="iconfont"></i>
-                                <span>时间：{{ item.create_time }}</span>
+                            <div class="item-content">
+                                <div class="c-text">
+                                    {{ item.jianshu }}
+                                </div>
+                                <div class="c-footer">
+                                    <i class="iconfont"></i>
+                                    <span>时间：{{ item.create_time }}</span>
+                                </div>
                             </div>
                         </div>
+                    </a>
+                </template>
+                <!--分页-->
+                <template v-if="computedDataSource && computedDataSource.length > 0">
+                    <div class="a-page-box">
+                        <a-pagination
+                            :current="index"
+                            :page-size="size"
+                            :total="total"
+                            :show-total="() => `共计 ${total} 条`"
+                            @change="onChange"
+                        />
                     </div>
-                </a>
-            </template>
-            <!--分页-->
-            <template v-if="computedDataSource && computedDataSource.length > 0">
-                <div class="a-page-box">
-                    <a-pagination
-                        :current="index"
-                        :page-size="size"
-                        :total="total"
-                        :show-total="() => `共计 ${total} 条`"
-                        @change="onChange"
-                    />
-                </div>
-            </template>
+                </template>
+            </div>
         </div>
     </template>
 </template>
@@ -83,48 +85,6 @@ onMounted(async function () {
 });
 </script>
 <style scoped>
-.x-list {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-.x-list .unit-title {
-    line-height: 40px;
-    height: 40px;
-    padding: 0px 10px 0px 10px;
-    background-color: #e8e7e3;
-    position: relative;
-}
-
-.x-list .unit-title::after {
-    content: '';
-    display: block;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    /* z-index: -1; */
-    border-bottom: 1px solid #ddd;
-}
-
-.x-list .unit-title .t-value {
-    float: left;
-    font-size: 16px;
-    color: #333;
-    font-weight: 400;
-}
-
-.x-list .unit-title .t-more {
-    float: right;
-    font-size: 14px;
-    color: #999;
-}
-
-.x-list .unit-title .t-value {
-    font-size: 16px;
-    color: #333;
-    font-weight: 400;
-}
-
 .x-item {
     padding: 10px 20px 10px 20px;
     border-bottom: 1px solid #ddd;
@@ -144,8 +104,6 @@ onMounted(async function () {
     font-weight: bold;
     color: #666;
 }
-
-.x-item .item-title span {}
 
 .x-item .item-content {
     padding: 5px 0px 5px 0px;

@@ -31,7 +31,7 @@
     min-width: 0;
     position: absolute;
     left: calc(100% + 20px);
-    top: 0;
     width: 340px;
+    top: 0;
 }
 </style>

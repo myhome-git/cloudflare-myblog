@@ -112,6 +112,12 @@ const exportToFile = () => {
 defineExpose({ setValue, getValue, clearValue, getHtml, getPreviewer, exportToFile });
 </script>
 <style scoped>
+.md-editor{
+    background-color: transparent;
+}
+:deep(.md-editor-preview) .md-editor-code .md-editor-code-head{
+    z-index: 1;
+}
 .markdown-container {
     position: relative;
     height: 100%;
@@ -135,9 +141,9 @@ defineExpose({ setValue, getValue, clearValue, getHtml, getPreviewer, exportToFi
     flex-shrink: 0;
     overflow-y: auto;
     position: sticky;
-    top: 0;
+    top: 60px;
     align-self: flex-start;
-    max-height: calc(100vh - 100px);
+    max-height: calc(100vh - 140px);
     border-left: 1px solid #eee;
     padding-left: 16px;
 }

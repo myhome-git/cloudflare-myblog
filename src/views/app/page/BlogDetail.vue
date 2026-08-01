@@ -2,7 +2,7 @@
     <div x-list>
         <template v-if="rowData">
             <template v-if="isValidValue(rowData)">
-                <div class="x-detail">
+                <div class="x-detail app-unit app-shadow">
                     <div class="x-title">
                         <div class="t-text">
                             {{ rowData.title }}
@@ -132,13 +132,13 @@ div[x-list] {
 }
 
 .x-detail {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  padding: 14px;
-  position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+    position: relative;
+    padding: 20px 40px;
 }
 
 .x-detail .x-title .t-text {
