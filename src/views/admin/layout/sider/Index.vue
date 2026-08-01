@@ -1,15 +1,16 @@
 <template>
-    <a-layout-sider v-model:collapsed="collapsed" collapsible theme="light" width="260">
+    <a-layout-sider v-model:collapsed="collapsedComputed" collapsible theme="light" width="260">
         <div class="logo">
             <BookOutlined class="logo-icon" />
-            <span v-if="!collapsed" class="logo-text">博客管理系统</span>
+            <span v-if="!collapsedComputed" class="logo-text">博客管理系统</span>
         </div>
-        <a-menu id="dddddd" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" style="width: auto"
+        <a-menu v-model:openKeys="openKeys" 
+            v-model:selectedKeys="selectedKeys" 
             mode="inline" :items="items" @click="handleClick"></a-menu>
     </a-layout-sider>
 </template>
 <script lang="ts" setup>
-import { reactive, ref, watch, VueElement, h } from 'vue';
+import { reactive, ref, watch, computed, h } from 'vue';
 import { useRouter } from 'vue-router';
 import {
     HomeOutlined,
@@ -22,7 +23,19 @@ import {
 } from '@ant-design/icons-vue';
 import type { MenuProps, ItemType } from 'ant-design-vue';
 
-const collapsed = ref<boolean>(false);
+const props = defineProps<{
+    collapsed: boolean;
+}>();
+
+const emit = defineEmits<{
+    'update:collapsed': [value: boolean];
+}>();
+
+const collapsedComputed = computed({
+    get: () => props.collapsed,
+    set: (value: boolean) => emit('update:collapsed', value),
+});
+
 const selectedKeys = ref<string[]>(['/']);
 const openKeys = ref<string[]>(['/']);
 
@@ -31,7 +44,7 @@ const router = useRouter();
 const routerList = ref(router?.options?.routes);
 
 function getItem(
-    label: VueElement | string,
+    label: any,
     key: string,
     icon?: any,
     children?: ItemType[],
@@ -111,13 +124,23 @@ watch([openKeys, routerList], (val) => {
 });
 </script>
 <style scoped>
-/* Sider 组件边框 */
-.ant-layout-sider {
-    border-right: 1px solid #f0f0f0 !important;
+.ant-menu{
+    height:calc(100% - 17px);
+    overflow: auto;
 }
-
-:where(.css-dev-only-do-not-override-1p3hq3p).ant-menu-light.ant-menu-root.ant-menu-inline,
-:where(.css-dev-only-do-not-override-1p3hq3p).ant-menu-light.ant-menu-root.ant-menu-vertical {
+.ant-menu-light{
+  background: transparent;
+}
+.ant-layout-sider {
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: rgba(var(--appwin--border-color-rgb), var(--appwin--border-color-opacity));
+}
+:deep(.ant-layout-sider-trigger){
+    display: none;
+}
+.ant-menu-light.ant-menu-root.ant-menu-inline,
+.ant-menu-light.ant-menu-root.ant-menu-vertical {
     border-inline-end: none !important;
 }
 
@@ -128,50 +151,51 @@ watch([openKeys, routerList], (val) => {
 }
 
 .logo {
-    height: 32px;
-    margin: 16px;
-    background: rgba(24, 144, 255, 0.1);
+    position: relative;
+    padding: 20px 26px;
     display: flex;
     align-items: center;
-    padding: 0 16px;
-    border-radius: 4px;
+    font-size: 20px;
+    background-color: rgba(var(--appwin--bg-color-rgb), calc(var(--appwin--bg-color-opacity) + 1));
+    color: rgba(var(--appwin--color), var(--appwin--color-opacity));
+}
+.logo::after{
+    content: '';
+    display: block;
+    position: absolute;
+    right: -1px;
+    top: 0;
+    height: 100%;
+    border-right-width: 1;
+    border-right-style: solid;
+    border-right-color: rgba(var(--appwin--bg-color-rgb), calc(var(--appwin--bg-color-opacity) + 1));
 }
 
 .logo-icon {
     font-size: 20px;
-    color: #1890ff;
 }
 
 .logo-text {
     margin-left: 12px;
-    font-size: 16px;
     font-weight: 600;
-    color: #1890ff;
     white-space: nowrap;
     transition: opacity 0.3s;
-}
-
-.site-layout .site-layout-background {
-    background: #fff;
-}
-
-[data-theme='dark'] .site-layout .site-layout-background {
-    background: #141414;
+    height: 20px;
+    line-height: 20px;
+    text-shadow: 1px 1px #555, 1px 1px #444, 2px 2px #333;
 }
 
 a {
-    /* 或者更具体的选择器，例如 router-link-active */
     text-decoration: none;
-    /* 移除下划线 */
     color: inherit;
-    /* 继承父元素的颜色 */
-    /* 其他样式重置 */
 }
 
 a:hover {
-    /* 或者更具体的选择器，例如 router-link-active */
     color: inherit;
-    /* 继承父元素的颜色 */
     transition: none;
+}
+:deep(.ant-menu-light .ant-menu-item-selected){
+    background-color: rgba(var(--appwin--bg-color-rgb), 0.75);
+    color: rgba(var(--appwin--color), var(--appwin--color-opacity));
 }
 </style>

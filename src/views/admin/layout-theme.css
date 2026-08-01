@@ -1,0 +1,141 @@
+.app-win {
+  outline: none;
+  font-family: "Microsoft YaHei", "Helvetica Neue", "Hiragino Sans GB", "黑体", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  --appwin--bg-color-opacity: 0.2;
+  --appwin--bg-color-opacity-hover: 0.2;
+  --appwin--border-color-opacity: 0.5;
+}
+/* 所有内容在背景层之上 */
+.app-win > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== 主题配色 ========== */
+
+/* 默认主题 - 淡紫灰 */
+body.default .app-win{
+  --appwin--bg-color-rgb: 126, 87, 194;
+  --appwin--bg-color-opacity: 0.2;
+  --appwin--bg-color-rgb-hover: 130, 120, 160;
+  --appwin--bg-color-opacity-hover: 0.5;
+  --appwin--border-color-rgb: var(--appwin--bg-color-rgb);
+  --appwin--border-color-opacity: 0.35;
+  --appwin--color-hover: #ffffff;
+  --appwin--color: 255, 255, 255;
+  --appwin--color-opacity: 1;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  color: rgba(var(--appwin--color), var(--appwin--color-opacity));
+}
+
+/* 绿色主题 - 清新草木绿 */
+body.green .app-win{
+  --appwin--bg-color-rgb: 102, 187, 106;
+  --appwin--bg-color-opacity: 0.2;
+  --appwin--bg-color-rgb-hover: 27, 94, 32;
+  --appwin--bg-color-opacity-hover: 0.5;
+  --appwin--border-color-rgb: var(--appwin--bg-color-rgb);
+  --appwin--border-color-opacity: 0.35;
+  --appwin--color: 255, 255, 255;
+  --appwin--color-opacity: 1;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  color: rgba(var(--appwin--color), var(--appwin--color-opacity));
+}
+
+/* 蓝色主题 - 天空蓝 */
+body.blue .app-win{
+  --appwin--bg-color-rgb: 66, 165, 245;
+  --appwin--bg-color-opacity: 0.2;
+  --appwin--bg-color-rgb-hover: 13, 71, 161;
+  --appwin--bg-color-opacity-hover: 0.5;
+  --appwin--border-color-rgb: var(--appwin--bg-color-rgb);
+  --appwin--border-color-opacity: 0.35;
+  --appwin--color-hover: #ffffff;
+  --appwin--color: 255, 255, 255;
+  --appwin--color-opacity: 1;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  color: rgba(var(--appwin--color), var(--appwin--color-opacity));
+}
+
+/* 粉色主题 - 樱花粉 */
+body.pink .app-win{
+  --appwin--bg-color-rgb: 240, 98, 146;
+  --appwin--bg-color-opacity: 0.2;
+  --appwin--bg-color-rgb-hover: 136, 14, 79;
+  --appwin--bg-color-opacity-hover: 0.5;
+  --appwin--border-color-rgb: var(--appwin--bg-color-rgb);
+  --appwin--border-color-opacity: 0.35;
+  --appwin--color-hover: #ffffff;
+  --appwin--color: 255, 255, 255;
+  --appwin--color-opacity: 1;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  color: rgba(var(--appwin--color), var(--appwin--color-opacity));
+}
+
+/* 象牙白主题 - 温暖米白 */
+body.Ivory .app-win{
+  --appwin--bg-color-rgb: 245, 235, 220;
+  --appwin--bg-color-opacity: 0.25;
+  --appwin--bg-color-rgb-hover: 180, 160, 130;
+  --appwin--bg-color-opacity-hover: 0.5;
+  --appwin--border-color-rgb: var(--appwin--bg-color-rgb);
+  --appwin--border-color-opacity: 0.35;
+  --appwin--color-hover: #333333;
+  --appwin--color: 51, 51, 51;
+  --appwin--color-opacity: 1;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  color: rgba(var(--appwin--color), var(--appwin--color-opacity));
+}
+
+/* 灰色主题 - 简约灰 */
+body.gray .app-win{
+  --appwin--bg-color-rgb: 158, 158, 158;
+  --appwin--bg-color-opacity: 0.2;
+  --appwin--bg-color-rgb-hover: 66, 66, 66;
+  --appwin--bg-color-opacity-hover: 0.5;
+  --appwin--border-color-rgb: var(--appwin--bg-color-rgb);
+  --appwin--border-color-opacity: 0.35;
+  --appwin--color-hover: #ffffff;
+  --appwin--color: 255, 255, 255;
+  --appwin--color-opacity: 1;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  color: rgba(var(--appwin--color), var(--appwin--color-opacity));
+}
+
+/* 棕褐色主题 - 复古暖棕 */
+body.sepia .app-win{
+  --appwin--bg-color-rgb: 161, 136, 103;
+  --appwin--bg-color-opacity: 0.2;
+  --appwin--bg-color-rgb-hover: 93, 64, 55;
+  --appwin--bg-color-opacity-hover: 0.5;
+  --appwin--border-color-rgb: var(--appwin--bg-color-rgb);
+  --appwin--border-color-opacity: 0.35;
+  --appwin--color-hover: #ffffff;
+  --appwin--color: 255, 255, 255;
+  --appwin--color-opacity: 1;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  color: rgba(var(--appwin--color), var(--appwin--color-opacity));
+}
+
+/* 暗色主题 - 深邃夜空 */
+body.dark .app-win{
+  color: #e0e0e0;
+  --appwin--bg-color-rgb: 255, 255, 255;
+  --appwin--bg-color-opacity: 0.08;
+  --appwin--bg-color-rgb-hover: 255, 255, 255;
+  --appwin--bg-color-opacity-hover: 0.25;
+  --appwin--border-color-rgb: var(--appwin--bg-color-rgb);
+  --appwin--border-color-opacity: 0.1;
+  --appwin--color-hover: #333333;
+  --appwin--color: 51, 51, 51;
+  --appwin--color-opacity: 1;
+  background-color: rgba(var(--appwin--bg-color-rgb), var(--appwin--bg-color-opacity));
+  color: rgba(var(--appwin--color), var(--appwin--color-opacity));
+}

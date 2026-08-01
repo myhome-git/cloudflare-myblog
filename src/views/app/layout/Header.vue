@@ -8,7 +8,6 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
 import Logo from './Logo.vue';
 import Search from './Search.vue';
 import HeaderLogin from './HeaderLogin.vue';

@@ -17,10 +17,10 @@
 <script setup lang="ts">
 import { isValidValue, handleItemClick } from '@/utils/utils';
 import { useRouter } from "vue-router";
-import { UserOutlined, DashboardOutlined, EnterOutlined } from '@ant-design/icons-vue';
+import { UserOutlined, DashboardOutlined } from '@ant-design/icons-vue';
 const router = useRouter();
 
-const isLogin = isValidValue(sessionStorage.getItem('token'));
+const isLogin = isValidValue(sessionStorage.getItem('username'));
 
 // 处理列表项点击事件
 const handleItemClickWrapper = (obj: any, url: string) => {

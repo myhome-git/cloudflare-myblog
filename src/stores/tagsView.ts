@@ -48,7 +48,7 @@ export const useTagsViewStore = defineStore('tagsView', () => {
   const cacheNames = computed(() => {
     return visitedViewsFiltered.value.map(tag => {
       let name = tag.path.replace(/[^a-zA-Z0-9]/g, '_')
-      if (name.startsWith('_')) name = name.substring(1)
+      if (name.startsWith('_')) {name = name.substring(1)}
       return 'R_' + name
     })
   })
@@ -148,7 +148,7 @@ export const useTagsViewStore = defineStore('tagsView', () => {
   function addVisitedView(view: TagView) {
     // 统一标准化路径，避免末尾斜杠导致重复
     view.path = normalizePath(view.path)
-    if (view.fullPath) view.fullPath = normalizePath(view.fullPath)
+    if (view.fullPath) {view.fullPath = normalizePath(view.fullPath)}
     if (visitedViews.value.some(tag => tag.path === view.path)) {
       return
     }
@@ -169,10 +169,10 @@ export const useTagsViewStore = defineStore('tagsView', () => {
    * 关闭指定标签页（首页不可关闭）
    */
   function closeTag(tag: TagView): string | null {
-    if (tag.path === '/admin/welcome') return null
+    if (tag.path === '/admin/welcome') {return null}
 
     const index = visitedViews.value.findIndex(t => t.path === tag.path)
-    if (index === -1) return null
+    if (index === -1) {return null}
 
     visitedViews.value.splice(index, 1)
 
@@ -198,10 +198,12 @@ export const useTagsViewStore = defineStore('tagsView', () => {
 
   /**
    * 关闭其他标签页（首页永远不会被关闭）
+   * @param keepTag - 要保留的标签页，默认使用当前激活的标签页
    */
-  function closeOtherTags() {
+  function closeOtherTags(keepTag?: TagView) {
+    const keepPath = keepTag ? keepTag.path : activeTagPath.value
     visitedViews.value = visitedViews.value.filter(
-      tag => tag.path === activeTagPath.value || tag.path === '/admin/welcome'
+      tag => tag.path === keepPath || tag.path === '/admin/welcome'
     )
   }
 
@@ -218,7 +220,7 @@ export const useTagsViewStore = defineStore('tagsView', () => {
    */
   function closeRightTags(tag: TagView) {
     const index = visitedViews.value.findIndex(t => t.path === tag.path)
-    if (index === -1) return
+    if (index === -1) {return}
     // 确保首页始终保留
     const welcomeIndex = visitedViews.value.findIndex(t => t.path === '/admin/welcome')
     if (welcomeIndex !== -1 && welcomeIndex > index) {
@@ -232,7 +234,7 @@ export const useTagsViewStore = defineStore('tagsView', () => {
    */
   function closeLeftTags(tag: TagView) {
     const index = visitedViews.value.findIndex(t => t.path === tag.path)
-    if (index === -1) return
+    if (index === -1) {return}
     // 保留首页
     visitedViews.value = [visitedViews.value[0], ...visitedViews.value.slice(index)]
   }
@@ -255,6 +257,25 @@ export const useTagsViewStore = defineStore('tagsView', () => {
     return path + '-r' + (refreshCountMap.value[path] || 0)
   }
 
+  /**
+   * 拖拽移动标签页位置（首页不可移动）
+   */
+  function moveTag(fromPath: string, toPath: string) {
+    // 首页不可拖动
+    if (fromPath === '/admin/welcome') {return}
+    // 目标位置是首页，不允许把首页挤走
+    if (toPath === '/admin/welcome') {return}
+
+    const fromIndex = visitedViews.value.findIndex(t => t.path === fromPath)
+    const toIndex = visitedViews.value.findIndex(t => t.path === toPath)
+    if (fromIndex === -1 || toIndex === -1 || fromIndex === toIndex) {return}
+
+    const [moved] = visitedViews.value.splice(fromIndex, 1)
+    // splice 后重新计算目标索引
+    const newToIndex = visitedViews.value.findIndex(t => t.path === toPath)
+    visitedViews.value.splice(newToIndex, 0, moved)
+  }
+
   return {
     visitedViews,
     activeTagPath,
@@ -271,6 +292,7 @@ export const useTagsViewStore = defineStore('tagsView', () => {
     closeRightTags,
     closeLeftTags,
     refreshTag,
-    getRefreshKey
+    getRefreshKey,
+    moveTag
   }
 })

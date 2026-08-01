@@ -5,6 +5,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 // @ts-ignore
 import redefineConsole from './redefine-console-plugin.js'
 import { multiPagePlugin } from './vite.config.multipage.js'
+import AutoImport from "unplugin-auto-import/vite"
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -18,6 +19,15 @@ export default defineConfig(({ mode }) => {
       // vueDevTools(),  // 临时禁用，排查 LINE 浏览器卡死问题
       redefineConsole(),
       multiPagePlugin,
+      AutoImport({
+        imports: ["vue", "vue-router"],
+        dts: "./src/auto-imports.d.ts",
+        eslintrc: {
+          enabled: true,
+          filepath: './.eslintrc-auto-import.json',
+          globalsPropValue: true
+        }
+      })
     ],
     define: {
       // 将环境变量注入到客户端代码中
@@ -33,7 +43,7 @@ export default defineConfig(({ mode }) => {
       allowedHosts: true,
       proxy: {
         '/api': {
-          target: 'http://localhost:8787',
+          target: 'https://blog.myhome.top', // 代理的目标地址
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '/api')
         }

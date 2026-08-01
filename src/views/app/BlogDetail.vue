@@ -158,11 +158,6 @@ onMounted(async () => {
   margin-right: 10px
 }
 
-:deep(.x-detail .x-content .cherry) {
-  /* box-shadow: none ; */
-  /* background: none ; */
-}
-
 :deep(.x-detail .x-content .cherry-previewer) {
   background: none !important;
   padding: 20px !important;

@@ -17,11 +17,18 @@
         >
           <template #tab>
             <a-dropdown :trigger="['contextmenu']">
-              <span style="user-select:none">{{ tag.title }}</span>
+              <div class='tabs-tab-span'
+                :draggable="tag.path !== '/admin/welcome'"
+                @contextmenu.prevent
+                @dragstart="onDragStart($event, tag.path)"
+                @dragover.prevent="onDragOver($event, tag.path)"
+                @drop.prevent="onDrop($event, tag.path)"
+                @dragend="onDragEnd"
+              >{{ tag.title }}</div>
               <template #overlay>
                 <a-menu @click="(info: any) => handleContextMenu(info.key as string, tag)">
                   <a-menu-item key="closeCurrent">关闭当前</a-menu-item>
-                  <a-menu-item key="closeOthers">关闭其他</a-menu-item>
+                  <a-menu-item key="closeOthers">关闭其它</a-menu-item>
                   <a-menu-item key="closeAll">关闭所有</a-menu-item>
                   <a-menu-item key="closeRight">关闭右侧</a-menu-item>
                   <a-menu-item key="closeLeft">关闭左侧</a-menu-item>
@@ -36,7 +43,7 @@
     <!-- 路由视图（单实例，配合 KeepAlive 缓存） -->
     <div class="tabs-content">
       <RouterView v-slot="{ Component, route: viewRoute }">
-        <KeepAlive>
+        <KeepAlive :include="tagsViewStore.cacheNames">
           <component :is="Component" :key="tagsViewStore.getRefreshKey(viewRoute.path)" />
         </KeepAlive>
       </RouterView>
@@ -45,13 +52,49 @@
 </template>
 
 <script lang="ts" setup>
-import { watch } from 'vue';
+import { ref, watch } from 'vue';
 import { RouterView, useRouter, useRoute } from 'vue-router'
 import { useTagsViewStore, type TagView } from '@/stores/tagsView'
 
 const router = useRouter()
 const route = useRoute()
 const tagsViewStore = useTagsViewStore()
+
+// 拖拽状态
+const dragFromPath = ref<string | null>(null)
+
+/** 拖拽开始 */
+function onDragStart(event: DragEvent, path: string) {
+  if (path === '/admin/welcome') {
+    event.preventDefault()
+    return
+  }
+  dragFromPath.value = path
+  if (event.dataTransfer) {
+    event.dataTransfer.effectAllowed = 'move'
+    event.dataTransfer.setData('text/plain', path)
+  }
+}
+
+/** 拖拽经过 */
+function onDragOver(event: DragEvent, path: string) {
+  if (event.dataTransfer) {
+    event.dataTransfer.dropEffect = 'move'
+  }
+}
+
+/** 拖拽放下 */
+function onDrop(event: DragEvent, toPath: string) {
+  if (!dragFromPath.value) return
+  if (dragFromPath.value === toPath) return
+  tagsViewStore.moveTag(dragFromPath.value, toPath)
+  dragFromPath.value = null
+}
+
+/** 拖拽结束 */
+function onDragEnd() {
+  dragFromPath.value = null
+}
 
 // 监听路由变化，自动添加标签页
 watch(
@@ -105,7 +148,7 @@ function handleContextMenu(key: string, tag: TagView) {
       removeTag(tag)
       break
     case 'closeOthers':
-      tagsViewStore.closeOtherTags()
+      tagsViewStore.closeOtherTags(tag)
       break
     case 'closeAll':
       tagsViewStore.closeAllTags()
@@ -129,6 +172,7 @@ function handleContextMenu(key: string, tag: TagView) {
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .tabs-bar {
@@ -137,9 +181,29 @@ function handleContextMenu(key: string, tag: TagView) {
   background: #fff;
 }
 
+/* 让 tab 的 padding 由内部 div 控制，使整个 tab 区域都可右键点击 */
+.tabs-bar :deep(.ant-tabs-tab) {
+  padding: 0;
+}
+
 .tabs-content {
   flex: 1;
-  overflow: auto;
   padding: 0;
+  overflow: auto;
+}
+.tabs-tab-span{
+  user-select:none;
+  align-items:center;
+  display: flex;
+  width:100%;
+  height:100%;
+  padding:8px 12px;
+  box-sizing:border-box;
+}
+.ant-tabs-tab{
+  margin-left: 5px;
+}
+:deep(.ant-tabs .ant-tabs-tab-remove){
+  margin: 0px 4px 0px -4px;
 }
 </style>
