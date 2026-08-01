@@ -13,12 +13,12 @@
             {
                 "path": "/blogs",
                 "name": "博客列表",
-                "source": "/app/BlogList.vue"
+                "source": "/app/page/BlogList.vue"
             },
             {
                 "path": "/blog",
                 "name": "博客详情",
-                "source": "/app/BlogDetail.vue"
+                "source": "/app/page/BlogDetail.vue"
             }
         ]
     }
