@@ -19,6 +19,8 @@
                             :value="rowData.content"
                             :on-after-change="onAfterChange"
                             :on-after-async-render="onAfterAsyncRender"
+                            :catalog="true"
+                            :scroll-element="'.app-win'"
                         />
                     </div>
                 </div>
@@ -125,10 +127,15 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+div[x-list] {
+    height: 100%;
+}
+
 .x-detail {
   width: 100%;
   height: 100%;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
   background: #fff;
   padding: 14px;
   position: relative;
@@ -149,6 +156,11 @@ onMounted(async () => {
 
 .x-detail .x-title .t-other .t-time {
   margin-right: 10px
+}
+
+.x-content {
+    flex: 1;
+    min-height: 0;
 }
 
 :deep(.x-detail .x-content .cherry-previewer) {

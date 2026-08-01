@@ -11,7 +11,7 @@
                     <template v-for="(item, index) of computedDataSource" :key="item.id">
                         <li>
                             <a-tag :color="item.color">
-                                {{ index + 1 }}
+                                {{ Number(index) + 1 }}
                             </a-tag>
                             <a
                                 :href="item.link_url"
@@ -36,16 +36,8 @@
 <script lang="ts" setup>
 import {  computed, useAttrs } from 'vue';
 // 透传对象属性和方法
-const attrs = useAttrs();
-const { dataSource } = attrs as {
-    dataSource?: any[] | { value: any[] },
-    onPageChange?: (index: number, size: number) => void,
-    pagination?: {
-        index: number,
-        size: number,
-        total: number
-    }
-};
+const attrs = useAttrs() as Record<string, any>;
+const dataSource = attrs['data-source'] ?? attrs.dataSource;
 
 // 计算属性，用于处理 dataSource
 const computedDataSource = computed(() => {

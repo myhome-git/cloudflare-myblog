@@ -15,10 +15,16 @@
 .app-content {
     margin: 20px 0;
     position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .app-content-left {
     min-width: 0;
+    flex: 1;
+    min-height: 0;
 }
 
 .app-content-right {

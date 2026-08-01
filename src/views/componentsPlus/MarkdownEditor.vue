@@ -10,22 +10,36 @@
             :style="{ height: '100%' }"
             :on-change="onChange"
         />
-        <MdPreview
-            v-else
-            :model-value="markdownValue"
-            :editor-id="uuid"
-            :theme="theme"
-            :preview-theme="previewTheme"
-            :language="language"
-            :style="{ height: '100%' }"
-            :on-change="onChange"
-        />
+        <template v-else>
+            <div class="markdown-preview-layout">
+                <div class="markdown-preview-content">
+                    <MdPreview
+                        :model-value="markdownValue"
+                        :editor-id="uuid"
+                        :theme="theme"
+                        :preview-theme="previewTheme"
+                        :language="language"
+                        :on-change="onChange"
+                    />
+                </div>
+                <template v-if="props.catalog">
+                    <div class="markdown-preview-catalog">
+                        <MdCatalog
+                            :editor-id="uuid"
+                            :theme="theme"
+                            :catalog-max-depth="3"
+                            :scroll-element="props.scrollElement"
+                        />
+                    </div>
+                </template>
+            </div>
+        </template>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
-import { MdEditor, MdPreview } from 'md-editor-v3'
+import { MdEditor, MdPreview, MdCatalog } from 'md-editor-v3'
 // @ts-ignore
 import 'md-editor-v3/lib/style.css'
 import { createUUID } from "@/utils/utils";
@@ -42,6 +56,14 @@ const props = defineProps({
     height: {
         type: String,
         default: '100%'
+    },
+    catalog: {
+        type: Boolean,
+        default: false
+    },
+    scrollElement: {
+        type: String,
+        default: '.markdown-preview-layout'
     }
 })
 const markdownValue = ref(props.value);
@@ -92,5 +114,31 @@ defineExpose({ setValue, getValue, clearValue, getHtml, getPreviewer, exportToFi
 <style scoped>
 .markdown-container {
     position: relative;
+    height: 100%;
+}
+
+.markdown-preview-layout {
+    display: flex;
+    height: 100%;
+    gap: 20px;
+}
+
+.markdown-preview-content {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    position: relative;
+}
+
+.markdown-preview-catalog {
+    width: 200px;
+    flex-shrink: 0;
+    overflow-y: auto;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    max-height: calc(100vh - 100px);
+    border-left: 1px solid #eee;
+    padding-left: 16px;
 }
 </style>
