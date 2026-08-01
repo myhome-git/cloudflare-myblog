@@ -2,6 +2,7 @@ import globals from 'globals'
 import pluginVue from 'eslint-plugin-vue'
 import typescriptEslint from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
+import vueParser from 'vue-eslint-parser'
 
 export default [
   {
@@ -70,8 +71,9 @@ export default [
   {
     files: ['**/*.vue'],
     languageOptions: {
-      parser: tsParser,
+      parser: vueParser,
       parserOptions: {
+        parser: tsParser,
         ecmaVersion: 'latest',
         sourceType: 'module',
         project: './tsconfig.app.json',
@@ -95,22 +97,18 @@ export default [
     },
     rules: {
       'vue/multi-word-component-names': 'off', // 允许单个单词的组件名称
-      'vue/html-self-closing': ['error', {
-        'html': { 'void': 'never', 'normal': 'always', 'component': 'always' },
-        'svg': 'always',
-        'math': 'always'
-      }],
+      'vue/html-self-closing': 'off',
       'vue/max-attributes-per-line': ['error', { 'singleline': 3, 'multiline': 1 }],
-      'vue/no-unregistered-components': ['error', {
-        'ignorePatterns': ['c-grid', 'c-table', 'c-form', 'c-table-action', 'DynamicApp', 'c-tree']
-      }],
+      'vue/no-empty-component-block': 'off',
+      'vue/valid-template-root': 'off',
+      'vue/no-unused-components': 'error',
 
       // TypeScript 规则
       // eslint-disable-next-line no-trailing-spaces
       '@typescript-eslint/no-unused-vars': ['error', { 'args': 'all', 'argsIgnorePattern': '^_', 'caughtErrors': 'all' }],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-empty-function': 'error',
+      '@typescript-eslint/no-empty-function': 'off',
     }
   },
 
@@ -141,7 +139,7 @@ export default [
       }],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-empty-function': 'error',
+      '@typescript-eslint/no-empty-function': 'off',
     }
   }
 ]

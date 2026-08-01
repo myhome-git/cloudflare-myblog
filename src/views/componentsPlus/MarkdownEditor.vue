@@ -1,22 +1,24 @@
 <template>
   <div class="markdown-container" :style="{ height: props.height ? props.height.toString() : '100%' }" @keydown="onKeydown">
-    <MdEditor v-if="props.type !== 'view'"
+    <MdEditor
+      v-if="props.type !== 'view'"
       v-model="markdownValue"
-      :editorId="uuid"
+      :editor-id="uuid"
       :theme="theme"
-      :previewTheme="previewTheme"
+      :preview-theme="previewTheme"
       :language="language"
       :style="{ height: '100%' }"
-      :onChange="onChange"
+      :on-change="onChange"
     />
-    <MdPreview v-else
-      :modelValue="markdownValue"
-      :editorId="uuid"
+    <MdPreview
+      v-else
+      :model-value="markdownValue"
+      :editor-id="uuid"
       :theme="theme"
-      :previewTheme="previewTheme"
+      :preview-theme="previewTheme"
       :language="language"
       :style="{ height: '100%' }"
-      :onChange="onChange"
+      :on-change="onChange"
     />
   </div>
 </template>
@@ -24,6 +26,7 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import { MdEditor, MdPreview } from 'md-editor-v3'
+// @ts-ignore
 import 'md-editor-v3/lib/style.css'
 import { createUUID } from "@/utils/utils";
 
@@ -79,7 +82,7 @@ const getHtml = () => {
 const getPreviewer = () => {
   return null;
 }
-const exportToFile = (type: string) => {
+const exportToFile = () => {
   // md-editor-v3 无内置导出功能
 }
 

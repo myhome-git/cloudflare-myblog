@@ -1,6 +1,10 @@
 <template>
-    <a-page-header size="small" style="border: 1px solid rgb(235, 237, 240);padding:12px 24px;" :breadcrumb="{ routes }"
-        @click.prevent />
+  <a-page-header
+    size="small"
+    style="border: 1px solid rgb(235, 237, 240);padding:12px 24px;"
+    :breadcrumb="{ routes }"
+    @click.prevent
+  />
 </template>
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'

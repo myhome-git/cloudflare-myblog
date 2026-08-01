@@ -4,15 +4,22 @@
       <template v-if="isValidValue(rowData)">
         <div class="x-detail">
           <div class="x-title">
-            <div class="t-text">{{ rowData.title }}</div>
+            <div class="t-text">
+              {{ rowData.title }}
+            </div>
             <div class="t-other">
               <span class="t-time">时间：{{ rowData.create_time }}</span>
               <span class="t-read-count">阅读量：{{ rowData.readCount }}</span>
             </div>
           </div>
           <div class="x-content">
-            <MarkdownEditor ref="refMarkdownEditor" type="view" :value="rowData.content" :onAfterChange="onAfterChange"
-              :onAfterAsyncRender="onAfterAsyncRender" />
+            <MarkdownEditor
+              ref="refMarkdownEditor"
+              type="view"
+              :value="rowData.content"
+              :on-after-change="onAfterChange"
+              :on-after-async-render="onAfterAsyncRender"
+            />
           </div>
         </div>
       </template>
@@ -21,7 +28,9 @@
       <a-alert message="数据小精灵正在玩捉迷藏，暂时还没有找到它呢~" type="warning" closable />
       <div class="x-detail">
         <div class="x-title">
-          <div class="t-text">信息之海浩瀚无垠，这次可能没有捞到你想要的那条鱼。</div>
+          <div class="t-text">
+            信息之海浩瀚无垠，这次可能没有捞到你想要的那条鱼。
+          </div>
         </div>
       </div>
     </template>
@@ -29,17 +38,15 @@
 </template>
 <script lang="ts" setup>
 // @ts-ignore
-import SystemConfig from '@/SystemConfig.js';
-import { ref, computed, onMounted, nextTick, watch } from 'vue';
-import { isValidValue, handleDecodemultiple, handleItemClick } from "@/utils/utils.js";
+import { ref, onMounted, nextTick, watch } from 'vue';
+import { isValidValue, handleDecodemultiple } from "@/utils/utils.js";
 // @ts-ignore
 import request from "@/utils/request.js";
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import MarkdownEditor from "@/views/componentsPlus/MarkdownEditor.vue";
 
 // 声明常量
 const route = useRoute();
-const router = useRouter();
 
 // 数据源
 const apiURL = `/api/app/blogs/query`;
@@ -63,14 +70,14 @@ const handleGetList = () => {
     const result = data.result;
     result.forEach((element: any) => {
       try {
-        element = handleDecodemultiple(element, element.key, ["title", "content"]);
-      } catch (error) {
+        handleDecodemultiple(element, element.key, ["title", "content"]);
+      } catch {
 
       }
     });
     try {
       rowData.value = result[0];
-    } catch (error) {
+    } catch {
 
     }
   }).catch((err: any) => {
@@ -88,36 +95,22 @@ const setValue = (val: string) => {
   }
 }
 
-const onAfterChange = (obj: any) => {
+const onAfterChange = () => {
 
 }
-const onAfterAsyncRender = (obj: any) => {
+const onAfterAsyncRender = () => {
   // setTimeout(() => {
   //   setValueA(obj);
   // }, 1000)
 }
 
-const setValueA = (obj: any) => {
-  const value: any = refMarkdownEditor.value;
-  try {
-    // target=_blank
-    // @ts-ignore
-    const $ = window.$;
-    const $dom = $(`#${value.getUUID()} .cherry-previewer a`);
-    // console.log(`找到a标签数量`, $dom.length);
-    $dom.attr("target", "_blank");
-  } catch (error) {
-
-  }
-}
-
-watch(() => rowData.value, (newVal, oldVal) => {
+watch(() => rowData.value, (newVal) => {
   if (newVal) {
     setValue(newVal.content);
   }
 })
 // 监听路由变化，重新获取数据
-watch(route, (to, from) => {
+watch(route, () => {
   // 重新获取数据
   handleGetList();
 });

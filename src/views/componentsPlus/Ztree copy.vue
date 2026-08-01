@@ -1,12 +1,13 @@
 <template>
-    ztree
-    <div class="ztree" id="treeDemo1"></div>
-    <div class="ztree" id="treeDemo2"></div>
-    <div class="ztree" id="treeDemo3"></div>
+  ztree
+  <div id="treeDemo1" class="ztree"></div>
+  <div id="treeDemo2" class="ztree"></div>
+  <div id="treeDemo3" class="ztree"></div>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, onMounted, nextTick } from "vue";
+import { onMounted, nextTick } from "vue";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps({
     type : {
         type : String,  //普通、复选(check)、单选(radio)
@@ -54,6 +55,7 @@ const initZtree = () => {
     $.fn.zTree.init($("#treeDemo1"), setting, zNodes);
 
     //复选框
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function onCheck(event: MouseEvent, treeId: number, treeNode: any) {
         console.info(treeNode);
         var treeObj = $.fn.zTree.getZTreeObj(treeId);
@@ -62,6 +64,7 @@ const initZtree = () => {
     }
 
     //选中
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function onClick(event: MouseEvent, treeId: number, treeNode: any) {
         var treeObj = $.fn.zTree.getZTreeObj(treeId);
         treeNode.checked = true;

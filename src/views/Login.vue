@@ -5,8 +5,15 @@
         <h1>系统登录</h1>
         <p>欢迎使用博客管理系统</p>
       </div>
-      <a-form :model="formState" name="loginForm" :wrapper-col="{ span: 24 }" autocomplete="off" @finish="onFinish"
-        @finishFailed="onFinishFailed" class="login-form">
+      <a-form
+        :model="formState"
+        name="loginForm"
+        :wrapper-col="{ span: 24 }"
+        autocomplete="off"
+        class="login-form"
+        @finish="onFinish"
+        @finish-failed="onFinishFailed"
+      >
         <a-form-item name="username" :rules="[{ required: true, message: '请输入用户名!' }]">
           <a-input v-model:value="formState.username" size="large" placeholder="请输入用户名">
             <template #prefix>
@@ -24,11 +31,20 @@
         </a-form-item>
 
         <a-form-item name="remember" class="remember-me">
-          <a-checkbox v-model:checked="formState.remember">记住我</a-checkbox>
+          <a-checkbox v-model:checked="formState.remember">
+            记住我
+          </a-checkbox>
         </a-form-item>
 
         <a-form-item>
-          <a-button type="primary" html-type="submit" size="large" block :loading="loading" class="login-button">
+          <a-button
+            type="primary"
+            html-type="submit"
+            size="large"
+            block
+            :loading="loading"
+            class="login-button"
+          >
             {{ loading ? '登录中...' : '登录' }}
           </a-button>
         </a-form-item>
@@ -37,8 +53,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-// @ts-ignore
-import SystemConfig from "@/SystemConfig.js";
 import { reactive, ref } from 'vue';
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
 // @ts-ignore
@@ -59,7 +73,7 @@ const formState = reactive<FormState>({
 
 const loading = ref(false);
 
-const onFinish = (values: any) => {
+const onFinish = () => {
   loading.value = true;
   const sendForm = JSON.parse(JSON.stringify(formState));
   try {

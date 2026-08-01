@@ -1,39 +1,43 @@
 <template>
-    <div class="app-unit">
-        <div class="unit-title">
-            <div class="t-value">友情链接</div>
-        </div>
-        <div class="unit-content">
-            <template v-if="computedDataSource.length > 0">
-                <ul>
-                    <template v-for="(item, index) of computedDataSource" :key="item.id">
-                        <li>
-                            <a-tag :color="item.color">
-                                {{ index + 1 }}
-                            </a-tag>
-                            <a :href="item.link_url" target="_blank" class="link-item" :title="item.name">
-                                {{ item.name }}：{{ item.link_url }}
-                            </a>
-                        </li>
-                    </template>
-                </ul>
-            </template>
-            <template v-else>
-                <div class="no-data">暂无数据</div>
-            </template>
-        </div>
+  <div class="app-unit">
+    <div class="unit-title">
+      <div class="t-value">
+        友情链接
+      </div>
     </div>
+    <div class="unit-content">
+      <template v-if="computedDataSource.length > 0">
+        <ul>
+          <template v-for="(item, index) of computedDataSource" :key="item.id">
+            <li>
+              <a-tag :color="item.color">
+                {{ index + 1 }}
+              </a-tag>
+              <a
+                :href="item.link_url"
+                target="_blank"
+                class="link-item"
+                :title="item.name"
+              >
+                {{ item.name }}：{{ item.link_url }}
+              </a>
+            </li>
+          </template>
+        </ul>
+      </template>
+      <template v-else>
+        <div class="no-data">
+          暂无数据
+        </div>
+      </template>
+    </div>
+  </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed, useAttrs } from 'vue';
-import { handleItemClick } from '@/utils/utils';
-import { useRouter } from "vue-router";
-
-const router = useRouter();
-
+import {  computed, useAttrs } from 'vue';
 // 透传对象属性和方法
 const attrs = useAttrs();
-const { dataSource, onPageChange } = attrs as {
+const { dataSource } = attrs as {
     dataSource?: any[] | { value: any[] },
     onPageChange?: (index: number, size: number) => void,
     pagination?: {
@@ -41,11 +45,6 @@ const { dataSource, onPageChange } = attrs as {
         size: number,
         total: number
     }
-};
-
-// 处理列表项点击事件
-const handleItemClickWrapper = (link_url: string) => {
-    handleItemClick({}, link_url, router);
 };
 
 // 计算属性，用于处理 dataSource

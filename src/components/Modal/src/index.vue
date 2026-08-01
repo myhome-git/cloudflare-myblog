@@ -1,49 +1,59 @@
 <template>
-    <!--
+  <!--
     :style="{ ...(props.width ? { width: `${props.width}px` } : {}) }"
         :bodyStyle="{ ...(props.height ? { height: `calc(100% - 120px)`, overflow: 'auto' } : {}) }"
     -->
-    <a-modal class="a-modal-win"
-      :closable="false"
-      :destroyOnClose="true"
-      :wrap-class-name="fullscreen?'full-modal':''"
-      v-model:open="open" :wrap-style="{ overflow: 'hidden' }"
-      :style="{ 
-        ...(props.width ? { width: `${props.width}px` } : {})
-      }"
-      :confirm-loading="confirmLoading"
-      :okText="props.okText"
-      @ok="handleClickOK"
-      :okButtonProps="okButtonProps"
-      :cancelText="props.cancelText"
-      @cancel="handleClickCancel"
-      :cancelButtonProps="cancelButtonProps"
-      :maskClosable="maskClosable">
-      <template #title>
-          <div ref="modalTitleRef" style="width: 100%; cursor: move; display: flex; align-items: center;">
-            <slot name="title">
-              <PlusOutlined v-if="(props.status || '').includes('add')" style="margin-right: 8px;" />
-              <EditOutlined v-else-if="(props.status || '').includes('edit')" style="margin-right: 8px;" />
-              <EyeOutlined v-else-if="(props.status || '').includes('view')" style="margin-right: 8px;" />
-              <span>{{ props.title || '' }}</span>
-              <div class="title-button">
-                <a-button v-if="props.fullscreen" type="text" danger @click="handleClickFullscreen">
-                  <FullscreenOutlined />
-                </a-button>
-                <a-button type="text" danger @click="handleClickCancel">
-                  <CloseOutlined />
-                </a-button>
-              </div>
-            </slot>
+  <a-modal
+    v-model:open="open"
+    class="a-modal-win"
+    :closable="false"
+    :destroy-on-close="true"
+    :wrap-class-name="fullscreen?'full-modal':''"
+    :wrap-style="{ overflow: 'hidden' }"
+    :style="{ 
+      ...(props.width ? { width: `${props.width}px` } : {})
+    }"
+    :confirm-loading="confirmLoading"
+    :ok-text="props.okText"
+    :ok-button-props="okButtonProps"
+    :cancel-text="props.cancelText"
+    :cancel-button-props="cancelButtonProps"
+    :mask-closable="maskClosable"
+    @ok="onClickOK"
+    @cancel="onClickCancel"
+  >
+    <template #title>
+      <div ref="modalTitleRef" style="width: 100%; cursor: move; display: flex; align-items: center;">
+        <slot name="title">
+          <PlusOutlined v-if="(props.status || '').includes('add')" style="margin-right: 8px;" />
+          <EditOutlined v-else-if="(props.status || '').includes('edit')" style="margin-right: 8px;" />
+          <EyeOutlined v-else-if="(props.status || '').includes('view')" style="margin-right: 8px;" />
+          <span>{{ props.title || '' }}</span>
+          <div class="title-button">
+            <a-button
+              v-if="props.fullscreen"
+              type="text"
+              danger
+              @click="handleClickFullscreen"
+            >
+              <FullscreenOutlined />
+            </a-button>
+            <a-button type="text" danger @click="onClickCancel">
+              <CloseOutlined />
+            </a-button>
           </div>
-      </template>
-      <div class="diy-form" :style="{height:`${props.height}px`}">
-          <slot name="default">表单内容</slot>
+        </slot>
       </div>
-      <template #modalRender="{ originVNode }">
-          <component :is="originVNode" />
-      </template>
-    </a-modal>
+    </template>
+    <div class="diy-form" :style="{height:`${props.height}px`}">
+      <slot name="default">
+        表单内容
+      </slot>
+    </div>
+    <template #modalRender="{ originVNode }">
+      <component :is="originVNode" />
+    </template>
+  </a-modal>
 </template>
 <script lang="ts" setup>
 // 模态对话框
@@ -107,12 +117,12 @@ const props = defineProps({
     okButtonProps: {
         type: Object,
         required: false,
-        default: {}
+        default: () => ({})
     },
     cancelButtonProps: {
         type: Object,
         required: false,
-        default: {}
+        default: () => ({})
     },
     cancelText: {
       type: [String, Function],
@@ -170,7 +180,7 @@ const maskClosable = computed(() => {
 
 // 按钮确定被点击
 const confirmLoading = ref(false)
-async function handleClickOK(e: MouseEvent) {
+async function onClickOK(e: MouseEvent) {
   // 代理点击确认回调，统一处理同步/异步错误
   const proxyClickOK = async (e: any) => {
     if (!props.handleClickOK) {
@@ -179,7 +189,7 @@ async function handleClickOK(e: MouseEvent) {
     try {
       // 同步和异步错误都能被捕获
       return await Promise.resolve(props.handleClickOK(e))
-    } catch (error) {
+    } catch {
       // console.error('handleClickOK 执行出错:', error)
       // 返回错误标识，让上层知道执行失败，不关闭弹窗
       return false
@@ -203,7 +213,7 @@ async function handleClickOK(e: MouseEvent) {
 };
 
 // 按钮取消被点击
-async function handleClickCancel(e: MouseEvent) {
+async function onClickCancel(e: MouseEvent) {
     if (props.handleClickCancel) {
     const result = await props.handleClickCancel(e)
     // 如果返回 false，则不关闭模态框
@@ -219,6 +229,7 @@ function handleClickFullscreen(){
   fullscreen.value = !fullscreen.value
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const defaultHandleCancel = (e: MouseEvent) => {
     open.value = false
 };
@@ -229,6 +240,7 @@ const draggableInited = ref(false)
 let dragInstance: any = null
 
 // 鼠标按下事件处理
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function handleMouseDown(e: MouseEvent) {
   if (!draggableInited.value) {
     const ele = document.querySelector('.ant-modal-wrap');
@@ -246,6 +258,7 @@ function handleMouseDown(e: MouseEvent) {
 }
 
 // 鼠标松开事件处理
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function handleMouseUp(e: MouseEvent) {
   // 解绑鼠标松开事件
   document.removeEventListener('mouseup', handleMouseUp)

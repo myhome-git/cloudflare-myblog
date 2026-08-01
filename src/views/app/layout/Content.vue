@@ -1,19 +1,18 @@
 <template>
-    <div class="app-content">
-        <div class="c-layout layout-left">
-            <slot name="left">
-                left
-            </slot>
-        </div>
-        <div class="c-layout layout-right">
-            <slot name="right">
-                right
-            </slot>
-        </div>
+  <div class="app-content">
+    <div class="c-layout layout-left">
+      <slot name="left">
+        left
+      </slot>
     </div>
+    <div class="c-layout layout-right">
+      <slot name="right">
+        right
+      </slot>
+    </div>
+  </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
 </script>
 
 <style scoped>

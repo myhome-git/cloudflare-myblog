@@ -1,42 +1,74 @@
 <template>
-    <Modal v-model:open="modalOpen" :modalStatus="modalStatus" :modalTitle="modalTitle" :handleOk="handleOk"
-        :handleCancel="handleCancel">
-        <template v-slot:form>
-            <a-form :model="formState" name="basic" :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }"
-                autocomplete="off">
-                <a-form-item label="登陆账户：" name="username" :rules="[{ required: true, message: '请输入登陆账户' }]">
-                    <a-input v-model:value="formState.username" />
-                </a-form-item>
-                <a-form-item label="登陆密码：" name="password" :rules="[{ required: false, message: '请输入登陆密码' }]">
-                    <a-input v-model:value="formState.password" />
-                    <template v-if="modalStatus === 'edit'">
-                        <p class="tishi-info">1、密码为空，则不进行修改</p>
-                        <p class="tishi-info">2、需要修改只需要输入新密码，输入示例：123456</p>
-                    </template>
-                </a-form-item>
-            </a-form>
-        </template>
-    </Modal>
-    <Modal :bindModalRow="bindModalRow" v-model:open="modalRowOpen" modalTitle="系统提示" :handleOk="handleRowOk"
-        :handleCancel="handleRowCancel">
-        <template v-slot:form>
-            <p>您确认要删除&nbsp;<span style="color:red;font-size:24px;">{{ bindModalRow.length }}</span>&nbsp;条数据吗？删除后不可恢复！
+  <Modal
+    v-model:open="modalOpen"
+    :modal-status="modalStatus"
+    :modal-title="modalTitle"
+    :handle-ok="handleOk"
+    :handle-cancel="handleCancel"
+  >
+    <template #form>
+      <a-form
+        :model="formState"
+        name="basic"
+        :label-col="{ span: 4 }"
+        :wrapper-col="{ span: 20 }"
+        autocomplete="off"
+      >
+        <a-form-item label="登陆账户：" name="username" :rules="[{ required: true, message: '请输入登陆账户' }]">
+          <a-input v-model:value="formState.username" />
+        </a-form-item>
+        <a-form-item label="登陆密码：" name="password" :rules="[{ required: false, message: '请输入登陆密码' }]">
+          <a-input v-model:value="formState.password" />
+          <template v-if="modalStatus === 'edit'">
+            <p class="tishi-info">
+              1、密码为空，则不进行修改
             </p>
-        </template>
-    </Modal>
-    <Table selectType="checkbox" :dataSource="dataSource" :columns="columns" :onSearch="onSearch" :onRefresh="onRefresh"
-        :onRowAdd="onRowAdd" :onRowEdit="onRowEdit" :onRowDelete="onRowDelete" :pagination="pagination"
-        :onPageChange="onPageChange" @onSelected="onSelected" @onDeleteMultiple="onDeleteMultiple"
-        :spinning="tableSpinning" :localeEmptyText="tableLocaleEmptyText">
-        <template #link="{ text, record, field }">
-            <template v-if="field === 'link_url'">
-                <a href="javascript:void(0)">{{ text }}</a>
-            </template>
-            <template v-else>
-                <span>{{ text }}</span>
-            </template>
-        </template>
-    </Table>
+            <p class="tishi-info">
+              2、需要修改只需要输入新密码，输入示例：123456
+            </p>
+          </template>
+        </a-form-item>
+      </a-form>
+    </template>
+  </Modal>
+  <Modal
+    v-model:open="modalRowOpen"
+    :bind-modal-row="bindModalRow"
+    modal-title="系统提示"
+    :handle-ok="handleRowOk"
+    :handle-cancel="handleRowCancel"
+  >
+    <template #form>
+      <p>
+        您确认要删除&nbsp;<span style="color:red;font-size:24px;">{{ bindModalRow.length }}</span>&nbsp;条数据吗？删除后不可恢复！
+      </p>
+    </template>
+  </Modal>
+  <Table
+    select-type="checkbox"
+    :data-source="dataSource"
+    :columns="columns"
+    :on-search="onSearch"
+    :on-refresh="onRefresh"
+    :on-row-add="onRowAdd"
+    :on-row-edit="onRowEdit"
+    :on-row-delete="onRowDelete"
+    :pagination="pagination"
+    :on-page-change="onPageChange"
+    :spinning="tableSpinning"
+    :locale-empty-text="tableLocaleEmptyText"
+    @on-selected="onSelected"
+    @on-delete-multiple="onDeleteMultiple"
+  >
+    <template #link="{ text, field }">
+      <template v-if="field === 'link_url'">
+        <a href="javascript:void(0)">{{ text }}</a>
+      </template>
+      <template v-else>
+        <span>{{ text }}</span>
+      </template>
+    </template>
+  </Table>
 </template>
 <script lang="ts" setup>
 import { reactive, ref, onMounted, nextTick } from "vue";
@@ -45,7 +77,7 @@ import { message } from "ant-design-vue";
 import SystemConfig from "@/SystemConfig.js";
 // @ts-ignore
 import request from "@/utils/request.js";
-import { isValidValue, getKey, encodeString, decodeString } from "@/utils/utils.js";
+import { isValidValue } from "@/utils/utils.js";
 import Table from "@/views/componentsPlus/Table.vue";
 import Modal from "@/views/componentsPlus/Modal.vue";
 
@@ -72,7 +104,7 @@ const onRefresh = () => {
     handleGetList();
 }
 // 添加
-const onRowAdd = (key: string) => {
+const onRowAdd = () => {
     modalStatus.value = "add";
     modalTitle.value = "新增数据";
     resetFormValue();
@@ -124,7 +156,7 @@ const handleRowCancel = () => {
 
 }
 // 选中回调函数
-const onSelected = (selectedRows: any[]) => {
+const onSelected = () => {
     // console.log("选中的行数据:", selectedRows);
     // 在这里处理选中的行数据
     // 例如，可以将选中的数据存储到一个响应式变量中
@@ -148,13 +180,12 @@ const pagination = ref(SystemConfig.page);
  * 模态对话框
  */
 const modalOpen = ref<Boolean>(false);
-const modalWidth = ref(`${Math.max(600, 0)}px`);
-const modalHeight = ref(`${Math.max(600, 0)}px`);
 const modalStatus = ref("");
 const modalTitle = ref("");
 const showModal = (value: boolean = true) => {
     modalOpen.value = value === undefined ? true : value;
 };
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const handleOk = (e: MouseEvent) => {
     const value = modalStatus.value;
     if (value === "add") {
@@ -250,7 +281,7 @@ const handleAdd = () => {
         url: `${apiURL}`,
         method: "post",
         data: sendForm
-    }).then((data: Object) => {
+    }).then(() => {
         handleGetList();
         showModal(false);
     }).catch((err: any) => {
@@ -268,7 +299,7 @@ const handleEdit = () => {
         url: `${apiURL}`,
         method: "put",
         data: sendForm
-    }).then((data: Object) => {
+    }).then(() => {
         handleGetList();
         showModal(false);
     }).catch((err: any) => {
@@ -281,7 +312,7 @@ const handleDelete = (sendData: any) => {
         url: `${apiURL}/multiple`,
         method: "delete",
         data: sendData
-    }).then((data: Object) => {
+    }).then(() => {
         handleGetList();
     }).catch((err: any) => {
         console.log(err);

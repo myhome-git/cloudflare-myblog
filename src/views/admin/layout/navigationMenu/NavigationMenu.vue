@@ -1,5 +1,5 @@
 <template>
-  <a-menu v-model:selectedKeys="current" mode="horizontal" @click="onClick">
+  <a-menu v-model:selected-keys="current" mode="horizontal" @click="onClick">
     <a-menu-item key="target-to-app">
       <template #icon>
         <HomeOutlined />

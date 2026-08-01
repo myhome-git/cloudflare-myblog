@@ -3,11 +3,11 @@
     <!-- 标签栏 -->
     <div class="tabs-bar">
       <a-tabs
-        v-model:activeKey="tagsViewStore.activeTagPath"
+        v-model:active-key="tagsViewStore.activeTagPath"
         type="editable-card"
-        hideAdd
-        :tabBarStyle="{ margin: 0 }"
-        @tabClick="switchTag"
+        hide-add
+        :tab-bar-style="{ margin: 0 }"
+        @tab-click="switchTag"
         @edit="handleEdit"
       >
         <a-tab-pane
@@ -17,22 +17,37 @@
         >
           <template #tab>
             <a-dropdown :trigger="['contextmenu']">
-              <div class='tabs-tab-span'
+              <div
+                class="tabs-tab-span"
                 :draggable="tag.path !== '/admin/welcome'"
                 @contextmenu.prevent
                 @dragstart="onDragStart($event, tag.path)"
                 @dragover.prevent="onDragOver($event, tag.path)"
                 @drop.prevent="onDrop($event, tag.path)"
                 @dragend="onDragEnd"
-              >{{ tag.title }}</div>
+              >
+                {{ tag.title }}
+              </div>
               <template #overlay>
                 <a-menu @click="(info: any) => handleContextMenu(info.key as string, tag)">
-                  <a-menu-item key="closeCurrent">关闭当前</a-menu-item>
-                  <a-menu-item key="closeOthers">关闭其它</a-menu-item>
-                  <a-menu-item key="closeAll">关闭所有</a-menu-item>
-                  <a-menu-item key="closeRight">关闭右侧</a-menu-item>
-                  <a-menu-item key="closeLeft">关闭左侧</a-menu-item>
-                  <a-menu-item key="refresh">刷新</a-menu-item>
+                  <a-menu-item key="closeCurrent">
+                    关闭当前
+                  </a-menu-item>
+                  <a-menu-item key="closeOthers">
+                    关闭其它
+                  </a-menu-item>
+                  <a-menu-item key="closeAll">
+                    关闭所有
+                  </a-menu-item>
+                  <a-menu-item key="closeRight">
+                    关闭右侧
+                  </a-menu-item>
+                  <a-menu-item key="closeLeft">
+                    关闭左侧
+                  </a-menu-item>
+                  <a-menu-item key="refresh">
+                    刷新
+                  </a-menu-item>
                 </a-menu>
               </template>
             </a-dropdown>
@@ -77,6 +92,7 @@ function onDragStart(event: DragEvent, path: string) {
 }
 
 /** 拖拽经过 */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function onDragOver(event: DragEvent, path: string) {
   if (event.dataTransfer) {
     event.dataTransfer.dropEffect = 'move'
@@ -84,6 +100,7 @@ function onDragOver(event: DragEvent, path: string) {
 }
 
 /** 拖拽放下 */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function onDrop(event: DragEvent, toPath: string) {
   if (!dragFromPath.value) return
   if (dragFromPath.value === toPath) return
@@ -126,7 +143,7 @@ function switchTag(key: string) {
 // 处理标签编辑（关闭）
 function handleEdit(key: string | number, action: 'add' | 'remove') {
   if (action === 'remove') {
-    const tag = tagsViewStore.visitedViewsFiltered.find(t => t.path === key)
+    const tag = tagsViewStore.visitedViewsFiltered.find(t => t.path === key) as TagView | undefined
     if (tag) {
       removeTag(tag)
     }
@@ -142,7 +159,7 @@ function removeTag(tag: TagView) {
 }
 
 // ========== 右键菜单处理 ==========
-function handleContextMenu(key: string, tag: TagView) {
+function handleContextMenu(key: string, tag: any) {
   switch (key) {
     case 'closeCurrent':
       removeTag(tag)

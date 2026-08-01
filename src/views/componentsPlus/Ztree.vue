@@ -1,8 +1,8 @@
 <template>
-    <div ref="$ztreeContainer" class="ztree" :id="treeId"></div>
+  <div :id="treeId" ref="$ztreeContainer" class="ztree"></div>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, watch, onMounted, onUnmounted, nextTick, reactive, defineEmits } from "vue";
+import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";
 import { merge } from 'lodash';
 
 const props = defineProps({
@@ -19,6 +19,7 @@ const props = defineProps({
     treeNodes: {  //zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
         type: Array,
         required: false,
+        // eslint-disable-next-line vue/require-valid-default-prop
         default: []
     }
 });
@@ -29,9 +30,9 @@ const setting = ref(props.treeSetting);
 const zNodes = ref(props.treeNodes);    // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
 const $ztreeContainer = ref(null);
 // @ts-ignore
-$ztreeContainer.extendMethods = {}; // 扩展自身方法
+$ztreeContainer.value.extendMethods = {}; // 扩展自身方法
 
-watch([props.treeNodes], (newValue, oldValue) => {
+watch([props.treeNodes], (newValue) => {
     handleTreeAddNodeData(JSON.parse(JSON.stringify(newValue[0])));
 });
 
@@ -53,11 +54,13 @@ const initComponent = () => {
 
     const $ = getJQuery();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function onExpand(event: MouseEvent, treeId: any, treeNode: any) {
         emit("onExpand", event, treeNode);
     };
 
     // 复选框，用于捕获 checkbox / radio 被勾选 或 取消勾选的事件回调函数
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function onCheck(event: MouseEvent, treeId: number, treeNode: any) {
         // console.log(`触发${event.type}事件，操作的节点`, treeNode);
         const treeObj = getZTreeObj();
@@ -74,6 +77,7 @@ const initComponent = () => {
     }
 
     // 用于捕获节点被点击的事件回调函数，如果设置了 setting.callback.beforeClick 方法，且返回 false，将无法触发 onClick 事件回调函数。
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function onClick(event: MouseEvent, treeId: number, treeNode: any) {
         event.stopPropagation();
         // 如果type为复选框，则由复选框触发
@@ -92,16 +96,19 @@ const initComponent = () => {
         emit("onClick",event, treeNode);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function onDblClick(event, treeId, treeNode) {
         // console.log(`触发${event.type}事件，操作的节点`, treeNode);
         event.stopPropagation();
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function onBeforeDblClick(treeId, treeNode) {
         return false;
     };
 
     // 节点被拖拽之前的事件回调函数，并且根据返回值确定是否允许开启拖拽操作
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function beforeDrag(treeId: any, treeNodes: any) {
         for (var i = 0, l = treeNodes.length; i < l; i++) {
             if (treeNodes[i].drag === false) {
@@ -112,11 +119,13 @@ const initComponent = () => {
     }
 
     // 节点拖拽操作结束之前的事件回调函数，并且根据返回值确定是否允许此拖拽操作
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function beforeDrop(treeId: any, treeNodes: any, targetNode: any, moveType: any) {
         return targetNode ? targetNode.drop !== false : true;
     }
 
     // 节点拖拽操作结束的事件回调函数，treeNodes被拖拽的节点 JSON 数据集合
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function onDrop(event: any, treeId: any, treeNodes: any, targetNode: any, moveType: any) {
         emit("onDrop", treeNodes, targetNode);
     };

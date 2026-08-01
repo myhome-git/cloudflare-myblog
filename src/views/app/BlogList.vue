@@ -1,45 +1,65 @@
 <template>
-    <template v-if="isServerResult.status === 200">
-        <template v-if="isValidValue(route.query.searchText)">
-            <template v-if="pagination.total < 1">
-                <a-alert :message="`信息之海浩瀚无垠，这次可能没有捞到你想要的那条鱼！`" type="warning" show-icon closable></a-alert>
-            </template>
-            <template v-else>
-                <a-alert :message="`${seMessage}`" type="success" show-icon closable />
-                <div style="height: 10px;"></div>
-                <BlogJianshu :dataSource="dataSource" :pagination="pagination" :onPageChange="onPageChange">
-                </BlogJianshu>
-            </template>
-        </template>
-        <template v-else>
-            <template v-if="pagination.total < 1">
-                <a-alert :message="`暂无数据！`" type="warning" show-icon closable></a-alert>
-            </template>
-            <template v-else>
-                <BlogJianshu :dataSource="dataSource" :pagination="pagination" :onPageChange="onPageChange">
-                </BlogJianshu>
-            </template>
-        </template>
+  <template v-if="isServerResult.status === 200">
+    <template v-if="isValidValue(route.query.searchText)">
+      <template v-if="pagination.total < 1">
+        <a-alert
+          :message="`信息之海浩瀚无垠，这次可能没有捞到你想要的那条鱼！`"
+          type="warning"
+          show-icon
+          closable
+        ></a-alert>
+      </template>
+      <template v-else>
+        <a-alert
+          :message="`${seMessage}`"
+          type="success"
+          show-icon
+          closable
+        />
+        <div style="height: 10px;"></div>
+        <BlogJianshu :data-source="dataSource" :pagination="pagination" :on-page-change="onPageChange">
+        </BlogJianshu>
+      </template>
     </template>
     <template v-else>
-        <template v-if="isServerResult.status === 500">
-            <a-alert :message="isServerResult.message" type="error" show-icon closable></a-alert>
-        </template>
-        <template v-else>
-            <div class="loading-box">{{ isServerResult.message }}</div>
-        </template>
+      <template v-if="pagination.total < 1">
+        <a-alert
+          :message="`暂无数据！`"
+          type="warning"
+          show-icon
+          closable
+        ></a-alert>
+      </template>
+      <template v-else>
+        <BlogJianshu :data-source="dataSource" :pagination="pagination" :on-page-change="onPageChange">
+        </BlogJianshu>
+      </template>
     </template>
+  </template>
+  <template v-else>
+    <template v-if="isServerResult.status === 500">
+      <a-alert
+        :message="isServerResult.message"
+        type="error"
+        show-icon
+        closable
+      ></a-alert>
+    </template>
+    <template v-else>
+      <div class="loading-box">
+        {{ isServerResult.message }}
+      </div>
+    </template>
+  </template>
 </template>
 <script lang="ts" setup>
 // @ts-ignore
-import SystemConfig from "@/SystemConfig.js";
-import { ref, computed, onMounted, nextTick, watch } from 'vue';
+import { ref, onMounted, nextTick, watch } from 'vue';
 import { isValidValue, handleDecodemultiple, handleItemClick } from "@/utils/utils.js";
 // @ts-ignore
 import request from "@/utils/request.js";
 import { useRoute, useRouter } from 'vue-router';
 import BlogJianshu from './BlogJianShu.vue';
-import { error } from "jquery";
 
 const route = useRoute();
 const router = useRouter();
@@ -74,7 +94,7 @@ const handleGetList = () => {
         result.forEach((element: any) => {
             try {
                 element = handleDecodemultiple(element, element.key, ["title", "jianshu"]);
-            } catch (error) {
+            } catch {
 
             }
             // @ts-ignore
@@ -153,11 +173,11 @@ onMounted(async () => {
 });
 
 // 监听路由变化，重新获取数据
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 watch(route, (to, from) => {
     // 从 URL 参数中读取分页信息
     let index = to.query.index as string;
     let size = to.query.size as string;
-    let classId = to.query.classId as string;
 
     // 如果 URL 参数不存在，则使用默认值
     if (!isValidValue(index)) {

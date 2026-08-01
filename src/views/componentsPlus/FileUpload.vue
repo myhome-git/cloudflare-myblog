@@ -1,6 +1,13 @@
 <template>
-  <a-upload v-model:file-list="fileList" name="file" :action="props.url" v-model:headers="headers"
-    :showUploadList="false" @change="handleChange" :before-upload="beforeUpload">
+  <a-upload
+    v-model:file-list="fileList"
+    v-model:headers="headers"
+    name="file"
+    :action="props.url"
+    :show-upload-list="false"
+    :before-upload="beforeUpload"
+    @change="handleChange"
+  >
     <a-button type="primary" ghost>
       <upload-outlined></upload-outlined>
       上传文件

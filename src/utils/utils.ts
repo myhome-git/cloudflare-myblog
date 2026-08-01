@@ -169,9 +169,9 @@ export function getKey() {
     // 生成一个随机数
     Math.random()
     // 循环1000次
-    for (var i = 0; i < 1000; i++) {
+    for (let i = 0; i < 1000; i++) {
         // 生成两个随机数，分别表示字符在字符串中的位置
-        var x = parseInt((Math.random() * (key.length) + 1).toString()),
+        const x = parseInt((Math.random() * (key.length) + 1).toString()),
             y = parseInt((Math.random() * (key.length) + 1).toString()),
             // 获取两个位置的字符
             si = key.substring(x - 1, x),
@@ -188,16 +188,17 @@ export function getKey() {
 // 函数encodeString用于将字符串s进行编码，返回编码后的字符串e
 export function encodeString(keyStr: string, s: string) {
     // 定义一个空数组_array，用于存储编码后的字符
+    // eslint-disable-next-line no-underscore-dangle
     const _array: string[] = []
     let e = ''
     // 使用encodeURIComponent函数对字符串s进行编码
     s = encodeURIComponent(s)
     // 遍历0-127的字符
-    for (var i = 0; i < 128; i++) {
+    for (let i = 0; i < 128; i++) {
         // 将字符转换为字符串，并存储到_array数组中
         _array[i] = String.fromCharCode(i)
         // 在temp_str中查找该字符，如果找到了，则将keyStr中对应位置的字符替换到_array中
-        var li = KEY_BASE.indexOf(_array[i])
+        const li = KEY_BASE.indexOf(_array[i])
         if (li > -1) {
             _array[i] = keyStr.substring(li, li + 1)
         }
@@ -214,31 +215,35 @@ export function encodeString(keyStr: string, s: string) {
 // 解码函数，将keyStr和s作为参数传入
 export function decodeString(keyStr: string, s: string) {
     // 定义一个数组，用于存储字符编码
+    // eslint-disable-next-line no-underscore-dangle
     const _array: string[] = []
     let e = ''
     // 遍历0-127的字符编码
-    for (var i = 0; i < 128; i++) {
+    for (let i = 0; i < 128; i++) {
         // 将字符编码转换为字符，并存储到数组中
         _array[i] = String.fromCharCode(i)
         // 在临时字符串中查找该字符，并获取其索引
-        var li = KEY_BASE.indexOf(_array[i])
+        const li = KEY_BASE.indexOf(_array[i])
         // 如果找到了该字符，则将其替换为keyStr中的对应字符
         if (li > -1) {
             _array[i] = keyStr.substring(li, li + 1)
         }
     }
     // 将s赋值给_s
-    var _s = s
+    // eslint-disable-next-line no-underscore-dangle
+    const _s = s
     // 遍历_s中的每个字符
     for (let i = 0; i < _s.length; i++) {
         // 获取当前字符
-        var _d = _s[i]
+        // eslint-disable-next-line no-underscore-dangle
+        const _d = _s[i]
         // 定义一个变量，用于存储当前字符在_array中的索引
-        var _li = -1
+        // eslint-disable-next-line no-underscore-dangle
+        let _li = -1
         // 遍历_array中的每个字符
-        for (var x = 0; x < 128; x++) {
+        for (let x = 0; x < 128; x++) {
             // 如果找到了当前字符，则将其索引赋值给_li，并跳出循环
-            if (_array[x] == _d) {
+            if (_array[x] === _d) {
                 _li = x
                 break
             }

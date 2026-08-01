@@ -1,37 +1,44 @@
 <template>
-    <!--
+  <!--
     :style="{ ...(props.width ? { width: `${props.width}px` } : {}) }"
         :bodyStyle="{ ...(props.height ? { height: `calc(100% - 120px)`, overflow: 'auto' } : {}) }"
     -->
-    <a-modal class="a-modal-win" v-model:open="open" :wrap-style="{ overflow: 'hidden' }" @cancel="handleClickCancel"
-        :style="{ ...(props.width ? { width: `${props.width}px` } : {}) }" @ok="handleClickOK"
-        :okButtonProps="{ style: { display: props.modalStatus === 'view' ? 'none' : 'inline-block' } }"
-        :maskClosable="maskClosable">
-        <template #title>
-            <div ref="modalTitleRef" style="width: 100%; cursor: move; display: flex; align-items: center;">
-                <PlusOutlined v-if="(props.modalStatus || '').includes('add')" style="margin-right: 8px;" />
-                <EditOutlined v-else-if="(props.modalStatus || '').includes('edit')" style="margin-right: 8px;" />
-                <EyeOutlined v-else-if="(props.modalStatus || '').includes('view')" style="margin-right: 8px;" />
-                <span>{{ props.modalTitle || '' }}</span>
-            </div>
-        </template>
-        <div class="diy-form">
-            <slot name="form">表单内容</slot>
-        </div>
-        <template #modalRender="{ originVNode }">
-            <component :is="originVNode" />
-            <!-- <div :style="transformStyle"> -->
+  <a-modal
+    v-model:open="open"
+    class="a-modal-win"
+    :wrap-style="{ overflow: 'hidden' }"
+    :style="{ ...(props.width ? { width: `${props.width}px` } : {}) }"
+    :ok-button-props="{ style: { display: props.modalStatus === 'view' ? 'none' : 'inline-block' } }"
+    :mask-closable="maskClosable"
+    @cancel="handleClickCancel"
+    @ok="handleClickOK"
+  >
+    <template #title>
+      <div ref="modalTitleRef" style="width: 100%; cursor: move; display: flex; align-items: center;">
+        <PlusOutlined v-if="(props.modalStatus || '').includes('add')" style="margin-right: 8px;" />
+        <EditOutlined v-else-if="(props.modalStatus || '').includes('edit')" style="margin-right: 8px;" />
+        <EyeOutlined v-else-if="(props.modalStatus || '').includes('view')" style="margin-right: 8px;" />
+        <span>{{ props.modalTitle || '' }}</span>
+      </div>
+    </template>
+    <div class="diy-form">
+      <slot name="form">
+        表单内容
+      </slot>
+    </div>
+    <template #modalRender="{ originVNode }">
+      <component :is="originVNode" />
+      <!-- <div :style="transformStyle"> -->
 
-            <!-- </div> -->
-        </template>
-    </a-modal>
+      <!-- </div> -->
+    </template>
+  </a-modal>
 </template>
 <script lang="ts" setup>
 // 模态对话框
-import { useAttrs, useSlots, ref, defineModel, watch } from 'vue';
+import { useAttrs, ref, watch } from 'vue';
 import { PlusOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons-vue';
 const attrs = useAttrs();
-const slots = useSlots();
 // console.log(`modal透传对象`, attrs);
 // console.log(`modal透传插槽`, slots);
 
@@ -80,7 +87,7 @@ const isMaskClosable = () => {
     }
     return true;
 }
-watch(() => props.modalStatus, (newVal) => {
+watch(() => props.modalStatus, () => {
     maskClosable.value = isMaskClosable();
 });
 const open = defineModel("open");
@@ -97,6 +104,7 @@ function handleClickOK(e: MouseEvent) {
     }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const defaultHandleOk = (e: MouseEvent) => {
     open.value = false;
 };
@@ -110,6 +118,7 @@ function handleClickCancel(e: MouseEvent) {
     }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const defaultHandleCancel = (e: MouseEvent) => {
     open.value = false;
 };

@@ -1,43 +1,80 @@
 <template>
-    <Modal v-model:open="modalOpen" :modalStatus="modalStatus" :modalTitle="modalTitle" :width="modalWidth"
-        :height="modalHeight" :maskClosable="modalStatus == 'view'" :handleOk="handleOk" :handleCancel="handleCancel">
-        <template v-slot:form>
-            <a-form :model="formState" name="basic" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }"
-                autocomplete="off">
-                <a-form-item label="内容：" name="content" :rules="[{ required: true, message: '请输入内容' }]">
-                    <MarkdownEditor ref="refFormContent" :type="modalStatus" :height="`calc(${modalHeight}px - 200px)`" />
-                </a-form-item>
-            </a-form>
+  <Modal
+    v-model:open="modalOpen"
+    :modal-status="modalStatus"
+    :modal-title="modalTitle"
+    :width="modalWidth"
+    :height="modalHeight"
+    :mask-closable="modalStatus == 'view'"
+    :handle-ok="handleOk"
+    :handle-cancel="handleCancel"
+  >
+    <template #form>
+      <a-form
+        :model="formState"
+        name="basic"
+        :label-col="{ span: 2 }"
+        :wrapper-col="{ span: 22 }"
+        autocomplete="off"
+      >
+        <a-form-item label="内容：" name="content" :rules="[{ required: true, message: '请输入内容' }]">
+          <MarkdownEditor ref="refFormContent" :type="modalStatus" :height="`calc(${modalHeight}px - 200px)`" />
+        </a-form-item>
+      </a-form>
+    </template>
+  </Modal>
+  <Modal
+    v-model:open="modalRowOpen"
+    :bind-modal-row="bindModalRow"
+    modal-title="系统提示"
+    :handle-ok="handleRowOk"
+    :handle-cancel="handleRowCancel"
+  >
+    <template #form>
+      <p>
+        您确认要删除&nbsp;<span style="color:red;font-size:24px;">{{ bindModalRow.length }}</span>&nbsp;条数据吗？删除后不可恢复！
+      </p>
+    </template>
+  </Modal>
+  <Table
+    select-type="checkbox"
+    :data-source="dataSource"
+    :columns="columns"
+    :on-search="onSearch"
+    :on-refresh="onRefresh"
+    :on-row-add="onRowAdd"
+    :on-row-edit="onRowEdit"
+    :on-row-delete="onRowDelete"
+    :pagination="pagination"
+    :on-page-change="onPageChange"
+    :spinning="tableSpinning"
+    :locale-empty-text="tableLocaleEmptyText"
+    @on-selected="onSelected"
+    @on-delete-multiple="onDeleteMultiple"
+  >
+    <template #link="{ text, record, field }">
+      <template v-if="field === 'jianshu'">
+        <a class="blog-title" href="javascript:void(0)" @click="rowTitleClick(record)">{{ text }}</a>
+      </template>
+      <template v-else>
+        <span>{{ text }}</span>
+      </template>
+    </template>
+    <template #operation-row="{ record }">
+      <a-button
+        v-if="rowTitleClick"
+        size="small"
+        type="primary"
+        ghost
+        @click="rowTitleClick(record)"
+      >
+        <template #icon>
+          <EyeOutlined />
         </template>
-    </Modal>
-    <Modal :bindModalRow="bindModalRow" v-model:open="modalRowOpen" modalTitle="系统提示" :handleOk="handleRowOk"
-        :handleCancel="handleRowCancel">
-        <template v-slot:form>
-            <p>您确认要删除&nbsp;<span style="color:red;font-size:24px;">{{ bindModalRow.length }}</span>&nbsp;条数据吗？删除后不可恢复！
-            </p>
-        </template>
-    </Modal>
-    <Table selectType="checkbox" :dataSource="dataSource" :columns="columns" :onSearch="onSearch" :onRefresh="onRefresh"
-        :onRowAdd="onRowAdd" :onRowEdit="onRowEdit" :onRowDelete="onRowDelete" :pagination="pagination"
-        :onPageChange="onPageChange" @onSelected="onSelected" @onDeleteMultiple="onDeleteMultiple"
-        :spinning="tableSpinning" :localeEmptyText="tableLocaleEmptyText">
-        <template #link="{ text, record, field }">
-            <template v-if="field === 'jianshu'">
-                <a class="blog-title" href="javascript:void(0)" @click="rowTitleClick(record)">{{ text }}</a>
-            </template>
-            <template v-else>
-                <span>{{ text }}</span>
-            </template>
-        </template>
-        <template #operation-row="{ record }">
-            <a-button v-if="rowTitleClick" size="small" type="primary" ghost @click="rowTitleClick(record)">
-                <template #icon>
-                    <EyeOutlined />
-                </template>
-                View
-            </a-button>
-        </template>
-    </Table>
+        View
+      </a-button>
+    </template>
+  </Table>
 </template>
 <script lang="ts" setup>
 import { reactive, ref, onMounted, nextTick } from "vue";
@@ -98,7 +135,7 @@ const rowTitleClick = (v: any) => {
     });
 }
 // 添加
-const onRowAdd = (key: string) => {
+const onRowAdd = () => {
     modalStatus.value = "add";
     modalTitle.value = "新增数据";
     resetFormValue();
@@ -154,7 +191,7 @@ const handleRowCancel = () => {
 
 }
 // 选中回调函数
-const onSelected = (selectedRows: any[]) => {
+const onSelected = () => {
     // console.log("选中的行数据:", selectedRows);
     // 在这里处理选中的行数据
     // 例如，可以将选中的数据存储到一个响应式变量中
@@ -185,7 +222,7 @@ const modalHeight = ref(Math.max(768, window.screen.height - (modalStatus.value 
 const showModal = (value: boolean = true) => {
     modalOpen.value = value === undefined ? true : value;
 };
-const handleOk = async (e: MouseEvent) => {
+const handleOk = async () => {
     const value = modalStatus.value;
     let result = false;
     if (value === "add") {
@@ -220,7 +257,6 @@ interface FormState {
     content: string;
     readTop: boolean;
 }
-const formClassList = ref<any>(null);
 const formStateDefaultValue = <FormState>{
     classId: null,
     title: "",
@@ -340,7 +376,7 @@ const handleDelete = (sendData: any) => {
         url: `${apiURL}/multiple`,
         method: "delete",
         data: sendData
-    }).then((data: Object) => {
+    }).then(() => {
         handleGetList();
     }).catch((err: any) => {
         console.log(err);

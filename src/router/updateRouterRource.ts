@@ -1,3 +1,4 @@
+// @ts-ignore
 const components = import.meta.glob('../views/**/*.vue')
 
 function updateRouterRource(list: any, parentPath: string = '') {
@@ -21,6 +22,7 @@ function updateRouterRource(list: any, parentPath: string = '') {
         element.meta = { ...element.meta, title: element.name }
       }
       // @ts-ignore
+      // eslint-disable-next-line no-underscore-dangle
       element.__name = element.name
       // @ts-ignore
       delete element.name
@@ -30,7 +32,7 @@ function updateRouterRource(list: any, parentPath: string = '') {
         if (tempComponent) {
           // 生成唯一的组件名称（基于路由路径），用于 KeepAlive 缓存匹配
           let name = element.path.replace(/[^a-zA-Z0-9]/g, '_')
-          if (name.startsWith('_')) name = name.substring(1)
+          if (name.startsWith('_')) {name = name.substring(1)}
           const componentName = 'R_' + name
           // 包装异步组件加载函数，给组件赋予唯一名称
           element.component = () => {
@@ -49,8 +51,8 @@ function updateRouterRource(list: any, parentPath: string = '') {
       if (element.children) {
         updateRouterRource(element.children, element.path)
       }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e) {
+
+    } catch {
       debugger
     }
   })

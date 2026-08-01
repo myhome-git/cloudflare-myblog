@@ -1,32 +1,32 @@
 <template>
-    <div class="app-win">
-        <a-layout style="height: 100vh;">
-            <Sider v-model:collapsed="collapsed"></Sider>
-            <a-layout>
-                <a-layout-header>
-                    <span>
-                        <menu-unfold-outlined
-                            v-if="collapsed"
-                            class="trigger"
-                            @click="collapsed = !collapsed"
-                        />
-                        <menu-fold-outlined v-else class="trigger" @click="collapsed = !collapsed" />
-                    </span>
-                    <NavigationMenu></NavigationMenu>
-                </a-layout-header>
-                <a-layout-content style="margin: 0px;position: relative;">
-                    <div class="view-container-box" :style="{ padding: '0px' }">
-                        <div class="view-container" :style="{ minHeight: '360px' }">
-                        <Tabs></Tabs>
-                        </div>
-                    </div>
-                </a-layout-content>
-                <a-layout-footer style="text-align: center;padding:8px 50px;">
-                    联系方式：admin@myhome.top
-                </a-layout-footer>
-            </a-layout>
-        </a-layout>
-    </div>
+  <div class="app-win">
+    <a-layout style="height: 100vh;">
+      <Sider v-model:collapsed="collapsed"></Sider>
+      <a-layout>
+        <a-layout-header>
+          <span>
+            <menu-unfold-outlined
+              v-if="collapsed"
+              class="trigger"
+              @click="collapsed = !collapsed"
+            />
+            <menu-fold-outlined v-else class="trigger" @click="collapsed = !collapsed" />
+          </span>
+          <NavigationMenu></NavigationMenu>
+        </a-layout-header>
+        <a-layout-content style="margin: 0px;position: relative;">
+          <div class="view-container-box" :style="{ padding: '0px' }">
+            <div class="view-container" :style="{ minHeight: '360px' }">
+              <Tabs></Tabs>
+            </div>
+          </div>
+        </a-layout-content>
+        <a-layout-footer style="text-align: center;padding:8px 50px;">
+          联系方式：admin@myhome.top
+        </a-layout-footer>
+      </a-layout>
+    </a-layout>
+  </div>
 </template>
 <script lang="ts" setup>
 import { onMounted, nextTick, onUnmounted } from 'vue';

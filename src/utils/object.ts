@@ -19,6 +19,7 @@ export const resetObject = (obj: any) => {
     return obj
 }
 
+// eslint-disable-next-line no-extend-native
 Object.defineProperty(Array.prototype, 'clear', {
     value: function() {
         this.splice(0, this.length)

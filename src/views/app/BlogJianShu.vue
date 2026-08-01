@@ -1,42 +1,42 @@
 <template>
-    <template v-if="computedDataSource && computedDataSource.length > 0">
-        <div class="x-list">
-            <template v-for="item of computedDataSource" :key="item.id">
-                <a :href="`/app/blog?id=${item.id}`" target="_blank">
-                    <div class="x-item">
-                        <div class="item-title">
-                            <a-tag v-if="item.readTop == 'true'" color="red">置顶</a-tag>
-                            <span>{{ item.title }}</span>
-                        </div>
-                        <div class="item-content">
-                            <div class="c-text">
-                                {{ item.jianshu }}
-                            </div>
-                            <div class="c-footer">
-                                <i class="iconfont"></i>
-                                <span>时间：{{ item.create_time }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </template>
-            <!--分页-->
-            <template v-if="computedDataSource && computedDataSource.length > 0">
-                <div class="a-page-box">
-                    <a-pagination :current="index" :page-size="size" :total="total" :show-total="() => `共计 ${total} 条`"
-                        @change="onChange" />
-                </div>
-            </template>
+  <template v-if="computedDataSource && computedDataSource.length > 0">
+    <div class="x-list">
+      <template v-for="item of computedDataSource" :key="item.id">
+        <a :href="`/app/blog?id=${item.id}`" target="_blank">
+          <div class="x-item">
+            <div class="item-title">
+              <a-tag v-if="item.readTop == 'true'" color="red">置顶</a-tag>
+              <span>{{ item.title }}</span>
+            </div>
+            <div class="item-content">
+              <div class="c-text">
+                {{ item.jianshu }}
+              </div>
+              <div class="c-footer">
+                <i class="iconfont"></i>
+                <span>时间：{{ item.create_time }}</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </template>
+      <!--分页-->
+      <template v-if="computedDataSource && computedDataSource.length > 0">
+        <div class="a-page-box">
+          <a-pagination
+            :current="index"
+            :page-size="size"
+            :total="total"
+            :show-total="() => `共计 ${total} 条`"
+            @change="onChange"
+          />
         </div>
-    </template>
+      </template>
+    </div>
+  </template>
 </template>
 <script setup lang="ts">
-import { ref, defineProps, useAttrs, useSlots, watch, withDefaults, onMounted, nextTick, computed, unref } from "vue";
-import { handleItemClick, isValidValue } from '@/utils/utils';
-import { useRoute, useRouter } from "vue-router";
-
-const route = useRoute();
-const router = useRouter();
+import { onMounted, nextTick, computed } from "vue";
 
 // 定义 props
 const props = withDefaults(defineProps<{
@@ -48,11 +48,6 @@ const props = withDefaults(defineProps<{
         total: number
     }
 }>(), {});
-
-// 处理列表项点击事件
-const handleItemClickWrapper = (id: string) => {
-    handleItemClick({ id: id }, '/app/blog', router, false, true);
-};
 
 // 计算属性，用于处理 dataSource
 const computedDataSource = computed(() => {

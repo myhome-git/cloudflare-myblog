@@ -1,11 +1,11 @@
 <template>
-    <div class="app-logo">
-        <a href="/">
-            <i class="iconfont"></i>
-            <span>MyBlog </span><b>Beta</b>
-            <p>Tell the world we were here!</p>
-        </a>
-    </div>
+  <div class="app-logo">
+    <a href="/">
+      <i class="iconfont"></i>
+      <span>MyBlog </span><b>Beta</b>
+      <p>Tell the world we were here!</p>
+    </a>
+  </div>
 </template>
 <script setup lang="ts"></script>
 <style scoped>

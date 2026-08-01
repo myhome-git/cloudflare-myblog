@@ -1,5 +1,5 @@
 <template>
-  <div v-html="data"></div>
+  <div v-html="props.data"></div>
 </template>
 <script lang="ts" setup>
 // @ts-ignore

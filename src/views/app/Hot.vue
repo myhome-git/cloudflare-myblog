@@ -1,40 +1,43 @@
 <template>
-    <div class="app-unit">
-        <div class="unit-title">
-            <div class="t-value">热门排行</div>
-        </div>
-        <div class="unit-content">
-            <template v-if="computedDataSource.length > 0">
-                <ul>
-                    <template v-for="(item, index) of computedDataSource" :key="item.id">
-                        <li>
-                            <a-tag :color="item.color">
-                                {{ index + 1 }}
-                            </a-tag>
-                            <a href="javascript:void(0)" @click="handleItemClickWrapper(item.id)" :title="item.title">
-                                {{ item.title }}
-                            </a>
-                        </li>
-                    </template>
-                </ul>
-            </template>
-            <template v-else>
-                <div class="no-data">暂无数据</div>
-            </template>
-        </div>
+  <div class="app-unit">
+    <div class="unit-title">
+      <div class="t-value">
+        热门排行
+      </div>
     </div>
+    <div class="unit-content">
+      <template v-if="computedDataSource.length > 0">
+        <ul>
+          <template v-for="(item, index) of computedDataSource" :key="item.id">
+            <li>
+              <a-tag :color="item.color">
+                {{ index + 1 }}
+              </a-tag>
+              <a href="javascript:void(0)" :title="item.title" @click="handleItemClickWrapper(item.id)">
+                {{ item.title }}
+              </a>
+            </li>
+          </template>
+        </ul>
+      </template>
+      <template v-else>
+        <div class="no-data">
+          暂无数据
+        </div>
+      </template>
+    </div>
+  </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed, useAttrs, watch } from 'vue';
+import { computed, useAttrs } from 'vue';
 import { handleItemClick } from '@/utils/utils';
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
-const route = useRoute();
 const router = useRouter();
 
 // 透传对象属性和方法
 const attrs = useAttrs();
-const { dataSource, onPageChange } = attrs as {
+const { dataSource } = attrs as {
     dataSource?: any[] | { value: any[] },
     onPageChange?: (index: number, size: number) => void,
     pagination?: {

@@ -68,9 +68,6 @@
 </template>
 
 <script lang="ts" setup>
-// @ts-ignore
-import SystemConfig from "@/SystemConfig";
-// @ts-ignore
 import request from "@/utils/request.js";
 import { handleDecodemultiple } from "@/utils/utils.js";
 import { ref, onMounted, onUnmounted } from 'vue';
@@ -174,7 +171,7 @@ const handleGetListBlog = () => {
     data.result.forEach((element: any) => {
       try {
         element = handleDecodemultiple(element, element.key, ["title"]);
-      } catch (error) {
+      } catch {
 
       }
       // @ts-ignore

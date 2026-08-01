@@ -1,20 +1,23 @@
 <template>
-    <div class="app-nav">
-        <div class="li" :class="{ active: route.query.classId === 'home' }" @click="handleItemClickWrapper({}, '/')">
-            Home
-        </div>
-        <template v-if="computedDataSource.length > 0">
-            <template v-for="(item, index) of computedDataSource" :key="item.id">
-                <li class="li" :class="{ active: route.query.classId === `${item.id}` }"
-                    @click="handleItemClickWrapper({ classId: item.id }, '/')">
-                    <span>{{ item.name }}</span>
-                </li>
-            </template>
-        </template>
+  <div class="app-nav">
+    <div class="li" :class="{ active: route.query.classId === 'home' }" @click="handleItemClickWrapper({}, '/')">
+      Home
     </div>
+    <template v-if="computedDataSource.length > 0">
+      <template v-for="(item) of computedDataSource" :key="item.id">
+        <li
+          class="li"
+          :class="{ active: route.query.classId === `${item.id}` }"
+          @click="handleItemClickWrapper({ classId: item.id }, '/')"
+        >
+          <span>{{ item.name }}</span>
+        </li>
+      </template>
+    </template>
+  </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed, useAttrs } from 'vue';
+import {  computed, useAttrs } from 'vue';
 import { handleItemClick } from '@/utils/utils';
 import { useRoute, useRouter } from "vue-router";
 
@@ -28,7 +31,7 @@ const handleItemClickWrapper = (obj: any, url: string) => {
 
 // 透传对象属性和方法
 const attrs = useAttrs();
-const { dataSource, onPageChange } = attrs as {
+const { dataSource } = attrs as {
     dataSource?: any[] | { value: any[] },
     onPageChange?: (index: number, size: number) => void,
     pagination?: {
