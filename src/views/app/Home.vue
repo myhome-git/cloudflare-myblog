@@ -6,7 +6,7 @@
         </div>
         <div class="x-layout layout-nav">
             <div class="x-container">
-                <Nav :data-source="dataSourceNav"></Nav>
+                <Nav :dataSource="dataSourceNav"></Nav>
             </div>
         </div>
         <div class="x-container flex-auto">
@@ -16,10 +16,9 @@
                         <RouterView></RouterView>
                     </template>
                     <template #right>
-                        <Hot :data-source="dataSourceHot"></Hot>
+                        <Hot :dataSource="dataSourceHot"></Hot>
                         <div style="height: 14px;"></div>
-                        <Link :data-source="dataSourceLink">
-                        </Link>
+                        <Link :dataSource="dataSourceLink"></Link>
                     </template>
                 </Content>
             </div>

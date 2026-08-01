@@ -101,6 +101,7 @@ export default [
             'vue/html-indent': ['error', 4], // 4空格缩进（模板）
             'vue/multi-word-component-names': 'off', // 允许单个单词的组件名称
             'vue/html-self-closing': 'off',
+            'vue/attribute-hyphenation': 'off', // 禁止自动将 prop 名从 camelCase 转为 kebab-case
             'vue/max-attributes-per-line': ['error', { 'singleline': 3, 'multiline': 1 }],
             'vue/no-empty-component-block': 'off',
             'vue/valid-template-root': 'off',

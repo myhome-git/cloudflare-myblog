@@ -1,6 +1,11 @@
 <template>
     <template v-if="computedDataSource && computedDataSource.length > 0">
         <div class="x-list">
+            <div class="unit-title">
+                <div class="t-value">
+                    文章列表
+                </div>
+            </div>
             <template v-for="item of computedDataSource" :key="item.id">
                 <a :href="`/app/blog?id=${item.id}`" target="_blank">
                     <div class="x-item">
@@ -81,6 +86,43 @@ onMounted(async function () {
 .x-list {
     border: 1px solid #ddd;
     border-radius: 5px;
+}
+.x-list .unit-title {
+    line-height: 40px;
+    height: 40px;
+    padding: 0px 10px 0px 10px;
+    background-color: #e8e7e3;
+    position: relative;
+}
+
+.x-list .unit-title::after {
+    content: '';
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    /* z-index: -1; */
+    border-bottom: 1px solid #ddd;
+}
+
+.x-list .unit-title .t-value {
+    float: left;
+    font-size: 16px;
+    color: #333;
+    font-weight: 400;
+}
+
+.x-list .unit-title .t-more {
+    float: right;
+    font-size: 14px;
+    color: #999;
+}
+
+.x-list .unit-title .t-value {
+    font-size: 16px;
+    color: #333;
+    font-weight: 400;
 }
 
 .x-item {
