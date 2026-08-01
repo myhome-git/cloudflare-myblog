@@ -20,6 +20,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { SettingOutlined, HomeOutlined } from '@ant-design/icons-vue';
 import ThemeSetting from './ThemeSetting.vue';
+import request from "@/utils/request";
 
 const current = ref<string[]>(['app']);
 const router = useRouter();
@@ -30,8 +31,7 @@ const onClick = (info: { key: string; keyPath: string[] }) => {
             router.push('/app');
             break;
         case 'out-system':
-            sessionStorage.removeItem('token');
-            router.push('/');
+            onUserOut();
             break;
         default:
             console.log('Unknown menu item selected');
@@ -40,6 +40,19 @@ const onClick = (info: { key: string; keyPath: string[] }) => {
         current.value = [];
     }, 300);
 }
+
+// 编辑
+const onUserOut = () => {
+    request({
+        url: `/api/user/out`
+    }).then(() => {
+        sessionStorage.removeItem("username");
+        router.push('/');
+    }).catch((err: any) => {
+        console.error(err);
+    });
+
+};
 </script>
 <style scoped>
 .ant-menu-horizontal {

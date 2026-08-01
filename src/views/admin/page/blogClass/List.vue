@@ -63,11 +63,9 @@
     </Table>
 </template>
 <script lang="ts" setup>
-// @ts-ignore
 import { reactive, ref, onMounted, nextTick } from "vue";
 import { message } from "ant-design-vue";
-// @ts-ignore
-import request from "@/utils/request.js";
+import request from "@/utils/request";
 import { isValidValue } from "@/utils/utils.js";
 import Table from "@/views/componentsPlus/Table.vue";
 import Modal from "@/views/componentsPlus/Modal.vue";
