@@ -1,59 +1,59 @@
 <template>
-  <!--
+    <!--
     :style="{ ...(props.width ? { width: `${props.width}px` } : {}) }"
         :bodyStyle="{ ...(props.height ? { height: `calc(100% - 120px)`, overflow: 'auto' } : {}) }"
     -->
-  <a-modal
-    v-model:open="open"
-    class="a-modal-win"
-    :closable="false"
-    :destroy-on-close="true"
-    :wrap-class-name="fullscreen?'full-modal':''"
-    :wrap-style="{ overflow: 'hidden' }"
-    :style="{ 
-      ...(props.width ? { width: `${props.width}px` } : {})
-    }"
-    :confirm-loading="confirmLoading"
-    :ok-text="props.okText"
-    :ok-button-props="okButtonProps"
-    :cancel-text="props.cancelText"
-    :cancel-button-props="cancelButtonProps"
-    :mask-closable="maskClosable"
-    @ok="onClickOK"
-    @cancel="onClickCancel"
-  >
-    <template #title>
-      <div ref="modalTitleRef" style="width: 100%; cursor: move; display: flex; align-items: center;">
-        <slot name="title">
-          <PlusOutlined v-if="(props.status || '').includes('add')" style="margin-right: 8px;" />
-          <EditOutlined v-else-if="(props.status || '').includes('edit')" style="margin-right: 8px;" />
-          <EyeOutlined v-else-if="(props.status || '').includes('view')" style="margin-right: 8px;" />
-          <span>{{ props.title || '' }}</span>
-          <div class="title-button">
-            <a-button
-              v-if="props.fullscreen"
-              type="text"
-              danger
-              @click="handleClickFullscreen"
-            >
-              <FullscreenOutlined />
-            </a-button>
-            <a-button type="text" danger @click="onClickCancel">
-              <CloseOutlined />
-            </a-button>
-          </div>
-        </slot>
-      </div>
-    </template>
-    <div class="diy-form" :style="{height:`${props.height}px`}">
-      <slot name="default">
-        表单内容
-      </slot>
-    </div>
-    <template #modalRender="{ originVNode }">
-      <component :is="originVNode" />
-    </template>
-  </a-modal>
+    <a-modal
+        v-model:open="open"
+        class="a-modal-win"
+        :closable="false"
+        :destroy-on-close="true"
+        :wrap-class-name="fullscreen?'full-modal':''"
+        :wrap-style="{ overflow: 'hidden' }"
+        :style="{ 
+            ...(props.width ? { width: `${props.width}px` } : {})
+        }"
+        :confirm-loading="confirmLoading"
+        :ok-text="props.okText"
+        :ok-button-props="okButtonProps"
+        :cancel-text="props.cancelText"
+        :cancel-button-props="cancelButtonProps"
+        :mask-closable="maskClosable"
+        @ok="onClickOK"
+        @cancel="onClickCancel"
+    >
+        <template #title>
+            <div ref="modalTitleRef" style="width: 100%; cursor: move; display: flex; align-items: center;">
+                <slot name="title">
+                    <PlusOutlined v-if="(props.status || '').includes('add')" style="margin-right: 8px;" />
+                    <EditOutlined v-else-if="(props.status || '').includes('edit')" style="margin-right: 8px;" />
+                    <EyeOutlined v-else-if="(props.status || '').includes('view')" style="margin-right: 8px;" />
+                    <span>{{ props.title || '' }}</span>
+                    <div class="title-button">
+                        <a-button
+                            v-if="props.fullscreen"
+                            type="text"
+                            danger
+                            @click="handleClickFullscreen"
+                        >
+                            <FullscreenOutlined />
+                        </a-button>
+                        <a-button type="text" danger @click="onClickCancel">
+                            <CloseOutlined />
+                        </a-button>
+                    </div>
+                </slot>
+            </div>
+        </template>
+        <div class="diy-form" :style="{height:`${props.height}px`}">
+            <slot name="default">
+                表单内容
+            </slot>
+        </div>
+        <template #modalRender="{ originVNode }">
+            <component :is="originVNode" />
+        </template>
+    </a-modal>
 </template>
 <script lang="ts" setup>
 // 模态对话框
@@ -125,44 +125,44 @@ const props = defineProps({
         default: () => ({})
     },
     cancelText: {
-      type: [String, Function],
-      required: false,
-      default: '取消'
+        type: [String, Function],
+        required: false,
+        default: '取消'
     },
     okText: {
-      type: [String, Function],
-      required: false,
-      default: '确定'
+        type: [String, Function],
+        required: false,
+        default: '确定'
     }
 });
 
 const okButtonProps = computed(() => {
-  let display = 'inline-block'
-  if(toObject(props.visible) === false){
-    display = 'none'
-  }else if(props.status === 'view'){
-    display = 'none'
-  }
-  return Object.assign({}, props.okButtonProps, {
-    style: {
-      display
-    },
-    disabled: toObject(props.disabled)
-  })
+    let display = 'inline-block'
+    if(toObject(props.visible) === false){
+        display = 'none'
+    }else if(props.status === 'view'){
+        display = 'none'
+    }
+    return Object.assign({}, props.okButtonProps, {
+        style: {
+            display
+        },
+        disabled: toObject(props.disabled)
+    })
 })
 const cancelButtonProps = computed(() => {
-  let display = 'inline-block'
-  if(toObject(props.visible) === false){
-    display = 'none'
-  }else if(props.status === 'view'){
-    display = 'none'
-  }
-  return Object.assign({}, props.okButtonProps, {
-    style: {
-      display
-    },
-    disabled: toObject(props.disabled)
-  })
+    let display = 'inline-block'
+    if(toObject(props.visible) === false){
+        display = 'none'
+    }else if(props.status === 'view'){
+        display = 'none'
+    }
+    return Object.assign({}, props.okButtonProps, {
+        style: {
+            display
+        },
+        disabled: toObject(props.disabled)
+    })
 })
 
 const open = defineModel("open")
@@ -181,52 +181,52 @@ const maskClosable = computed(() => {
 // 按钮确定被点击
 const confirmLoading = ref(false)
 async function onClickOK(e: MouseEvent) {
-  // 代理点击确认回调，统一处理同步/异步错误
-  const proxyClickOK = async (e: any) => {
-    if (!props.handleClickOK) {
-      return undefined
+    // 代理点击确认回调，统一处理同步/异步错误
+    const proxyClickOK = async (e: any) => {
+        if (!props.handleClickOK) {
+            return undefined
+        }
+        try {
+            // 同步和异步错误都能被捕获
+            return await Promise.resolve(props.handleClickOK(e))
+        } catch {
+            // console.error('handleClickOK 执行出错:', error)
+            // 返回错误标识，让上层知道执行失败，不关闭弹窗
+            return false
+        }
     }
-    try {
-      // 同步和异步错误都能被捕获
-      return await Promise.resolve(props.handleClickOK(e))
-    } catch {
-      // console.error('handleClickOK 执行出错:', error)
-      // 返回错误标识，让上层知道执行失败，不关闭弹窗
-      return false
+    if (props.handleClickOK) {
+        confirmLoading.value = true
+        try {
+            const result = await proxyClickOK(e)
+            // 如果返回 false，则不关闭模态框
+            if (result !== false) {
+                defaultHandleCancel(e)
+            }
+            return result
+        } finally {
+            confirmLoading.value = false
+        }
+    } else {
+        return defaultHandleCancel(e)
     }
-  }
-  if (props.handleClickOK) {
-    confirmLoading.value = true
-    try {
-      const result = await proxyClickOK(e)
-      // 如果返回 false，则不关闭模态框
-      if (result !== false) {
-        defaultHandleCancel(e)
-      }
-      return result
-    } finally {
-      confirmLoading.value = false
-    }
-  } else {
-    return defaultHandleCancel(e)
-  }
 };
 
 // 按钮取消被点击
 async function onClickCancel(e: MouseEvent) {
     if (props.handleClickCancel) {
-    const result = await props.handleClickCancel(e)
-    // 如果返回 false，则不关闭模态框
-    if (result !== false) {
-        defaultHandleCancel(e)
+        const result = await props.handleClickCancel(e)
+        // 如果返回 false，则不关闭模态框
+        if (result !== false) {
+            defaultHandleCancel(e)
+        }
+        return result
+    } else {
+        return defaultHandleCancel(e)
     }
-    return result
-  } else {
-    return defaultHandleCancel(e)
-  }
 };
 function handleClickFullscreen(){
-  fullscreen.value = !fullscreen.value
+    fullscreen.value = !fullscreen.value
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -242,48 +242,48 @@ let dragInstance: any = null
 // 鼠标按下事件处理
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function handleMouseDown(e: MouseEvent) {
-  if (!draggableInited.value) {
-    const ele = document.querySelector('.ant-modal-wrap');
-    if (ele) {
-      dragInstance = new Draggable(ele, {
-        // 拖拽handle设置为Modal头部
-        handle: document.querySelector('.ant-modal-header')
-      })
-      draggableInited.value = true
+    if (!draggableInited.value) {
+        const ele = document.querySelector('.ant-modal-wrap');
+        if (ele) {
+            dragInstance = new Draggable(ele, {
+                // 拖拽handle设置为Modal头部
+                handle: document.querySelector('.ant-modal-header')
+            })
+            draggableInited.value = true
+        }
     }
-  }
   
-  // 绑定鼠标松开事件到 document，确保在任意位置松开都能触发
-  document.addEventListener('mouseup', handleMouseUp)
+    // 绑定鼠标松开事件到 document，确保在任意位置松开都能触发
+    document.addEventListener('mouseup', handleMouseUp)
 }
 
 // 鼠标松开事件处理
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function handleMouseUp(e: MouseEvent) {
-  // 解绑鼠标松开事件
-  document.removeEventListener('mouseup', handleMouseUp)
+    // 解绑鼠标松开事件
+    document.removeEventListener('mouseup', handleMouseUp)
   
-  // 如果需要在松开时做其他处理，可以在这里添加
+    // 如果需要在松开时做其他处理，可以在这里添加
 }
 
 onMounted(() => {
-  nextTick(() => {
+    nextTick(() => {
     // 确保DOM已渲染完成后获取元素引用
-    if (modalTitleRef.value) {
-      // 绑定鼠标按下事件
-      modalTitleRef.value.addEventListener('mousedown', handleMouseDown)
-    }
-  })
+        if (modalTitleRef.value) {
+            // 绑定鼠标按下事件
+            modalTitleRef.value.addEventListener('mousedown', handleMouseDown)
+        }
+    })
 })
 
 // 组件卸载时清理事件监听器
 onUnmounted(() => {
-  if (modalTitleRef.value) {
-    modalTitleRef.value.removeEventListener('mousedown', handleMouseDown)
-  }
-  if (dragInstance) {
-    dragInstance.destroy()
-  }
+    if (modalTitleRef.value) {
+        modalTitleRef.value.removeEventListener('mousedown', handleMouseDown)
+    }
+    if (dragInstance) {
+        dragInstance.destroy()
+    }
 })
 
 </script>

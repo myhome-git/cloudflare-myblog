@@ -325,8 +325,8 @@ export const handleItemClick = (obj: any, url: string, router: any, mergeQuery: 
 }
 
 export function toObject(obj: any){
-  if(typeof obj === 'function'){
-    return obj()
-  }
-  return unref(obj)
+    if(typeof obj === 'function'){
+        return obj()
+    }
+    return unref(obj)
 }

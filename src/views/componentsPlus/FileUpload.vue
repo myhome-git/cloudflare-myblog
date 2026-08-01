@@ -1,18 +1,18 @@
 <template>
-  <a-upload
-    v-model:file-list="fileList"
-    v-model:headers="headers"
-    name="file"
-    :action="props.url"
-    :show-upload-list="false"
-    :before-upload="beforeUpload"
-    @change="handleChange"
-  >
-    <a-button type="primary" ghost>
-      <upload-outlined></upload-outlined>
-      上传文件
-    </a-button>
-  </a-upload>
+    <a-upload
+        v-model:file-list="fileList"
+        v-model:headers="headers"
+        name="file"
+        :action="props.url"
+        :show-upload-list="false"
+        :before-upload="beforeUpload"
+        @change="handleChange"
+    >
+        <a-button type="primary" ghost>
+            <upload-outlined></upload-outlined>
+            上传文件
+        </a-button>
+    </a-upload>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
@@ -21,42 +21,42 @@ import { UploadOutlined } from '@ant-design/icons-vue';
 import type { UploadChangeParam } from 'ant-design-vue';
 
 const props = defineProps({
-  url: {
-    type: String,
-    required: false,
-    default: "/api/files/upload"
-  }
+    url: {
+        type: String,
+        required: false,
+        default: "/api/files/upload"
+    }
 });
 
 const emit = defineEmits(["onUploadSuccess"]);
 
 const headers = ref({
-  authorization: 'authorization-text',
-  tempfilename: ""
+    authorization: 'authorization-text',
+    tempfilename: ""
 });
 
 const beforeUpload = (file: any) => {
-  const value = headers.value;
-  value.tempfilename = encodeURIComponent(file.name);
-  return true;
+    const value = headers.value;
+    value.tempfilename = encodeURIComponent(file.name);
+    return true;
 }
 
 const handleChange = (info: UploadChangeParam) => {
-  if (info.file.status !== 'uploading') {
+    if (info.file.status !== 'uploading') {
     // console.log(info.file, info.fileList);
-  }
-  if (info.file.status === 'done') {
-    console.log(info);
-    try {
-      const response = info.file.response;
-      emit("onUploadSuccess",response.result);
-    } catch (error) {
-      console.error(error instanceof Error ? error.message : error);
     }
-    message.success(`${info.file.name} file uploaded successfully`);
-  } else if (info.file.status === 'error') {
-    message.error(`${info.file.name} file upload failed.`);
-  }
+    if (info.file.status === 'done') {
+        console.log(info);
+        try {
+            const response = info.file.response;
+            emit("onUploadSuccess",response.result);
+        } catch (error) {
+            console.error(error instanceof Error ? error.message : error);
+        }
+        message.success(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+    }
 };
 
 const fileList = ref([]);

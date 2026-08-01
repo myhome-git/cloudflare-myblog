@@ -1,80 +1,80 @@
 <template>
-  <Modal
-    v-model:open="modalOpen"
-    :modal-status="modalStatus"
-    :modal-title="modalTitle"
-    :width="modalWidth"
-    :height="modalHeight"
-    :mask-closable="false"
-    :handle-ok="handleOk"
-    :handle-cancel="handleCancel"
-  >
-    <template #form>
-      <a-form
-        :model="formState"
-        name="basic"
-        :label-col="{ span: 4 }"
-        :wrapper-col="{ span: 20 }"
-        autocomplete="off"
-      >
-        <a-form-item label="分类：" name="classId" :rules="[{ required: false, message: '未选择任何选项' }]">
-          <Select v-model:value="formState.classId" :options="formClassList" style="width:300px"></Select>
-        </a-form-item>
-        <a-form-item label="标题：" name="title" :rules="[{ required: true, message: '请输入标题' }]">
-          <a-input v-model:value="formState.title" />
-        </a-form-item>
-        <a-form-item label="标签：" name="tags" :rules="[{ required: false, message: '请输入标签，多个标签可以用逗号隔开' }]">
-          <a-input v-model:value="formState.tags" />
-        </a-form-item>
-        <a-form-item label="内容：" name="content" :rules="[{ required: true, message: '请输入内容' }]">
-          <MarkdownEditor ref="refFormContent" :height="`calc(${modalHeight}px - 500px)`" />
-        </a-form-item>
-        <a-form-item label=" " name="name" :rules="[{ required: false, message: '请输入是否置顶' }]">
-          <a-checkbox v-model:checked="formState.readTop">
-            是否置顶
-          </a-checkbox>
-        </a-form-item>
-      </a-form>
-    </template>
-  </Modal>
-  <Modal
-    v-model:open="modalRowOpen"
-    :bind-modal-row="bindModalRow"
-    modal-title="系统提示"
-    :handle-ok="handleRowOk"
-    :handle-cancel="handleRowCancel"
-  >
-    <template #form>
-      <p>
-        您确认要删除&nbsp;<span style="color:red;font-size:24px;">{{ bindModalRow.length }}</span>&nbsp;条数据吗？删除后不可恢复！
-      </p>
-    </template>
-  </Modal>
-  <Table
-    select-type="checkbox"
-    :data-source="dataSource"
-    :columns="columns"
-    :on-search="onSearch"
-    :on-refresh="onRefresh"
-    :on-row-add="onRowAdd"
-    :on-row-edit="onRowEdit"
-    :on-row-delete="onRowDelete"
-    :pagination="pagination"
-    :on-page-change="onPageChange"
-    :spinning="tableSpinning"
-    :locale-empty-text="tableLocaleEmptyText"
-    @on-selected="onSelected"
-    @on-delete-multiple="onDeleteMultiple"
-  >
-    <template #link="{ text, record, field }">
-      <template v-if="field === 'title'">
-        <a class="blog-title" :href="`/app/blog?id=${record[uuidName]}`" target="_blank">{{ text }}</a>
-      </template>
-      <template v-else>
-        <span>{{ text }}</span>
-      </template>
-    </template>
-  </Table>
+    <Modal
+        v-model:open="modalOpen"
+        :modal-status="modalStatus"
+        :modal-title="modalTitle"
+        :width="modalWidth"
+        :height="modalHeight"
+        :mask-closable="false"
+        :handle-ok="handleOk"
+        :handle-cancel="handleCancel"
+    >
+        <template #form>
+            <a-form
+                :model="formState"
+                name="basic"
+                :label-col="{ span: 4 }"
+                :wrapper-col="{ span: 20 }"
+                autocomplete="off"
+            >
+                <a-form-item label="分类：" name="classId" :rules="[{ required: false, message: '未选择任何选项' }]">
+                    <Select v-model:value="formState.classId" :options="formClassList" style="width:300px"></Select>
+                </a-form-item>
+                <a-form-item label="标题：" name="title" :rules="[{ required: true, message: '请输入标题' }]">
+                    <a-input v-model:value="formState.title" />
+                </a-form-item>
+                <a-form-item label="标签：" name="tags" :rules="[{ required: false, message: '请输入标签，多个标签可以用逗号隔开' }]">
+                    <a-input v-model:value="formState.tags" />
+                </a-form-item>
+                <a-form-item label="内容：" name="content" :rules="[{ required: true, message: '请输入内容' }]">
+                    <MarkdownEditor ref="refFormContent" :height="`calc(${modalHeight}px - 500px)`" />
+                </a-form-item>
+                <a-form-item label=" " name="name" :rules="[{ required: false, message: '请输入是否置顶' }]">
+                    <a-checkbox v-model:checked="formState.readTop">
+                        是否置顶
+                    </a-checkbox>
+                </a-form-item>
+            </a-form>
+        </template>
+    </Modal>
+    <Modal
+        v-model:open="modalRowOpen"
+        :bind-modal-row="bindModalRow"
+        modal-title="系统提示"
+        :handle-ok="handleRowOk"
+        :handle-cancel="handleRowCancel"
+    >
+        <template #form>
+            <p>
+                您确认要删除&nbsp;<span style="color:red;font-size:24px;">{{ bindModalRow.length }}</span>&nbsp;条数据吗？删除后不可恢复！
+            </p>
+        </template>
+    </Modal>
+    <Table
+        select-type="checkbox"
+        :data-source="dataSource"
+        :columns="columns"
+        :on-search="onSearch"
+        :on-refresh="onRefresh"
+        :on-row-add="onRowAdd"
+        :on-row-edit="onRowEdit"
+        :on-row-delete="onRowDelete"
+        :pagination="pagination"
+        :on-page-change="onPageChange"
+        :spinning="tableSpinning"
+        :locale-empty-text="tableLocaleEmptyText"
+        @on-selected="onSelected"
+        @on-delete-multiple="onDeleteMultiple"
+    >
+        <template #link="{ text, record, field }">
+            <template v-if="field === 'title'">
+                <a class="blog-title" :href="`/app/blog?id=${record[uuidName]}`" target="_blank">{{ text }}</a>
+            </template>
+            <template v-else>
+                <span>{{ text }}</span>
+            </template>
+        </template>
+    </Table>
 </template>
 <script lang="ts" setup>
 import { reactive, ref, onMounted, nextTick } from "vue";
@@ -223,7 +223,7 @@ const refFormContent = ref<{
     setValue: (value: string) => void;
     getValue: () => string;
     clearValue: () => void;
-} | null>(null);
+        } | null>(null);
 interface FormState {
     classId: number | null;
     title: string;

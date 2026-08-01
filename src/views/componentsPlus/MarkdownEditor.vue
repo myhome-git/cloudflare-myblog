@@ -1,26 +1,26 @@
 <template>
-  <div class="markdown-container" :style="{ height: props.height ? props.height.toString() : '100%' }" @keydown="onKeydown">
-    <MdEditor
-      v-if="props.type !== 'view'"
-      v-model="markdownValue"
-      :editor-id="uuid"
-      :theme="theme"
-      :preview-theme="previewTheme"
-      :language="language"
-      :style="{ height: '100%' }"
-      :on-change="onChange"
-    />
-    <MdPreview
-      v-else
-      :model-value="markdownValue"
-      :editor-id="uuid"
-      :theme="theme"
-      :preview-theme="previewTheme"
-      :language="language"
-      :style="{ height: '100%' }"
-      :on-change="onChange"
-    />
-  </div>
+    <div class="markdown-container" :style="{ height: props.height ? props.height.toString() : '100%' }" @keydown="onKeydown">
+        <MdEditor
+            v-if="props.type !== 'view'"
+            v-model="markdownValue"
+            :editor-id="uuid"
+            :theme="theme"
+            :preview-theme="previewTheme"
+            :language="language"
+            :style="{ height: '100%' }"
+            :on-change="onChange"
+        />
+        <MdPreview
+            v-else
+            :model-value="markdownValue"
+            :editor-id="uuid"
+            :theme="theme"
+            :preview-theme="previewTheme"
+            :language="language"
+            :style="{ height: '100%' }"
+            :on-change="onChange"
+        />
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -31,22 +31,22 @@ import 'md-editor-v3/lib/style.css'
 import { createUUID } from "@/utils/utils";
 
 const props = defineProps({
-  type: {
-    type: String,
-    default: 'edit&preview'
-  },
-  value: {
-    type: String,
-    default: ''
-  },
-  height: {
-    type: String,
-    default: '100%'
-  }
+    type: {
+        type: String,
+        default: 'edit&preview'
+    },
+    value: {
+        type: String,
+        default: ''
+    },
+    height: {
+        type: String,
+        default: '100%'
+    }
 })
 const markdownValue = ref(props.value);
 watch(() => props.value, (newValue) => {
-  markdownValue.value = newValue;
+    markdownValue.value = newValue;
 })
 
 const uuid = `markdown-${createUUID()}`;
@@ -56,34 +56,34 @@ const previewTheme = ref('github' as const);
 const language = ref('zh-CN');
 
 const onChange = (value: string) => {
-  markdownValue.value = value;
+    markdownValue.value = value;
 }
 
 // 阻止 Esc 键冒泡，防止触发全局关闭事件
 const onKeydown = (e: KeyboardEvent) => {
-  if (e.key === 'Escape') {
-    e.stopPropagation();
-  }
+    if (e.key === 'Escape') {
+        e.stopPropagation();
+    }
 }
 
 // 设置内容
 const setValue = (value: string) => {
-  markdownValue.value = value;
+    markdownValue.value = value;
 }
 const getValue = (): string => {
-  return markdownValue.value || '';
+    return markdownValue.value || '';
 }
 const clearValue = () => {
-  markdownValue.value = '';
+    markdownValue.value = '';
 }
 const getHtml = () => {
-  return '';
+    return '';
 }
 const getPreviewer = () => {
-  return null;
+    return null;
 }
 const exportToFile = () => {
-  // md-editor-v3 无内置导出功能
+    // md-editor-v3 无内置导出功能
 }
 
 // 暴露给父组件的方法

@@ -1,33 +1,33 @@
 <template>
-  <a-collapse
-    active-key="1"
-    :accordion="false"
-    :bordered="true"
-    ghost
-  >
-    <a-collapse-panel key="1" :show-arrow="false">
-      <template #header>
-        <a-alert message="cloudflare 额度" type="info" />
-      </template>
-      <a-list item-layout="horizontal" :data-source="dataSource" size="small">
-        <template #renderItem="{ item }">
-          <a-list-item>
-            <a-list-item-meta>
-              <template #title>
-                {{ item.title }}
-              </template>
-              <template #description>
-                {{ item.remarks }}
-              </template>                            
-            </a-list-item-meta>
-          </a-list-item>
-        </template>
-      </a-list>
-    </a-collapse-panel>
-    <a-collapse-panel key="1" header="This is panel header 2" :show-arrow="false">
-      <p>123</p>
-    </a-collapse-panel>
-  </a-collapse>
+    <a-collapse
+        active-key="1"
+        :accordion="false"
+        :bordered="true"
+        ghost
+    >
+        <a-collapse-panel key="1" :show-arrow="false">
+            <template #header>
+                <a-alert message="cloudflare 额度" type="info" />
+            </template>
+            <a-list item-layout="horizontal" :data-source="dataSource" size="small">
+                <template #renderItem="{ item }">
+                    <a-list-item>
+                        <a-list-item-meta>
+                            <template #title>
+                                {{ item.title }}
+                            </template>
+                            <template #description>
+                                {{ item.remarks }}
+                            </template>                            
+                        </a-list-item-meta>
+                    </a-list-item>
+                </template>
+            </a-list>
+        </a-collapse-panel>
+        <a-collapse-panel key="1" header="This is panel header 2" :show-arrow="false">
+            <p>123</p>
+        </a-collapse-panel>
+    </a-collapse>
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from "vue";

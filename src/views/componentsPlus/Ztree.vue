@@ -1,5 +1,5 @@
 <template>
-  <div :id="treeId" ref="$ztreeContainer" class="ztree"></div>
+    <div :id="treeId" ref="$ztreeContainer" class="ztree"></div>
 </template>
 <script lang="ts" setup>
 import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";

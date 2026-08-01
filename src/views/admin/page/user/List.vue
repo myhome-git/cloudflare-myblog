@@ -1,75 +1,75 @@
 <template>
-  <Modal
-    v-model:open="modalOpen"
-    :modal-status="modalStatus"
-    :modal-title="modalTitle"
-    :handle-ok="handleOk"
-    :handle-cancel="handleCancel"
-  >
-    <template #form>
-      <a-form
-        :model="formState"
-        name="basic"
-        :label-col="{ span: 4 }"
-        :wrapper-col="{ span: 20 }"
-        autocomplete="off"
-      >
-        <a-form-item label="登陆账户：" name="username" :rules="[{ required: true, message: '请输入登陆账户' }]">
-          <a-input v-model:value="formState.username" />
-        </a-form-item>
-        <a-form-item label="登陆密码：" name="password" :rules="[{ required: false, message: '请输入登陆密码' }]">
-          <a-input v-model:value="formState.password" />
-          <template v-if="modalStatus === 'edit'">
-            <p class="tishi-info">
-              1、密码为空，则不进行修改
+    <Modal
+        v-model:open="modalOpen"
+        :modal-status="modalStatus"
+        :modal-title="modalTitle"
+        :handle-ok="handleOk"
+        :handle-cancel="handleCancel"
+    >
+        <template #form>
+            <a-form
+                :model="formState"
+                name="basic"
+                :label-col="{ span: 4 }"
+                :wrapper-col="{ span: 20 }"
+                autocomplete="off"
+            >
+                <a-form-item label="登陆账户：" name="username" :rules="[{ required: true, message: '请输入登陆账户' }]">
+                    <a-input v-model:value="formState.username" />
+                </a-form-item>
+                <a-form-item label="登陆密码：" name="password" :rules="[{ required: false, message: '请输入登陆密码' }]">
+                    <a-input v-model:value="formState.password" />
+                    <template v-if="modalStatus === 'edit'">
+                        <p class="tishi-info">
+                            1、密码为空，则不进行修改
+                        </p>
+                        <p class="tishi-info">
+                            2、需要修改只需要输入新密码，输入示例：123456
+                        </p>
+                    </template>
+                </a-form-item>
+            </a-form>
+        </template>
+    </Modal>
+    <Modal
+        v-model:open="modalRowOpen"
+        :bind-modal-row="bindModalRow"
+        modal-title="系统提示"
+        :handle-ok="handleRowOk"
+        :handle-cancel="handleRowCancel"
+    >
+        <template #form>
+            <p>
+                您确认要删除&nbsp;<span style="color:red;font-size:24px;">{{ bindModalRow.length }}</span>&nbsp;条数据吗？删除后不可恢复！
             </p>
-            <p class="tishi-info">
-              2、需要修改只需要输入新密码，输入示例：123456
-            </p>
-          </template>
-        </a-form-item>
-      </a-form>
-    </template>
-  </Modal>
-  <Modal
-    v-model:open="modalRowOpen"
-    :bind-modal-row="bindModalRow"
-    modal-title="系统提示"
-    :handle-ok="handleRowOk"
-    :handle-cancel="handleRowCancel"
-  >
-    <template #form>
-      <p>
-        您确认要删除&nbsp;<span style="color:red;font-size:24px;">{{ bindModalRow.length }}</span>&nbsp;条数据吗？删除后不可恢复！
-      </p>
-    </template>
-  </Modal>
-  <Table
-    select-type="checkbox"
-    :data-source="dataSource"
-    :columns="columns"
-    :on-search="onSearch"
-    :on-refresh="onRefresh"
-    :on-row-add="onRowAdd"
-    :on-row-edit="onRowEdit"
-    :on-row-delete="onRowDelete"
-    :pagination="pagination"
-    :on-page-change="onPageChange"
-    :spinning="tableSpinning"
-    :locale-empty-text="tableLocaleEmptyText"
-    @on-selected="onSelected"
-    @on-delete-multiple="onDeleteMultiple"
-  >
-    <!-- eslint-disable-next-line vue/no-unused-vars -->
-    <template #link="{ text, record, field }">
-      <template v-if="field === 'link_url'">
-        <a href="javascript:void(0)">{{ text }}</a>
-      </template>
-      <template v-else>
-        <span>{{ text }}</span>
-      </template>
-    </template>
-  </Table>
+        </template>
+    </Modal>
+    <Table
+        select-type="checkbox"
+        :data-source="dataSource"
+        :columns="columns"
+        :on-search="onSearch"
+        :on-refresh="onRefresh"
+        :on-row-add="onRowAdd"
+        :on-row-edit="onRowEdit"
+        :on-row-delete="onRowDelete"
+        :pagination="pagination"
+        :on-page-change="onPageChange"
+        :spinning="tableSpinning"
+        :locale-empty-text="tableLocaleEmptyText"
+        @on-selected="onSelected"
+        @on-delete-multiple="onDeleteMultiple"
+    >
+        <!-- eslint-disable-next-line vue/no-unused-vars -->
+        <template #link="{ text, record, field }">
+            <template v-if="field === 'link_url'">
+                <a href="javascript:void(0)">{{ text }}</a>
+            </template>
+            <template v-else>
+                <span>{{ text }}</span>
+            </template>
+        </template>
+    </Table>
 </template>
 <script lang="ts" setup>
 import { reactive, ref, onMounted, nextTick } from "vue";

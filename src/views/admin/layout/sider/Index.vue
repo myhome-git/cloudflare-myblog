@@ -1,22 +1,22 @@
 <template>
-  <a-layout-sider
-    v-model:collapsed="collapsedComputed"
-    collapsible
-    theme="light"
-    width="260"
-  >
-    <div class="logo">
-      <BookOutlined class="logo-icon" />
-      <span v-if="!collapsedComputed" class="logo-text">博客管理系统</span>
-    </div>
-    <a-menu
-      v-model:open-keys="openKeys" 
-      v-model:selected-keys="selectedKeys" 
-      mode="inline"
-      :items="items"
-      @click="handleClick"
-    ></a-menu>
-  </a-layout-sider>
+    <a-layout-sider
+        v-model:collapsed="collapsedComputed"
+        collapsible
+        theme="light"
+        width="260"
+    >
+        <div class="logo">
+            <BookOutlined class="logo-icon" />
+            <span v-if="!collapsedComputed" class="logo-text">博客管理系统</span>
+        </div>
+        <a-menu
+            v-model:open-keys="openKeys" 
+            v-model:selected-keys="selectedKeys" 
+            mode="inline"
+            :items="items"
+            @click="handleClick"
+        ></a-menu>
+    </a-layout-sider>
 </template>
 <script lang="ts" setup>
 import { reactive, ref, watch, computed, h } from 'vue';

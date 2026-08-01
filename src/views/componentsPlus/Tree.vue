@@ -1,12 +1,12 @@
 <template>
-  <a-tree
-    v-model:expanded-keys="expandedKeys"
-    v-model:selected-keys="selectedKeys"
-    :load-data="onLoadData"
-    :tree-data="treeData"
-    :show-line="true"
-    :expand-action="'dblclick'"
-  />
+    <a-tree
+        v-model:expanded-keys="expandedKeys"
+        v-model:selected-keys="selectedKeys"
+        :load-data="onLoadData"
+        :tree-data="treeData"
+        :show-line="true"
+        :expand-action="'dblclick'"
+    />
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";

@@ -1,40 +1,40 @@
 <template>
-  <div x-list>
-    <template v-if="rowData">
-      <template v-if="isValidValue(rowData)">
-        <div class="x-detail">
-          <div class="x-title">
-            <div class="t-text">
-              {{ rowData.title }}
+    <div x-list>
+        <template v-if="rowData">
+            <template v-if="isValidValue(rowData)">
+                <div class="x-detail">
+                    <div class="x-title">
+                        <div class="t-text">
+                            {{ rowData.title }}
+                        </div>
+                        <div class="t-other">
+                            <span class="t-time">时间：{{ rowData.create_time }}</span>
+                            <span class="t-read-count">阅读量：{{ rowData.readCount }}</span>
+                        </div>
+                    </div>
+                    <div class="x-content">
+                        <MarkdownEditor
+                            ref="refMarkdownEditor"
+                            type="view"
+                            :value="rowData.content"
+                            :on-after-change="onAfterChange"
+                            :on-after-async-render="onAfterAsyncRender"
+                        />
+                    </div>
+                </div>
+            </template>
+        </template>
+        <template v-else>
+            <a-alert message="数据小精灵正在玩捉迷藏，暂时还没有找到它呢~" type="warning" closable />
+            <div class="x-detail">
+                <div class="x-title">
+                    <div class="t-text">
+                        信息之海浩瀚无垠，这次可能没有捞到你想要的那条鱼。
+                    </div>
+                </div>
             </div>
-            <div class="t-other">
-              <span class="t-time">时间：{{ rowData.create_time }}</span>
-              <span class="t-read-count">阅读量：{{ rowData.readCount }}</span>
-            </div>
-          </div>
-          <div class="x-content">
-            <MarkdownEditor
-              ref="refMarkdownEditor"
-              type="view"
-              :value="rowData.content"
-              :on-after-change="onAfterChange"
-              :on-after-async-render="onAfterAsyncRender"
-            />
-          </div>
-        </div>
-      </template>
-    </template>
-    <template v-else>
-      <a-alert message="数据小精灵正在玩捉迷藏，暂时还没有找到它呢~" type="warning" closable />
-      <div class="x-detail">
-        <div class="x-title">
-          <div class="t-text">
-            信息之海浩瀚无垠，这次可能没有捞到你想要的那条鱼。
-          </div>
-        </div>
-      </div>
-    </template>
-  </div>
+        </template>
+    </div>
 </template>
 <script lang="ts" setup>
 // @ts-ignore
@@ -53,74 +53,74 @@ const apiURL = `/api/app/blogs/query`;
 const refMarkdownEditor = ref(null);
 const rowData = ref(<any>{});
 const pagination = ref({
-  size: 1,
-  index: 1,
-  total: 0
+    size: 1,
+    index: 1,
+    total: 0
 });
 
 const handleGetList = () => {
-  let sendParams = Object.assign({
-    id: route.query.id
-  }, pagination.value);
-  Object.assign(sendParams, route.query);
-  request({
-    url: `${apiURL}/getBlogReadById`,
-    params: sendParams
-  }).then((data: any) => {
-    const result = data.result;
-    result.forEach((element: any) => {
-      try {
-        handleDecodemultiple(element, element.key, ["title", "content"]);
-      } catch {
+    let sendParams = Object.assign({
+        id: route.query.id
+    }, pagination.value);
+    Object.assign(sendParams, route.query);
+    request({
+        url: `${apiURL}/getBlogReadById`,
+        params: sendParams
+    }).then((data: any) => {
+        const result = data.result;
+        result.forEach((element: any) => {
+            try {
+                handleDecodemultiple(element, element.key, ["title", "content"]);
+            } catch {
 
-      }
+            }
+        });
+        try {
+            rowData.value = result[0];
+        } catch {
+
+        }
+    }).catch((err: any) => {
+        console.log(err);
     });
-    try {
-      rowData.value = result[0];
-    } catch {
-
-    }
-  }).catch((err: any) => {
-    console.log(err);
-  });
 };
 
 const setValue = (val: string) => {
-  const value: any = refMarkdownEditor.value;
-  try {
+    const value: any = refMarkdownEditor.value;
+    try {
     // @ts-ignore
-    value && value.setValue(val);
-  } catch (error) {
-    console.log(error);
-  }
+        value && value.setValue(val);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const onAfterChange = () => {
 
 }
 const onAfterAsyncRender = () => {
-  // setTimeout(() => {
-  //   setValueA(obj);
-  // }, 1000)
+    // setTimeout(() => {
+    //   setValueA(obj);
+    // }, 1000)
 }
 
 watch(() => rowData.value, (newVal) => {
-  if (newVal) {
-    setValue(newVal.content);
-  }
+    if (newVal) {
+        setValue(newVal.content);
+    }
 })
 // 监听路由变化，重新获取数据
 watch(route, () => {
-  // 重新获取数据
-  handleGetList();
+    // 重新获取数据
+    handleGetList();
 });
 
 // 挂载事件
 onMounted(async () => {
-  // 使用 $nextTick 确保 DOM 已经渲染完成
-  await nextTick(() => {
-    handleGetList();
-  });
+    // 使用 $nextTick 确保 DOM 已经渲染完成
+    await nextTick(() => {
+        handleGetList();
+    });
 });
 </script>
 

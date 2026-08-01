@@ -1,75 +1,75 @@
 <template>
-  <div class="a-table-box">
-    <!--顶部按钮区-->
-    <div class="a-table-button">
-      <div class="layout-scape">
-        <a-space>
-          <slot name="refresh" label="刷新数据"></slot>
-          <slot name="layout-left" label="左侧插槽"></slot>
-        </a-space>
-      </div>
-      <div class="layout-scape-right">
-        <a-space>
-          <slot name="layout-right" label="右侧插槽"></slot>
-          <slot name="add" label="新增数据"></slot>
-          <a-popconfirm
-            v-if="rowSelection && props.selectType !== 'radio'"
-            title="删除后不可恢复，是否确认删除?"
-            @confirm="onDeleteMultiple"
-          >
-            <a-button type="primary" ghost>
-              删除数据
-            </a-button>
-          </a-popconfirm>
-        </a-space>
-      </div>
-    </div>
-    <!--表格主体-->
-    <div class="a-table-contaner">
-      <div class="table-container-body">
-        <a-table
-          ref="rootElement"
-          size="small"
-          :row-selection="rowSelection"
-          :data-source="dataSource"
-          :columns="columns"
-          :pagination="false"
-          bordered
-        >
-          <template #bodyCell="{ column, text, record }">
-            <template v-if="column[uuidName] !== undefined">
-              <div>
-                {{ text }}
-              </div>
-            </template>
-            <template v-else-if="column.dataIndex === 'operation'">
-              <a-flex gap="small">
-                <slot name="operation-row" :data="record"></slot>
-                <a v-if="onEdit" @click="onEdit(record[uuidName])">Edit</a>
-                <a-popconfirm
-                  v-if="onDelete"
-                  title="删除后不可恢复，是否确认删除?"
-                  @confirm="onDelete(record[uuidName])"
+    <div class="a-table-box">
+        <!--顶部按钮区-->
+        <div class="a-table-button">
+            <div class="layout-scape">
+                <a-space>
+                    <slot name="refresh" label="刷新数据"></slot>
+                    <slot name="layout-left" label="左侧插槽"></slot>
+                </a-space>
+            </div>
+            <div class="layout-scape-right">
+                <a-space>
+                    <slot name="layout-right" label="右侧插槽"></slot>
+                    <slot name="add" label="新增数据"></slot>
+                    <a-popconfirm
+                        v-if="rowSelection && props.selectType !== 'radio'"
+                        title="删除后不可恢复，是否确认删除?"
+                        @confirm="onDeleteMultiple"
+                    >
+                        <a-button type="primary" ghost>
+                            删除数据
+                        </a-button>
+                    </a-popconfirm>
+                </a-space>
+            </div>
+        </div>
+        <!--表格主体-->
+        <div class="a-table-contaner">
+            <div class="table-container-body">
+                <a-table
+                    ref="rootElement"
+                    size="small"
+                    :row-selection="rowSelection"
+                    :data-source="dataSource"
+                    :columns="columns"
+                    :pagination="false"
+                    bordered
                 >
-                  <a>Delete</a>
-                </a-popconfirm>
-              </a-flex>
-            </template>
-          </template>
-        </a-table>
-      </div>
+                    <template #bodyCell="{ column, text, record }">
+                        <template v-if="column[uuidName] !== undefined">
+                            <div>
+                                {{ text }}
+                            </div>
+                        </template>
+                        <template v-else-if="column.dataIndex === 'operation'">
+                            <a-flex gap="small">
+                                <slot name="operation-row" :data="record"></slot>
+                                <a v-if="onEdit" @click="onEdit(record[uuidName])">Edit</a>
+                                <a-popconfirm
+                                    v-if="onDelete"
+                                    title="删除后不可恢复，是否确认删除?"
+                                    @confirm="onDelete(record[uuidName])"
+                                >
+                                    <a>Delete</a>
+                                </a-popconfirm>
+                            </a-flex>
+                        </template>
+                    </template>
+                </a-table>
+            </div>
+        </div>
+        <!--分页-->
+        <div class="a-table-page-box">
+            <a-pagination
+                v-model:current="pagination.index"
+                v-model:page-size="pagination.size"
+                :total="pagination.total"
+                :show-total="total => `共计 ${total} 条`"
+                @change="onPaginationChange"
+            />
+        </div>
     </div>
-    <!--分页-->
-    <div class="a-table-page-box">
-      <a-pagination
-        v-model:current="pagination.index"
-        v-model:page-size="pagination.size"
-        :total="pagination.total"
-        :show-total="total => `共计 ${total} 条`"
-        @change="onPaginationChange"
-      />
-    </div>
-  </div>
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, nextTick, computed, unref } from "vue";

@@ -1,80 +1,80 @@
 <template>
-  <Modal
-    v-model:open="modalOpen"
-    :modal-status="modalStatus"
-    :modal-title="modalTitle"
-    :width="modalWidth"
-    :height="modalHeight"
-    :mask-closable="modalStatus == 'view'"
-    :handle-ok="handleOk"
-    :handle-cancel="handleCancel"
-  >
-    <template #form>
-      <a-form
-        :model="formState"
-        name="basic"
-        :label-col="{ span: 2 }"
-        :wrapper-col="{ span: 22 }"
-        autocomplete="off"
-      >
-        <a-form-item label="内容：" name="content" :rules="[{ required: true, message: '请输入内容' }]">
-          <MarkdownEditor ref="refFormContent" :type="modalStatus" :height="`calc(${modalHeight}px - 200px)`" />
-        </a-form-item>
-      </a-form>
-    </template>
-  </Modal>
-  <Modal
-    v-model:open="modalRowOpen"
-    :bind-modal-row="bindModalRow"
-    modal-title="系统提示"
-    :handle-ok="handleRowOk"
-    :handle-cancel="handleRowCancel"
-  >
-    <template #form>
-      <p>
-        您确认要删除&nbsp;<span style="color:red;font-size:24px;">{{ bindModalRow.length }}</span>&nbsp;条数据吗？删除后不可恢复！
-      </p>
-    </template>
-  </Modal>
-  <Table
-    select-type="checkbox"
-    :data-source="dataSource"
-    :columns="columns"
-    :on-search="onSearch"
-    :on-refresh="onRefresh"
-    :on-row-add="onRowAdd"
-    :on-row-edit="onRowEdit"
-    :on-row-delete="onRowDelete"
-    :pagination="pagination"
-    :on-page-change="onPageChange"
-    :spinning="tableSpinning"
-    :locale-empty-text="tableLocaleEmptyText"
-    @on-selected="onSelected"
-    @on-delete-multiple="onDeleteMultiple"
-  >
-    <template #link="{ text, record, field }">
-      <template v-if="field === 'jianshu'">
-        <a class="blog-title" href="javascript:void(0)" @click="rowTitleClick(record)">{{ text }}</a>
-      </template>
-      <template v-else>
-        <span>{{ text }}</span>
-      </template>
-    </template>
-    <template #operation-row="{ record }">
-      <a-button
-        v-if="rowTitleClick"
-        size="small"
-        type="primary"
-        ghost
-        @click="rowTitleClick(record)"
-      >
-        <template #icon>
-          <EyeOutlined />
+    <Modal
+        v-model:open="modalOpen"
+        :modal-status="modalStatus"
+        :modal-title="modalTitle"
+        :width="modalWidth"
+        :height="modalHeight"
+        :mask-closable="modalStatus == 'view'"
+        :handle-ok="handleOk"
+        :handle-cancel="handleCancel"
+    >
+        <template #form>
+            <a-form
+                :model="formState"
+                name="basic"
+                :label-col="{ span: 2 }"
+                :wrapper-col="{ span: 22 }"
+                autocomplete="off"
+            >
+                <a-form-item label="内容：" name="content" :rules="[{ required: true, message: '请输入内容' }]">
+                    <MarkdownEditor ref="refFormContent" :type="modalStatus" :height="`calc(${modalHeight}px - 200px)`" />
+                </a-form-item>
+            </a-form>
         </template>
-        View
-      </a-button>
-    </template>
-  </Table>
+    </Modal>
+    <Modal
+        v-model:open="modalRowOpen"
+        :bind-modal-row="bindModalRow"
+        modal-title="系统提示"
+        :handle-ok="handleRowOk"
+        :handle-cancel="handleRowCancel"
+    >
+        <template #form>
+            <p>
+                您确认要删除&nbsp;<span style="color:red;font-size:24px;">{{ bindModalRow.length }}</span>&nbsp;条数据吗？删除后不可恢复！
+            </p>
+        </template>
+    </Modal>
+    <Table
+        select-type="checkbox"
+        :data-source="dataSource"
+        :columns="columns"
+        :on-search="onSearch"
+        :on-refresh="onRefresh"
+        :on-row-add="onRowAdd"
+        :on-row-edit="onRowEdit"
+        :on-row-delete="onRowDelete"
+        :pagination="pagination"
+        :on-page-change="onPageChange"
+        :spinning="tableSpinning"
+        :locale-empty-text="tableLocaleEmptyText"
+        @on-selected="onSelected"
+        @on-delete-multiple="onDeleteMultiple"
+    >
+        <template #link="{ text, record, field }">
+            <template v-if="field === 'jianshu'">
+                <a class="blog-title" href="javascript:void(0)" @click="rowTitleClick(record)">{{ text }}</a>
+            </template>
+            <template v-else>
+                <span>{{ text }}</span>
+            </template>
+        </template>
+        <template #operation-row="{ record }">
+            <a-button
+                v-if="rowTitleClick"
+                size="small"
+                type="primary"
+                ghost
+                @click="rowTitleClick(record)"
+            >
+                <template #icon>
+                    <EyeOutlined />
+                </template>
+                View
+            </a-button>
+        </template>
+    </Table>
 </template>
 <script lang="ts" setup>
 import { reactive, ref, onMounted, nextTick } from "vue";
@@ -248,7 +248,7 @@ const refFormContent = ref<{
     setValue: (value: string) => void;
     getValue: () => string;
     clearValue: () => void;
-} | null>(null);
+        } | null>(null);
 interface FormState {
     classId: number | null;
     title: string;

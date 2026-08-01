@@ -1,8 +1,8 @@
 <template>
-  ztree
-  <div id="treeDemo1" class="ztree"></div>
-  <div id="treeDemo2" class="ztree"></div>
-  <div id="treeDemo3" class="ztree"></div>
+    ztree
+    <div id="treeDemo1" class="ztree"></div>
+    <div id="treeDemo2" class="ztree"></div>
+    <div id="treeDemo3" class="ztree"></div>
 </template>
 <script lang="ts" setup>
 import { onMounted, nextTick } from "vue";
@@ -28,8 +28,8 @@ const initZtree = () => {
     // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
     var setting = {
         view: {
-			showLine: true
-		}
+            showLine: true
+        }
     };
     // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
     var zNodes = [{

@@ -17,6 +17,7 @@ export default [
     },
     rules: {
       // 基本规则
+      'indent': ['error', 4, { 'SwitchCase': 1, 'ignoredNodes': ['TemplateLiteral'] }], // 4空格缩进
       'semi': ['error', 'never'], // 不使用分号
       'no-extra-semi': 'error', // 禁止不必要的分号
       'no-unused-vars': 'error', // 禁止未使用的变量
@@ -96,6 +97,8 @@ export default [
       }
     },
     rules: {
+      'indent': ['error', 4, { 'SwitchCase': 1, 'ignoredNodes': ['TemplateLiteral'] }], // 4空格缩进
+      'vue/html-indent': ['error', 4], // 4空格缩进（模板）
       'vue/multi-word-component-names': 'off', // 允许单个单词的组件名称
       'vue/html-self-closing': 'off',
       'vue/max-attributes-per-line': ['error', { 'singleline': 3, 'multiline': 1 }],

@@ -1,52 +1,52 @@
 <template>
-  <Modal
-    v-model:open="modalRowOpen"
-    :bind-modal-row="bindModalRow"
-    modal-title="系统提示"
-    :handle-ok="handleRowOk"
-    :handle-cancel="handleRowCancel"
-  >
-    <template #form>
-      <p>
-        您确认要删除&nbsp;<span style="color:red;font-size:24px;">{{ bindModalRow.length }}</span>&nbsp;条数据吗？删除后不可恢复！
-      </p>
-    </template>
-  </Modal>
-  <Table
-    select-type="checkbox"
-    :data-source="dataSource"
-    :columns="columns"
-    :on-search="onSearch"
-    :on-refresh="onRefresh"
-    :on-row-add="onRowAdd"
-    :on-row-delete="onRowDelete"
-    :pagination="pagination"
-    :on-page-change="onPageChange"
-    :spinning="tableSpinning"
-    :locale-empty-text="tableLocaleEmptyText"
-    @on-selected="onSelected"
-    @on-delete-multiple="onDeleteMultiple"
-  >
-    <template #add>
-      <a-button
-        v-if="onRowAdd"
-        type="primary"
-        ghost
-        @click="onRowAdd"
-      >
-        备份数据库
-      </a-button>
-      <!-- <a-button v-if="onRowVacuum" @click="onRowVacuum" type="primary" ghost>压缩数据库</a-button> -->
-    </template>
-    <template #link="{ text, field }">
-      <template v-if="field === 'link_url'">
-        <a href="javascript:void(0)">{{ text }}</a>
-      </template>
-      <template v-else>
-        <span>{{ text }}</span>
-      </template>
-    </template>
-  </Table>
+    <Modal
+        v-model:open="modalRowOpen"
+        :bind-modal-row="bindModalRow"
+        modal-title="系统提示"
+        :handle-ok="handleRowOk"
+        :handle-cancel="handleRowCancel"
+    >
+        <template #form>
+            <p>
+                您确认要删除&nbsp;<span style="color:red;font-size:24px;">{{ bindModalRow.length }}</span>&nbsp;条数据吗？删除后不可恢复！
+            </p>
+        </template>
+    </Modal>
+    <Table
+        select-type="checkbox"
+        :data-source="dataSource"
+        :columns="columns"
+        :on-search="onSearch"
+        :on-refresh="onRefresh"
+        :on-row-add="onRowAdd"
+        :on-row-delete="onRowDelete"
+        :pagination="pagination"
+        :on-page-change="onPageChange"
+        :spinning="tableSpinning"
+        :locale-empty-text="tableLocaleEmptyText"
+        @on-selected="onSelected"
+        @on-delete-multiple="onDeleteMultiple"
+    >
+        <template #add>
+            <a-button
+                v-if="onRowAdd"
+                type="primary"
+                ghost
+                @click="onRowAdd"
+            >
+                备份数据库
+            </a-button>
+            <!-- <a-button v-if="onRowVacuum" @click="onRowVacuum" type="primary" ghost>压缩数据库</a-button> -->
+        </template>
+        <template #link="{ text, field }">
+            <template v-if="field === 'link_url'">
+                <a href="javascript:void(0)">{{ text }}</a>
+            </template>
+            <template v-else>
+                <span>{{ text }}</span>
+            </template>
+        </template>
+    </Table>
 </template>
 <script lang="ts" setup>
 import { reactive, ref, onMounted, nextTick } from "vue";

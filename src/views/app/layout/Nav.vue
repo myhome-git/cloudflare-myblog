@@ -1,20 +1,20 @@
 <template>
-  <div class="app-nav">
-    <div class="li" :class="{ active: route.query.classId === 'home' }" @click="handleItemClickWrapper({}, '/')">
-      Home
+    <div class="app-nav">
+        <div class="li" :class="{ active: route.query.classId === 'home' }" @click="handleItemClickWrapper({}, '/')">
+            Home
+        </div>
+        <template v-if="computedDataSource.length > 0">
+            <template v-for="(item) of computedDataSource" :key="item.id">
+                <li
+                    class="li"
+                    :class="{ active: route.query.classId === `${item.id}` }"
+                    @click="handleItemClickWrapper({ classId: item.id }, '/')"
+                >
+                    <span>{{ item.name }}</span>
+                </li>
+            </template>
+        </template>
     </div>
-    <template v-if="computedDataSource.length > 0">
-      <template v-for="(item) of computedDataSource" :key="item.id">
-        <li
-          class="li"
-          :class="{ active: route.query.classId === `${item.id}` }"
-          @click="handleItemClickWrapper({ classId: item.id }, '/')"
-        >
-          <span>{{ item.name }}</span>
-        </li>
-      </template>
-    </template>
-  </div>
 </template>
 <script lang="ts" setup>
 import {  computed, useAttrs } from 'vue';

@@ -1,69 +1,69 @@
 <template>
-  <div class="tabs-container">
-    <!-- 标签栏 -->
-    <div class="tabs-bar">
-      <a-tabs
-        v-model:active-key="tagsViewStore.activeTagPath"
-        type="editable-card"
-        hide-add
-        :tab-bar-style="{ margin: 0 }"
-        @tab-click="switchTag"
-        @edit="handleEdit"
-      >
-        <a-tab-pane
-          v-for="tag in tagsViewStore.visitedViewsFiltered"
-          :key="tag.path"
-          :closable="tag.path !== '/admin/welcome'"
-        >
-          <template #tab>
-            <a-dropdown :trigger="['contextmenu']">
-              <div
-                class="tabs-tab-span"
-                :draggable="tag.path !== '/admin/welcome'"
-                @contextmenu.prevent
-                @dragstart="onDragStart($event, tag.path)"
-                @dragover.prevent="onDragOver($event, tag.path)"
-                @drop.prevent="onDrop($event, tag.path)"
-                @dragend="onDragEnd"
-              >
-                {{ tag.title }}
-              </div>
-              <template #overlay>
-                <a-menu @click="(info: any) => handleContextMenu(info.key as string, tag)">
-                  <a-menu-item key="closeCurrent">
-                    关闭当前
-                  </a-menu-item>
-                  <a-menu-item key="closeOthers">
-                    关闭其它
-                  </a-menu-item>
-                  <a-menu-item key="closeAll">
-                    关闭所有
-                  </a-menu-item>
-                  <a-menu-item key="closeRight">
-                    关闭右侧
-                  </a-menu-item>
-                  <a-menu-item key="closeLeft">
-                    关闭左侧
-                  </a-menu-item>
-                  <a-menu-item key="refresh">
-                    刷新
-                  </a-menu-item>
-                </a-menu>
-              </template>
-            </a-dropdown>
-          </template>
-        </a-tab-pane>
-      </a-tabs>
+    <div class="tabs-container">
+        <!-- 标签栏 -->
+        <div class="tabs-bar">
+            <a-tabs
+                v-model:active-key="tagsViewStore.activeTagPath"
+                type="editable-card"
+                hide-add
+                :tab-bar-style="{ margin: 0 }"
+                @tab-click="switchTag"
+                @edit="handleEdit"
+            >
+                <a-tab-pane
+                    v-for="tag in tagsViewStore.visitedViewsFiltered"
+                    :key="tag.path"
+                    :closable="tag.path !== '/admin/welcome'"
+                >
+                    <template #tab>
+                        <a-dropdown :trigger="['contextmenu']">
+                            <div
+                                class="tabs-tab-span"
+                                :draggable="tag.path !== '/admin/welcome'"
+                                @contextmenu.prevent
+                                @dragstart="onDragStart($event, tag.path)"
+                                @dragover.prevent="onDragOver($event, tag.path)"
+                                @drop.prevent="onDrop($event, tag.path)"
+                                @dragend="onDragEnd"
+                            >
+                                {{ tag.title }}
+                            </div>
+                            <template #overlay>
+                                <a-menu @click="(info: any) => handleContextMenu(info.key as string, tag)">
+                                    <a-menu-item key="closeCurrent">
+                                        关闭当前
+                                    </a-menu-item>
+                                    <a-menu-item key="closeOthers">
+                                        关闭其它
+                                    </a-menu-item>
+                                    <a-menu-item key="closeAll">
+                                        关闭所有
+                                    </a-menu-item>
+                                    <a-menu-item key="closeRight">
+                                        关闭右侧
+                                    </a-menu-item>
+                                    <a-menu-item key="closeLeft">
+                                        关闭左侧
+                                    </a-menu-item>
+                                    <a-menu-item key="refresh">
+                                        刷新
+                                    </a-menu-item>
+                                </a-menu>
+                            </template>
+                        </a-dropdown>
+                    </template>
+                </a-tab-pane>
+            </a-tabs>
+        </div>
+        <!-- 路由视图（单实例，配合 KeepAlive 缓存） -->
+        <div class="tabs-content">
+            <RouterView v-slot="{ Component, route: viewRoute }">
+                <KeepAlive :include="tagsViewStore.cacheNames">
+                    <component :is="Component" :key="tagsViewStore.getRefreshKey(viewRoute.path)" />
+                </KeepAlive>
+            </RouterView>
+        </div>
     </div>
-    <!-- 路由视图（单实例，配合 KeepAlive 缓存） -->
-    <div class="tabs-content">
-      <RouterView v-slot="{ Component, route: viewRoute }">
-        <KeepAlive :include="tagsViewStore.cacheNames">
-          <component :is="Component" :key="tagsViewStore.getRefreshKey(viewRoute.path)" />
-        </KeepAlive>
-      </RouterView>
-    </div>
-  </div>
 </template>
 
 <script lang="ts" setup>
@@ -80,107 +80,107 @@ const dragFromPath = ref<string | null>(null)
 
 /** 拖拽开始 */
 function onDragStart(event: DragEvent, path: string) {
-  if (path === '/admin/welcome') {
-    event.preventDefault()
-    return
-  }
-  dragFromPath.value = path
-  if (event.dataTransfer) {
-    event.dataTransfer.effectAllowed = 'move'
-    event.dataTransfer.setData('text/plain', path)
-  }
+    if (path === '/admin/welcome') {
+        event.preventDefault()
+        return
+    }
+    dragFromPath.value = path
+    if (event.dataTransfer) {
+        event.dataTransfer.effectAllowed = 'move'
+        event.dataTransfer.setData('text/plain', path)
+    }
 }
 
 /** 拖拽经过 */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function onDragOver(event: DragEvent, path: string) {
-  if (event.dataTransfer) {
-    event.dataTransfer.dropEffect = 'move'
-  }
+    if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = 'move'
+    }
 }
 
 /** 拖拽放下 */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function onDrop(event: DragEvent, toPath: string) {
-  if (!dragFromPath.value) return
-  if (dragFromPath.value === toPath) return
-  tagsViewStore.moveTag(dragFromPath.value, toPath)
-  dragFromPath.value = null
+    if (!dragFromPath.value) return
+    if (dragFromPath.value === toPath) return
+    tagsViewStore.moveTag(dragFromPath.value, toPath)
+    dragFromPath.value = null
 }
 
 /** 拖拽结束 */
 function onDragEnd() {
-  dragFromPath.value = null
+    dragFromPath.value = null
 }
 
 // 监听路由变化，自动添加标签页
 watch(
-  () => route.path,
-  (newPath) => {
-    if (newPath.startsWith('/admin/')) {
-      const tag: TagView = {
-        path: route.path,
-        fullPath: route.fullPath,
-        query: route.query,
-        params: route.params,
-        meta: route.meta,
-        title: (route.meta?.title as string) || (route.name as string) || '未命名'
-      }
-      tagsViewStore.addVisitedView(tag)
-      tagsViewStore.setActiveTag(route.path)
-    }
-  },
-  { immediate: true }
+    () => route.path,
+    (newPath) => {
+        if (newPath.startsWith('/admin/')) {
+            const tag: TagView = {
+                path: route.path,
+                fullPath: route.fullPath,
+                query: route.query,
+                params: route.params,
+                meta: route.meta,
+                title: (route.meta?.title as string) || (route.name as string) || '未命名'
+            }
+            tagsViewStore.addVisitedView(tag)
+            tagsViewStore.setActiveTag(route.path)
+        }
+    },
+    { immediate: true }
 )
 
 // 切换标签页
 function switchTag(key: string) {
-  if (key !== route.path) {
-    router.push(key)
-  }
+    if (key !== route.path) {
+        router.push(key)
+    }
 }
 
 // 处理标签编辑（关闭）
 function handleEdit(key: string | number, action: 'add' | 'remove') {
-  if (action === 'remove') {
-    const tag = tagsViewStore.visitedViewsFiltered.find(t => t.path === key) as TagView | undefined
-    if (tag) {
-      removeTag(tag)
+    if (action === 'remove') {
+        const tag = tagsViewStore.visitedViewsFiltered.find(t => t.path === key) as TagView | undefined
+        if (tag) {
+            removeTag(tag)
+        }
     }
-  }
 }
 
 // 移除标签页
 function removeTag(tag: TagView) {
-  const redirectPath = tagsViewStore.closeTag(tag)
-  if (redirectPath) {
-    router.push(redirectPath)
-  }
+    const redirectPath = tagsViewStore.closeTag(tag)
+    if (redirectPath) {
+        router.push(redirectPath)
+    }
 }
 
 // ========== 右键菜单处理 ==========
 function handleContextMenu(key: string, tag: any) {
-  switch (key) {
-    case 'closeCurrent':
-      removeTag(tag)
-      break
-    case 'closeOthers':
-      tagsViewStore.closeOtherTags(tag)
-      break
-    case 'closeAll':
-      tagsViewStore.closeAllTags()
-      router.push('/admin/welcome')
-      break
-    case 'closeRight':
-      tagsViewStore.closeRightTags(tag)
-      break
-    case 'closeLeft':
-      tagsViewStore.closeLeftTags(tag)
-      break
-    case 'refresh':
-      tagsViewStore.refreshTag(tag)
-      break
-  }
+    switch (key) {
+        case 'closeCurrent':
+            removeTag(tag)
+            break
+        case 'closeOthers':
+            tagsViewStore.closeOtherTags(tag)
+            break
+        case 'closeAll':
+            tagsViewStore.closeAllTags()
+            router.push('/admin/welcome')
+            break
+        case 'closeRight':
+            tagsViewStore.closeRightTags(tag)
+            break
+        case 'closeLeft':
+            tagsViewStore.closeLeftTags(tag)
+            break
+        case 'refresh':
+            tagsViewStore.refreshTag(tag)
+            break
+    }
 }
 </script>
 

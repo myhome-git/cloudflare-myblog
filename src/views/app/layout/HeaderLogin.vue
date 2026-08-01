@@ -1,18 +1,18 @@
 <template>
-  <div class="header-login">
-    <template v-if="isLogin">
-      <a href="javascript:void(0);" @click="handleItemClickWrapper({}, '/admin')">
-        <DashboardOutlined />
-        <span>转到后台</span>
-      </a>
-    </template>
-    <template v-else>
-      <a href="javascript:void(0);" @click="handleItemClickWrapper({}, '/login')">
-        <UserOutlined />
-        <span>管理员登录</span>
-      </a>
-    </template>
-  </div>
+    <div class="header-login">
+        <template v-if="isLogin">
+            <a href="javascript:void(0);" @click="handleItemClickWrapper({}, '/admin')">
+                <DashboardOutlined />
+                <span>转到后台</span>
+            </a>
+        </template>
+        <template v-else>
+            <a href="javascript:void(0);" @click="handleItemClickWrapper({}, '/login')">
+                <UserOutlined />
+                <span>管理员登录</span>
+            </a>
+        </template>
+    </div>
 </template>
 <script setup lang="ts">
 import { isValidValue, handleItemClick } from '@/utils/utils';

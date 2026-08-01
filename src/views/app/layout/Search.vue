@@ -1,15 +1,15 @@
 <template>
-  <div id="form-search" class="x-head-search x-clearfix">
-    <input
-      v-model="inputSearchValue"
-      type="text"
-      placeholder="请输入搜索内容..."
-      @keyup.enter="handleClick"
-    >
-    <div id="btn-search" class="x-search-btn x-inlineblock" @click="handleClick">
-      <SearchOutlined />
+    <div id="form-search" class="x-head-search x-clearfix">
+        <input
+            v-model="inputSearchValue"
+            type="text"
+            placeholder="请输入搜索内容..."
+            @keyup.enter="handleClick"
+        >
+        <div id="btn-search" class="x-search-btn x-inlineblock" @click="handleClick">
+            <SearchOutlined />
+        </div>
     </div>
-  </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';

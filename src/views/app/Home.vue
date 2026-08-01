@@ -1,35 +1,35 @@
 <template>
-  <div class="app-win">
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_1281105_ue0q9rvh0lb.css">
-    <div class="x-container">
-      <Header @on-search="onSearch"></Header>
+    <div class="app-win">
+        <link rel="stylesheet" href="//at.alicdn.com/t/font_1281105_ue0q9rvh0lb.css">
+        <div class="x-container">
+            <Header @on-search="onSearch"></Header>
+        </div>
+        <div class="x-layout layout-nav">
+            <div class="x-container">
+                <Nav :data-source="dataSourceNav"></Nav>
+            </div>
+        </div>
+        <div class="x-container flex-auto">
+            <div class="layout-content">
+                <Content>
+                    <template #left>
+                        <RouterView></RouterView>
+                    </template>
+                    <template #right>
+                        <Hot :data-source="dataSourceHot"></Hot>
+                        <div style="height: 14px;"></div>
+                        <Link :data-source="dataSourceLink">
+                        </Link>
+                    </template>
+                </Content>
+            </div>
+        </div>
+        <div class="x-layout layout-footer">
+            <div class="x-container">
+                <Footer></Footer>
+            </div>
+        </div>
     </div>
-    <div class="x-layout layout-nav">
-      <div class="x-container">
-        <Nav :data-source="dataSourceNav"></Nav>
-      </div>
-    </div>
-    <div class="x-container flex-auto">
-      <div class="layout-content">
-        <Content>
-          <template #left>
-            <RouterView></RouterView>
-          </template>
-          <template #right>
-            <Hot :data-source="dataSourceHot"></Hot>
-            <div style="height: 14px;"></div>
-            <Link :data-source="dataSourceLink">
-            </Link>
-          </template>
-        </Content>
-      </div>
-    </div>
-    <div class="x-layout layout-footer">
-      <div class="x-container">
-        <Footer></Footer>
-      </div>
-    </div>
-  </div>
 </template>
 <script lang="ts" setup>
 // @ts-ignore

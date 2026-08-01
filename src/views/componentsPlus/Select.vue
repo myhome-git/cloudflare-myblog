@@ -1,21 +1,21 @@
 <template>
-  <a-select
-    :value="value"
-    show-search
-    placeholder="请选择"
-    style="width: 100%"
-    :options="options"
-    v-bind="attrs"
-    :filter-option="filterOption"
-    @focus="handleFocus"
-    @blur="handleBlur"
-    @change="handleChange"
-  >
-    <!-- 循环 slots 对象，将所有插槽（包括作用域插槽）都透传下去 -->
-    <template v-for="(_, name) in slots" #[name]="scopedData">
-      <slot :name="name" v-bind="scopedData" />
-    </template>
-  </a-select>
+    <a-select
+        :value="value"
+        show-search
+        placeholder="请选择"
+        style="width: 100%"
+        :options="options"
+        v-bind="attrs"
+        :filter-option="filterOption"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @change="handleChange"
+    >
+        <!-- 循环 slots 对象，将所有插槽（包括作用域插槽）都透传下去 -->
+        <template v-for="(_, name) in slots" #[name]="scopedData">
+            <slot :name="name" v-bind="scopedData" />
+        </template>
+    </a-select>
 </template>
 <script lang="ts" setup>
 import { useAttrs, useSlots, ref, onMounted, nextTick, watch } from 'vue';
@@ -32,8 +32,8 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  value: '',
-  options: () => []
+    value: '',
+    options: () => []
 });
 
 const attrs = useAttrs();

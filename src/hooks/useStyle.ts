@@ -6,21 +6,21 @@ import { onMounted, onUnmounted } from 'vue'
  * @param id 可选的样式 id，用于去重
  */
 export function useStyle(css: string, id?: string) {
-  const styleId = id || `dynamic-style-${Math.random().toString(36).slice(2, 10)}`
+    const styleId = id || `dynamic-style-${Math.random().toString(36).slice(2, 10)}`
 
-  onMounted(() => {
+    onMounted(() => {
     // 避免重复插入
-    if (document.getElementById(styleId)) { return }
-    const style = document.createElement('style')
-    style.id = styleId
-    style.textContent = css
-    document.head.appendChild(style)
-  })
+        if (document.getElementById(styleId)) { return }
+        const style = document.createElement('style')
+        style.id = styleId
+        style.textContent = css
+        document.head.appendChild(style)
+    })
 
-  onUnmounted(() => {
-    const style = document.getElementById(styleId)
-    if (style) {
-      document.head.removeChild(style)
-    }
-  })
+    onUnmounted(() => {
+        const style = document.getElementById(styleId)
+        if (style) {
+            document.head.removeChild(style)
+        }
+    })
 }

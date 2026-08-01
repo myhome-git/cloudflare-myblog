@@ -1,56 +1,56 @@
 <template>
-  <template v-if="isServerResult.status === 200">
-    <template v-if="isValidValue(route.query.searchText)">
-      <template v-if="pagination.total < 1">
-        <a-alert
-          :message="`信息之海浩瀚无垠，这次可能没有捞到你想要的那条鱼！`"
-          type="warning"
-          show-icon
-          closable
-        ></a-alert>
-      </template>
-      <template v-else>
-        <a-alert
-          :message="`${seMessage}`"
-          type="success"
-          show-icon
-          closable
-        />
-        <div style="height: 10px;"></div>
-        <BlogJianshu :data-source="dataSource" :pagination="pagination" :on-page-change="onPageChange">
-        </BlogJianshu>
-      </template>
+    <template v-if="isServerResult.status === 200">
+        <template v-if="isValidValue(route.query.searchText)">
+            <template v-if="pagination.total < 1">
+                <a-alert
+                    :message="`信息之海浩瀚无垠，这次可能没有捞到你想要的那条鱼！`"
+                    type="warning"
+                    show-icon
+                    closable
+                ></a-alert>
+            </template>
+            <template v-else>
+                <a-alert
+                    :message="`${seMessage}`"
+                    type="success"
+                    show-icon
+                    closable
+                />
+                <div style="height: 10px;"></div>
+                <BlogJianshu :data-source="dataSource" :pagination="pagination" :on-page-change="onPageChange">
+                </BlogJianshu>
+            </template>
+        </template>
+        <template v-else>
+            <template v-if="pagination.total < 1">
+                <a-alert
+                    :message="`暂无数据！`"
+                    type="warning"
+                    show-icon
+                    closable
+                ></a-alert>
+            </template>
+            <template v-else>
+                <BlogJianshu :data-source="dataSource" :pagination="pagination" :on-page-change="onPageChange">
+                </BlogJianshu>
+            </template>
+        </template>
     </template>
     <template v-else>
-      <template v-if="pagination.total < 1">
-        <a-alert
-          :message="`暂无数据！`"
-          type="warning"
-          show-icon
-          closable
-        ></a-alert>
-      </template>
-      <template v-else>
-        <BlogJianshu :data-source="dataSource" :pagination="pagination" :on-page-change="onPageChange">
-        </BlogJianshu>
-      </template>
+        <template v-if="isServerResult.status === 500">
+            <a-alert
+                :message="isServerResult.message"
+                type="error"
+                show-icon
+                closable
+            ></a-alert>
+        </template>
+        <template v-else>
+            <div class="loading-box">
+                {{ isServerResult.message }}
+            </div>
+        </template>
     </template>
-  </template>
-  <template v-else>
-    <template v-if="isServerResult.status === 500">
-      <a-alert
-        :message="isServerResult.message"
-        type="error"
-        show-icon
-        closable
-      ></a-alert>
-    </template>
-    <template v-else>
-      <div class="loading-box">
-        {{ isServerResult.message }}
-      </div>
-    </template>
-  </template>
 </template>
 <script lang="ts" setup>
 // @ts-ignore

@@ -1,56 +1,56 @@
 <template>
-  <div class="login-container">
-    <div class="login-box">
-      <div class="login-header">
-        <h1>系统登录</h1>
-        <p>欢迎使用博客管理系统</p>
-      </div>
-      <a-form
-        :model="formState"
-        name="loginForm"
-        :wrapper-col="{ span: 24 }"
-        autocomplete="off"
-        class="login-form"
-        @finish="onFinish"
-        @finish-failed="onFinishFailed"
-      >
-        <a-form-item name="username" :rules="[{ required: true, message: '请输入用户名!' }]">
-          <a-input v-model:value="formState.username" size="large" placeholder="请输入用户名">
-            <template #prefix>
-              <UserOutlined />
-            </template>
-          </a-input>
-        </a-form-item>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>系统登录</h1>
+                <p>欢迎使用博客管理系统</p>
+            </div>
+            <a-form
+                :model="formState"
+                name="loginForm"
+                :wrapper-col="{ span: 24 }"
+                autocomplete="off"
+                class="login-form"
+                @finish="onFinish"
+                @finish-failed="onFinishFailed"
+            >
+                <a-form-item name="username" :rules="[{ required: true, message: '请输入用户名!' }]">
+                    <a-input v-model:value="formState.username" size="large" placeholder="请输入用户名">
+                        <template #prefix>
+                            <UserOutlined />
+                        </template>
+                    </a-input>
+                </a-form-item>
 
-        <a-form-item name="password" :rules="[{ required: true, message: '请输入密码!' }]">
-          <a-input-password v-model:value="formState.password" size="large" placeholder="请输入密码">
-            <template #prefix>
-              <LockOutlined />
-            </template>
-          </a-input-password>
-        </a-form-item>
+                <a-form-item name="password" :rules="[{ required: true, message: '请输入密码!' }]">
+                    <a-input-password v-model:value="formState.password" size="large" placeholder="请输入密码">
+                        <template #prefix>
+                            <LockOutlined />
+                        </template>
+                    </a-input-password>
+                </a-form-item>
 
-        <a-form-item name="remember" class="remember-me">
-          <a-checkbox v-model:checked="formState.remember">
-            记住我
-          </a-checkbox>
-        </a-form-item>
+                <a-form-item name="remember" class="remember-me">
+                    <a-checkbox v-model:checked="formState.remember">
+                        记住我
+                    </a-checkbox>
+                </a-form-item>
 
-        <a-form-item>
-          <a-button
-            type="primary"
-            html-type="submit"
-            size="large"
-            block
-            :loading="loading"
-            class="login-button"
-          >
-            {{ loading ? '登录中...' : '登录' }}
-          </a-button>
-        </a-form-item>
-      </a-form>
+                <a-form-item>
+                    <a-button
+                        type="primary"
+                        html-type="submit"
+                        size="large"
+                        block
+                        :loading="loading"
+                        class="login-button"
+                    >
+                        {{ loading ? '登录中...' : '登录' }}
+                    </a-button>
+                </a-form-item>
+            </a-form>
+        </div>
     </div>
-  </div>
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
@@ -66,47 +66,47 @@ interface FormState {
 }
 
 const formState = reactive<FormState>({
-  username: localStorage.getItem("remember") === 'true' ? `${localStorage.getItem("username")}` : '',
-  password: '',
-  remember: true,
+    username: localStorage.getItem("remember") === 'true' ? `${localStorage.getItem("username")}` : '',
+    password: '',
+    remember: true,
 });
 
 const loading = ref(false);
 
 const onFinish = () => {
-  loading.value = true;
-  const sendForm = JSON.parse(JSON.stringify(formState));
-  try {
-    request({
-      url: `/api/user/accountVerification`,
-      method: "post",
-      data: sendForm
-    }).then((resp: any) => {
-      const { result } = resp;
-      sessionStorage.setItem("username", result.username);
-      sessionStorage.setItem("file_upload_max_size", result.file_upload_max_size);
-      // 记住功能
-      if (formState.remember) {
-        localStorage.setItem("username", result.username);
-        localStorage.setItem("remember", formState.remember.toString());
-      }
-      location.href = "/admin";
-      // console.log(res);
-    }).catch((err: any) => {
-      console.log(err);
-    }).finally(() => {
-      loading.value = false;
-    })
-  } catch (err) {
-    console.log(err);
-    message.error("登录失败，请检查用户名和密码");
-  } finally {
-    loading.value = false;
-  }
+    loading.value = true;
+    const sendForm = JSON.parse(JSON.stringify(formState));
+    try {
+        request({
+            url: `/api/user/accountVerification`,
+            method: "post",
+            data: sendForm
+        }).then((resp: any) => {
+            const { result } = resp;
+            sessionStorage.setItem("username", result.username);
+            sessionStorage.setItem("file_upload_max_size", result.file_upload_max_size);
+            // 记住功能
+            if (formState.remember) {
+                localStorage.setItem("username", result.username);
+                localStorage.setItem("remember", formState.remember.toString());
+            }
+            location.href = "/admin";
+            // console.log(res);
+        }).catch((err: any) => {
+            console.log(err);
+        }).finally(() => {
+            loading.value = false;
+        })
+    } catch (err) {
+        console.log(err);
+        message.error("登录失败，请检查用户名和密码");
+    } finally {
+        loading.value = false;
+    }
 };
 
 const onFinishFailed = (errorInfo: any) => {
-  console.log('Failed:', errorInfo);
+    console.log('Failed:', errorInfo);
 };
 </script>
 <style lang="less" scoped>

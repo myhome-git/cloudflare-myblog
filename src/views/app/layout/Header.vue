@@ -1,11 +1,11 @@
 <template>
-  <div class="app-header">
-    <Logo></Logo>
-    <Search @on-search="onSearch"></Search>
-    <div class="header-menu">
-      <HeaderLogin></HeaderLogin>
+    <div class="app-header">
+        <Logo></Logo>
+        <Search @on-search="onSearch"></Search>
+        <div class="header-menu">
+            <HeaderLogin></HeaderLogin>
+        </div>
     </div>
-  </div>
 </template>
 <script lang="ts" setup>
 import Logo from './Logo.vue';

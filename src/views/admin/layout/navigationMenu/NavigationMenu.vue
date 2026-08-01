@@ -1,19 +1,19 @@
 <template>
-  <a-menu v-model:selected-keys="current" mode="horizontal" @click="onClick">
-    <a-menu-item key="target-to-app">
-      <template #icon>
-        <HomeOutlined />
-      </template>
-      转到前台
-    </a-menu-item>
-    <ThemeSetting />
-    <a-menu-item key="out-system">
-      <template #icon>
-        <SettingOutlined />
-      </template>
-      退出系统
-    </a-menu-item>
-  </a-menu>
+    <a-menu v-model:selected-keys="current" mode="horizontal" @click="onClick">
+        <a-menu-item key="target-to-app">
+            <template #icon>
+                <HomeOutlined />
+            </template>
+            转到前台
+        </a-menu-item>
+        <ThemeSetting />
+        <a-menu-item key="out-system">
+            <template #icon>
+                <SettingOutlined />
+            </template>
+            退出系统
+        </a-menu-item>
+    </a-menu>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
@@ -24,21 +24,21 @@ import ThemeSetting from './ThemeSetting.vue';
 const current = ref<string[]>(['app']);
 const router = useRouter();
 const onClick = (info: { key: string; keyPath: string[] }) => {
-  const key = info.key;
-  switch (key) {
-    case 'target-to-app':
-      router.push('/app');
-      break;
-    case 'out-system':
-      sessionStorage.removeItem('token');
-      router.push('/');
-      break;
-    default:
-      console.log('Unknown menu item selected');
-  }
-  setTimeout(() => {
-    current.value = [];
-  }, 300);
+    const key = info.key;
+    switch (key) {
+        case 'target-to-app':
+            router.push('/app');
+            break;
+        case 'out-system':
+            sessionStorage.removeItem('token');
+            router.push('/');
+            break;
+        default:
+            console.log('Unknown menu item selected');
+    }
+    setTimeout(() => {
+        current.value = [];
+    }, 300);
 }
 </script>
 <style scoped>

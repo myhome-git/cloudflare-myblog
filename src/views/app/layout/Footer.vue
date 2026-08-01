@@ -1,7 +1,7 @@
 <template>
-  <div class="app-footer">
-    开发者联系方式：admin@myhome.top
-  </div>
+    <div class="app-footer">
+        开发者联系方式：admin@myhome.top
+    </div>
 </template>
 <script lang="ts" setup>
 </script>

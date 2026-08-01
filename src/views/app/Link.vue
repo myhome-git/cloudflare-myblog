@@ -1,37 +1,37 @@
 <template>
-  <div class="app-unit">
-    <div class="unit-title">
-      <div class="t-value">
-        友情链接
-      </div>
-    </div>
-    <div class="unit-content">
-      <template v-if="computedDataSource.length > 0">
-        <ul>
-          <template v-for="(item, index) of computedDataSource" :key="item.id">
-            <li>
-              <a-tag :color="item.color">
-                {{ index + 1 }}
-              </a-tag>
-              <a
-                :href="item.link_url"
-                target="_blank"
-                class="link-item"
-                :title="item.name"
-              >
-                {{ item.name }}：{{ item.link_url }}
-              </a>
-            </li>
-          </template>
-        </ul>
-      </template>
-      <template v-else>
-        <div class="no-data">
-          暂无数据
+    <div class="app-unit">
+        <div class="unit-title">
+            <div class="t-value">
+                友情链接
+            </div>
         </div>
-      </template>
+        <div class="unit-content">
+            <template v-if="computedDataSource.length > 0">
+                <ul>
+                    <template v-for="(item, index) of computedDataSource" :key="item.id">
+                        <li>
+                            <a-tag :color="item.color">
+                                {{ index + 1 }}
+                            </a-tag>
+                            <a
+                                :href="item.link_url"
+                                target="_blank"
+                                class="link-item"
+                                :title="item.name"
+                            >
+                                {{ item.name }}：{{ item.link_url }}
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+            <template v-else>
+                <div class="no-data">
+                    暂无数据
+                </div>
+            </template>
+        </div>
     </div>
-  </div>
 </template>
 <script lang="ts" setup>
 import {  computed, useAttrs } from 'vue';
