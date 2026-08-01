@@ -40,7 +40,7 @@
           <slot name="button-layout-right" label="右侧插槽"></slot>
           <slot name="deleteMultiple">
             <a-button
-              v-if="onDeleteMultiple && attrs.selectType === 'checkbox'"
+              v-if="onDeleteMultiple && selectType === 'checkbox'"
               type="primary"
               ghost
               @click="onDeleteMultiple"
@@ -146,7 +146,19 @@ const attrs = useAttrs();
 const slots = useSlots();
 // console.log(`table透传对象`, attrs);
 // console.log(`table透传插槽`, slots);
-const { selectType, dataSource, uuidName, onSearch, onRefresh, onRowAdd, onRowEdit, onRowDelete, onPageChange } = attrs as {
+
+// 将 kebab-case 属性名转换为 camelCase（如 on-refresh → onRefresh）
+const normalizeAttrs = (rawAttrs: Record<string, any>) => {
+  const result: Record<string, any> = {};
+  Object.keys(rawAttrs).forEach(key => {
+    const camelCaseKey = key.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+    result[camelCaseKey] = rawAttrs[key];
+  });
+  return result;
+};
+const normalizedAttrs = normalizeAttrs(attrs);
+
+const { selectType, dataSource, uuidName, onSearch, onRefresh, onRowAdd, onRowEdit, onRowDelete, onPageChange } = normalizedAttrs as {
     uuidName?: string,
     selectType?: 'radio' | 'checkbox',
     dataSource?: any[] | { value: any[] },
@@ -222,14 +234,14 @@ const getSelected = () => {
 }
 
 // 分页
-const pagination = attrs.pagination as { index: number, size: number, total: number } | undefined;
+const pagination = normalizedAttrs.pagination as { index: number, size: number, total: number } | undefined;
 const size = computed(() => pagination?.size || 0);
 const index = computed(() => pagination?.index || 1);
 const total = computed(() => pagination?.total || 0);
-const spinning = computed(() => attrs.spinning || false);
-const localeEmptyText = computed(() => isValidValue(attrs.localeEmptyText) ? attrs.localeEmptyText : '暂无数据');
+const spinning = computed(() => normalizedAttrs.spinning || false);
+const localeEmptyText = computed(() => isValidValue(normalizedAttrs.localeEmptyText) ? normalizedAttrs.localeEmptyText : '暂无数据');
 const onChange = (current: number, pageSize: number) => {
-    const pagination = attrs.pagination as { index: number, size: number } | undefined;
+    const pagination = normalizedAttrs.pagination as { index: number, size: number } | undefined;
     if (pagination) {
         pagination.index = current;
         pagination.size = pageSize;

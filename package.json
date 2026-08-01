@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "npm run lint:fix && vite --host --mode dev --port 5173",
+    "dev": "npm run lint && vite --host --mode dev --port 5173",
     "type-check": "vue-tsc --build",
     "build": "npm run lint && vite build",
     "build-only": "run-p type-check \"build-only {@}\" --",

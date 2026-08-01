@@ -60,7 +60,8 @@
     @on-selected="onSelected"
     @on-delete-multiple="onDeleteMultiple"
   >
-    <template #link="{ text, field }">
+    <!-- eslint-disable-next-line vue/no-unused-vars -->
+    <template #link="{ text, record, field }">
       <template v-if="field === 'link_url'">
         <a href="javascript:void(0)">{{ text }}</a>
       </template>
@@ -185,8 +186,7 @@ const modalTitle = ref("");
 const showModal = (value: boolean = true) => {
     modalOpen.value = value === undefined ? true : value;
 };
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const handleOk = (e: MouseEvent) => {
+const handleOk = () => {
     const value = modalStatus.value;
     if (value === "add") {
         handleAdd();
