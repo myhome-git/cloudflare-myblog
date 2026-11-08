@@ -43,7 +43,7 @@ export default defineConfig(({ mode }) => {
       allowedHosts: true,
       proxy: {
         '/api': {
-          target: 'http://localhost:8787', // 代理的目标地址
+          target: 'https://blog.myhome.top', // 代理的目标地址
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '/api')
         }
