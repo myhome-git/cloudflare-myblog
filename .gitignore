@@ -8,10 +8,10 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
 dist-ssr
 .vite
 *.local
+/bun.lock
 
 # Environment variables
 .env*
