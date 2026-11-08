@@ -167,4 +167,51 @@ div[x-list] {
   background: none !important;
   padding: 20px !important;
 }
+
+/* 平板及以下：收紧正文内边距与标题字号 */
+@media (max-width: 991px) {
+    .x-detail {
+        padding: 16px 20px;
+    }
+
+    .x-detail .x-title .t-text {
+        font-size: 19px;
+    }
+
+    :deep(.x-detail .x-content .cherry-previewer) {
+        padding: 12px !important;
+    }
+}
+
+/* 手机：进一步收紧，避免内容区过窄 */
+@media (max-width: 767px) {
+    .x-detail {
+        padding: 12px;
+    }
+
+    .x-detail .x-title .t-text {
+        font-size: 17px;
+        padding: 6px;
+    }
+
+    .x-detail .x-title .t-other {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    :deep(.x-detail .x-content .cherry-previewer) {
+        padding: 4px !important;
+    }
+
+    /* 长链接、表格等不允许撑破屏幕 */
+    :deep(.x-detail .x-content img) {
+        max-width: 100%;
+        height: auto;
+    }
+
+    :deep(.x-detail .x-content table) {
+        display: block;
+        overflow-x: auto;
+    }
+}
 </style>

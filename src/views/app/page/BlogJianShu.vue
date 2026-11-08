@@ -103,6 +103,10 @@ onMounted(async function () {
     font-size: 18px;
     font-weight: bold;
     color: #666;
+    /* 长标题允许换行，避免小屏横向溢出 */
+    flex-wrap: wrap;
+    gap: 4px;
+    word-break: break-word;
 }
 
 .x-item .item-content {
@@ -142,5 +146,35 @@ onMounted(async function () {
     z-index: -1;
     border: 1px solid #91caff;
     border-radius: 5px;
+}
+
+/* 平板及以下：收紧列表项内边距与标题字号 */
+@media (max-width: 991px) {
+    .x-item {
+        padding: 10px 14px;
+    }
+
+    .x-item .item-title {
+        font-size: 16px;
+    }
+}
+
+/* 手机：分页区收窄，避免挤压 */
+@media (max-width: 767px) {
+    .x-item {
+        padding: 10px 12px;
+    }
+
+    .x-item .item-title {
+        font-size: 15px;
+    }
+
+    .x-item .item-content .c-text {
+        font-size: 13px;
+    }
+
+    .a-page-box {
+        padding: 14px 8px;
+    }
 }
 </style>

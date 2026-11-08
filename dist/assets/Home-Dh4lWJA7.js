@@ -1,1 +1,0 @@
-import{R as s}from"./index-BU104rE2.js";import{d as a,K as e,t as o,F as n,u as t,L as l,l as m}from"./vendor-DsBrrcim.js";const r=a({__name:"Home",setup:a=>(a,r)=>(m(),e(l,null,[r[0]||(r[0]=o("h1",null,"index page",-1)),n(t(s))],64))});export{r as default};

@@ -50,6 +50,15 @@ const computedDataSource = computed(() => {
     align-items: center;
     list-style: none;
     position: relative;
+    /* 分类较多时允许横向滚动，不换行撑破布局 */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.app-nav::-webkit-scrollbar {
+    display: none;
 }
 
 .app-nav::before {
@@ -79,6 +88,42 @@ const computedDataSource = computed(() => {
     font-weight: bold;
     color: #666;
     position: relative;
+    /* 防止 flex 压缩文字 */
+    flex: none;
+    white-space: nowrap;
+}
+
+/* 平板及以下：缩小字号与内边距，容纳更多分类 */
+@media (max-width: 991px) {
+    .app-nav {
+        line-height: 44px;
+    }
+
+    .app-nav .li {
+        padding: 0px 14px;
+        font-size: 16px;
+    }
+
+    .app-nav .li::after {
+        top: 14px;
+    }
+}
+
+/* 手机：进一步缩小 */
+@media (max-width: 767px) {
+    .app-nav {
+        line-height: 40px;
+    }
+
+    .app-nav .li {
+        padding: 0px 12px;
+        font-size: 15px;
+    }
+
+    .app-nav .li::after {
+        top: 12px;
+        height: 14px;
+    }
 }
 
 .app-nav .li::after {

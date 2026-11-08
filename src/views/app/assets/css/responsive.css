@@ -1,0 +1,75 @@
+/**
+ * 前台响应式样式（仅 /app 使用，后台不受影响）
+ *
+ * 断点约定：
+ *   大屏    ≥ 1200px   容器 1160px，右侧栏 340px
+ *   中等    ≥ 992px    容器自适应，右侧栏 300px
+ *   平板    ≥ 768px    右侧栏收窄到 280px
+ *   手机    < 768px    单列，右侧栏移到正文下方
+ *
+ * 用法：在组件样式中直接使用 var(--app-*)，不要在组件里再写死像素宽度。
+ */
+
+html {
+    /* 内容最大宽度（不含左右内边距） */
+    --app-container-max: 1160px;
+    /* 左右内边距 */
+    --app-container-gap: 0px;
+    /* 右侧栏宽度 */
+    --app-aside-width: 340px;
+    /* 主列与右侧栏的间距 */
+    --app-aside-gap: 20px;
+    /* 顶部 Logo / 搜索 / 登录区的高度 */
+    --app-header-height: 100px;
+    /* 导航栏高度 */
+    --app-nav-height: 50px;
+}
+
+/* 中等屏幕：收一点边距与侧栏，避免贴边 */
+@media (max-width: 1199px) {
+    html {
+        --app-container-max: 100%;
+        --app-container-gap: 20px;
+        --app-aside-width: 300px;
+    }
+}
+
+/* 平板：侧栏进一步收窄 */
+@media (max-width: 991px) {
+    html {
+        --app-container-gap: 16px;
+        --app-aside-width: 270px;
+        --app-aside-gap: 16px;
+    }
+}
+
+/* 手机：单列布局，侧栏移到正文下方 */
+@media (max-width: 767px) {
+    html {
+        --app-container-gap: 12px;
+        --app-aside-width: 100%;
+        --app-aside-gap: 0px;
+        --app-header-height: auto;
+        --app-nav-height: auto;
+    }
+}
+
+/**
+ * 容器：自适应宽度 + 居中
+ * 替代原先写死的 width: 1160px，这样窄屏不会再出现横向滚动条。
+ */
+.x-container {
+    width: 100%;
+    max-width: var(--app-container-max);
+    margin: 0 auto;
+    padding-left: var(--app-container-gap);
+    padding-right: var(--app-container-gap);
+}
+
+/* 小屏下部分内容需要允许换行，避免长英文/链接撑破容器 */
+@media (max-width: 767px) {
+    .app-unit .unit-content > ul > li {
+        white-space: normal;
+        word-break: break-word;
+    }
+}

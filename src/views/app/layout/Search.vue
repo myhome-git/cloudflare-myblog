@@ -25,19 +25,14 @@ const handleClick = () => {
 </script>
 <style scoped>
 .x-head-search {
-    width: 320px;
+    width: 100%;
     height: 38px;
     border: 1px solid #ccc;
     border-radius: 20px;
     position: relative;
-    position: absolute;
-    top: 0;
-    left: 455px;
-    bottom: 0;
-    margin: auto;
     color: #ccc;
     transition: all 0.3s ease-in-out 0s;
-    /*box-shadow: 0px 0px 5px rgba(0,0,0,0.2);*/
+    /* 宽度与位置由 Header.vue 的 flex 布局控制，这里不再写死 left / width */
 }
 
 .x-head-search:before {
@@ -54,9 +49,11 @@ const handleClick = () => {
     height: 36px;
     border: 0;
     border-radius: 20px 0px 0px 20px;
-    width: 256px;
+    /* 留出右侧按钮宽度（60px），宽度自适应父容器 */
+    width: calc(100% - 60px);
     padding-left: 15px;
     background-color: transparent;
+    outline: none;
 }
 
 .x-head-search .x-search-btn {

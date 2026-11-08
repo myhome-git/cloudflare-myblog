@@ -29,10 +29,9 @@ const handleItemClickWrapper = (obj: any, url: string) => {
 </script>
 <style scoped>
 .header-login {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    padding: 10px 0px 10px 0px;
+    /* 位置由 Header 的 flex 布局控制，不再绝对定位 */
+    white-space: nowrap;
+    text-align: right;
 }
 
 .header-login a {
@@ -50,4 +49,17 @@ const handleItemClickWrapper = (obj: any, url: string) => {
 }
 
 .header-login a:hover :deep(.anticon) {}
+
+/* 手机：隐藏文字只留图标，给搜索框让出空间 */
+@media (max-width: 767px) {
+    .header-login a {
+        font-size: 0;
+        padding: 0px 6px;
+    }
+
+    .header-login a :deep(.anticon) {
+        font-size: 20px;
+        margin-right: 0;
+    }
+}
 </style>

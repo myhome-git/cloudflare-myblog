@@ -10,13 +10,9 @@
 <script setup lang="ts"></script>
 <style scoped>
 .app-logo{
-	position: absolute;
-	left: 0;
-	top: 0;
-	bottom: 0;
-	height: 40px;
+	/* 位置由 Header 的 flex 布局决定，不再使用绝对定位 */
+	flex: none;
 	line-height: 20px;
-	margin: auto;
 }
 .app-logo span{
 	font-weight: bold;

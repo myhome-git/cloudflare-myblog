@@ -37,6 +37,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { isValidValue, handleDecodemultiple, handleItemClick } from "@/utils/utils.js";
 import request from "@/utils/request";
 import '../assets/css/common.css';
+import '../assets/css/responsive.css';
 import Header from './Header.vue';
 import Nav from './Nav.vue';
 import Content from './Content.vue';
@@ -181,16 +182,12 @@ watch(route, () => {
     flex-direction: column;
     background-color: #fdfcf8;
     color: #999;
-    overflow-y: scroll;
-    overflow-x: auto;
+    /* 只允许纵向滚动；横向交给布局自适应，避免小屏出现左右拖动 */
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-.x-container {
-    width: 1160px;
-    margin: 0 auto;
-    /* outline: 1px solid red; */
-}
-
+/* 宽度由 responsive.css 的 .x-container 统一控制（max-width 变量），此处不再写死像素 */
 .x-container.flex-auto {
     flex: 1;
     display: flex;
