@@ -1,1 +1,0 @@
-import{_ as o}from"./_plugin-vue_export-helper-BCo6x5W8.js";import{K as e,l as r}from"./vendor-DsBrrcim.js";const t={class:"app-footer"};const s=o({},[["render",function(o,s){return r(),e("div",t," 开发者联系方式：admin@myhome.top ")}],["__scopeId","data-v-d5959bbc"]]);export{s as default};

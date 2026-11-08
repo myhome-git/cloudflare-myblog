@@ -2,11 +2,11 @@
     <div class="app-win">
         <link rel="stylesheet" href="//at.alicdn.com/t/font_1281105_ue0q9rvh0lb.css">
         <div class="x-container">
-            <Header @on-search="onSearch"></Header>
+            <Header :nav-open="navOpen" @on-search="onSearch" @toggle-nav="toggleNav"></Header>
         </div>
         <div class="x-layout layout-nav">
             <div class="x-container">
-                <Nav :dataSource="dataSourceNav"></Nav>
+                <Nav :data-source="dataSourceNav" :open="navOpen"></Nav>
             </div>
         </div>
         <div class="x-container flex-auto">
@@ -54,6 +54,17 @@ const onSearch = (value: string) => {
     inputSearchValue.value = value;
     handleItemClick({ searchText: value }, '/app', router, false)
 }
+
+// 手机端分类导航的展开状态（图标在 Header 右上角）
+const navOpen = ref(false);
+const toggleNav = () => {
+    navOpen.value = !navOpen.value;
+};
+
+// 路由变化时收起分类面板
+watch(route, () => {
+    navOpen.value = false;
+});
 
 // 数据源
 const apiURL = `/api/app/blogs/query`;

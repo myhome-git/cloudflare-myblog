@@ -4,6 +4,17 @@
         <Search @on-search="onSearch"></Search>
         <div class="header-menu">
             <HeaderLogin></HeaderLogin>
+            <!-- 手机端：在登录按钮旁显示导航展开图标 -->
+            <button
+                type="button"
+                class="header-nav-toggle"
+                :aria-expanded="navOpen ? 'true' : 'false'"
+                aria-label="展开分类导航"
+                @click="emit('toggleNav')"
+            >
+                <MenuOutlined v-if="!navOpen" />
+                <CloseOutlined v-else />
+            </button>
         </div>
     </div>
 </template>
@@ -11,8 +22,10 @@
 import Logo from './Logo.vue';
 import Search from './Search.vue';
 import HeaderLogin from './HeaderLogin.vue';
+import { MenuOutlined, CloseOutlined } from '@ant-design/icons-vue';
 
-const emit = defineEmits(["onSearch"]);
+defineProps<{ navOpen?: boolean }>();
+const emit = defineEmits(["onSearch", "toggleNav"]);
 const onSearch = (value: string) => {
     emit('onSearch', value);
 }
@@ -38,7 +51,7 @@ const onSearch = (value: string) => {
 }
 
 .app-header :deep(.x-head-search) {
-    position: static;
+    /* 只参与 flex 布局；不覆盖其 position: relative（内部按钮以此为定位基准） */
     flex: 1 1 auto;
     max-width: 320px;
     margin: 0;
@@ -49,6 +62,29 @@ const onSearch = (value: string) => {
     flex: none;
     width: 140px;
     margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+/* 分类导航展开按钮：仅手机端显示（在登录按钮旁边） */
+.header-nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #666;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.header-nav-toggle:hover {
+    color: #FF5722;
 }
 
 /* 中等屏：压缩间距 */
@@ -84,6 +120,11 @@ const onSearch = (value: string) => {
 
     .app-header .header-menu {
         width: auto;
+    }
+
+    /* 手机端显示分类展开按钮 */
+    .header-nav-toggle {
+        display: inline-flex;
     }
 }
 </style>

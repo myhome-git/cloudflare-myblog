@@ -1,25 +1,35 @@
 <template>
     <div class="app-nav">
-        <div class="li" :class="{ active: route.query.classId === 'home' }" @click="handleItemClickWrapper({}, '/')">
-            Home
-        </div>
-        <template v-if="computedDataSource.length > 0">
-            <template v-for="(item) of computedDataSource" :key="item.id">
-                <li
+        <!-- 分类列表：大屏常驻；手机端默认收起，由 Header 的图标控制展开 -->
+        <div class="nav-list" :class="{ 'is-open': open }">
+            <div
+                class="li"
+                :class="{ active: route.query.classId === 'home' }"
+                @click="handleItemClickWrapper({}, '/')"
+            >
+                Home
+            </div>
+            <template v-if="computedDataSource.length > 0">
+                <div
+                    v-for="item of computedDataSource"
+                    :key="item.id"
                     class="li"
                     :class="{ active: route.query.classId === `${item.id}` }"
                     @click="handleItemClickWrapper({ classId: item.id }, '/')"
                 >
                     <span>{{ item.name }}</span>
-                </li>
+                </div>
             </template>
-        </template>
+        </div>
     </div>
 </template>
 <script lang="ts" setup>
-import {  computed, useAttrs } from 'vue';
+import { computed, useAttrs } from 'vue';
 import { handleItemClick } from '@/utils/utils';
 import { useRoute, useRouter } from "vue-router";
+
+// 手机端展开状态由父级（Index.vue）通过 Header 的图标控制
+withDefaults(defineProps<{ open?: boolean }>(), { open: false });
 
 const route = useRoute();
 const router = useRouter();
@@ -43,21 +53,29 @@ const computedDataSource = computed(() => {
 });
 </script>
 <style>
+/* ============ 大屏（≥ 768px）：横向导航，保持原视觉 ============ */
 .app-nav {
     line-height: 50px;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
     list-style: none;
     position: relative;
-    /* 分类较多时允许横向滚动，不换行撑破布局 */
+}
+
+/* 汉堡按钮已移到 Header，这里不再需要 */
+.nav-list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1 1 auto;
+    min-width: 0;
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
-.app-nav::-webkit-scrollbar {
+.nav-list::-webkit-scrollbar {
     display: none;
 }
 
@@ -93,39 +111,6 @@ const computedDataSource = computed(() => {
     white-space: nowrap;
 }
 
-/* 平板及以下：缩小字号与内边距，容纳更多分类 */
-@media (max-width: 991px) {
-    .app-nav {
-        line-height: 44px;
-    }
-
-    .app-nav .li {
-        padding: 0px 14px;
-        font-size: 16px;
-    }
-
-    .app-nav .li::after {
-        top: 14px;
-    }
-}
-
-/* 手机：进一步缩小 */
-@media (max-width: 767px) {
-    .app-nav {
-        line-height: 40px;
-    }
-
-    .app-nav .li {
-        padding: 0px 12px;
-        font-size: 15px;
-    }
-
-    .app-nav .li::after {
-        top: 12px;
-        height: 14px;
-    }
-}
-
 .app-nav .li::after {
     display: block;
     content: '';
@@ -154,4 +139,67 @@ const computedDataSource = computed(() => {
     color: #fff;
     background-color: rgba(63, 63, 63, 0.7);
 }
+
+/* ============ 平板（≤ 991px）：缩小字号与间距 ============ */
+@media (max-width: 991px) {
+    .app-nav {
+        line-height: 44px;
+    }
+
+    .app-nav .li {
+        padding: 0px 14px;
+        font-size: 16px;
+    }
+
+    .app-nav .li::after {
+        top: 14px;
+    }
+}
+
+/* ============ 手机（≤ 767px）：收成汉堡菜单 ============ */
+@media (max-width: 767px) {
+    .app-nav {
+        line-height: 40px;
+        flex-wrap: wrap;
+        /* 手机端不需要两端竖线 */
+        border-bottom: 1px solid #ddd;
+    }
+
+    .app-nav::before,
+    .app-nav::after {
+        display: none;
+    }
+
+    /* 收起时隐藏列表 */
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        overflow: visible;
+    }
+
+    /* 展开：纵向排列，每项整行可点 */
+    .nav-list.is-open {
+        display: flex;
+        border-top: 1px solid #ddd;
+    }
+
+    .nav-list .li {
+        padding: 0 14px;
+        font-size: 15px;
+        line-height: 40px;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* 手机端纵向列表不需要分隔竖线 */
+    .nav-list .li::after {
+        display: none;
+    }
+
+    .nav-list .li:last-child {
+        border-bottom: 0;
+    }
+}
 </style>
+

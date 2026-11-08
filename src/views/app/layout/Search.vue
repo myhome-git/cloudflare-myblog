@@ -35,16 +35,6 @@ const handleClick = () => {
     /* 宽度与位置由 Header.vue 的 flex 布局控制，这里不再写死 left / width */
 }
 
-.x-head-search:before {
-    display: block;
-    content: "";
-    height: 100%;
-    position: absolute;
-    right: 60px;
-    top: 0;
-    border-left: inherit;
-}
-
 .x-head-search input {
     height: 36px;
     border: 0;
@@ -56,14 +46,18 @@ const handleClick = () => {
     outline: none;
 }
 
+/* 原先在输入区与按钮之间画的分隔线：自适应布局下位置不再固定，已移除 */
+
 .x-head-search .x-search-btn {
     width: 46px;
+    height: 36px;
+    line-height: 36px;
     text-align: center;
     cursor: pointer;
-    float: right;
-    margin-right: 13px;
-    margin-top: 3px;
-    position: relative;
+    /* 贴搜索框右侧居中；宽度已由 input 的 calc 预留 */
+    position: absolute;
+    right: 6px;
+    top: 0;
 }
 
 .x-head-search .x-search-btn .anticon-search {
@@ -71,7 +65,7 @@ const handleClick = () => {
     font-weight: 700;
     position: absolute;
     left: 10px;
-    top: 0px;
+    top: 3px;
     padding: 3px 10px;
 }
 
